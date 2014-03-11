@@ -1,47 +1,50 @@
 / Copyright (c) 2012-2014 Epimorphics Ltd. Released under Apache License 2.0 http://www.apache.org/licenses/
-.qonsole
+%form.qonsole.form-inline{:role => "form", action: qonsole_rails.query_path}
   .col-md-12.well
     %h2 Example queries
     %ul.list-inline.examples
+      = render_examples( @config )
+
   .col-md-12.well.vertical
     %h2 Prefixes
     %ul.list-inline.prefixes
       %li.keep
-        %a.button{"data-toggle" => "modal", :href => "#prefixEditor", :title => "Add a SPARQL prefix"}
-          %i.icon-plus-sign
+        %button{type: :submit, title: "Add a SPARQL prefix", name: "add-prefix"}
+          %i.fa.fa-plus
+
   .col-md-12.well
     .query-edit
       #query-edit-cm
+
     .query-chrome
-      %form.form-inline{:role => "form"}
-        .form-group
-          %label{:for => "sparqlEndpoint"}
-          .dropdown
-            %a.btn.btn-custom2{"data-toggle" => "dropdown", :href => "#"}
-              Select endpoint
-              %i.icon-collapse
-            %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
-        .form-group
-          %label{:for => "sparqlEndpoint"} SPARQL endpoint
-          %input#sparqlEndpoint.form-control{:type => "text"}/
-        .form-group
-          %label{:for => "displayFormat"} Results
-          .dropdown
-            %a.btn.btn-custom2.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
-              %span table
-              %i.icon-collapse
-            %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
-              %li{:role => "presentation"}
-                %a{"data-value" => "tsv", :href => "#", :role => "menuitem", :tabindex => "-1"} table
-              %li{:role => "presentation"}
-                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1"} plain text
-              %li{:role => "presentation"}
-                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1"} JSON
-              %li{:role => "presentation"}
-                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1"} XML
-        .form-group
-          %label &nbsp;
-          %a.btn.btn-success.run-query.form-control{:href => "#"} perform query
+      .form-group
+        %label{:for => "sparqlEndpoint"}
+        .dropdown
+          %a.btn.btn-custom2{"data-toggle" => "dropdown", :href => "#"}
+            Select endpoint
+            %i.icon-collapse
+          %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
+      .form-group
+        %label{:for => "sparqlEndpoint"} SPARQL endpoint
+        %input#sparqlEndpoint.form-control{:type => "text"}/
+      .form-group
+        %label{:for => "displayFormat"} Results
+        .dropdown
+          %a.btn.btn-custom2.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
+            %span table
+            %i.icon-collapse
+          %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
+            %li{:role => "presentation"}
+              %a{"data-value" => "tsv", :href => "#", :role => "menuitem", :tabindex => "-1"} table
+            %li{:role => "presentation"}
+              %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1"} plain text
+            %li{:role => "presentation"}
+              %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1"} JSON
+            %li{:role => "presentation"}
+              %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1"} XML
+      .form-group
+        %label &nbsp;
+        %button.btn-success.run-query.form-control{:href => "#"} perform query
 
   #results-block.row.sparql.sparql-results
     .col-md-12
@@ -49,7 +52,7 @@
         .row
           .col-md-12
             %span.loadingSpinner.hidden
-              %img{:alt => "waiting for server action to complete", :src => "img/wait30.gif"}/
+              %img{:alt => "waiting for server action to complete", :src => "#{asset_path "qonsole_rails/wait30.gif"}"}/
             %span.timeTaken.hidden
         .row
           #results.col-md-12
