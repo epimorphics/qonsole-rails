@@ -25,6 +25,7 @@
             Select endpoint
             %i.icon-collapse
           %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
+            = render_endpoints( @config )
       .form-group
         %label{:for => "sparqlEndpoint"} SPARQL endpoint
         %input#sparqlEndpoint.form-control{:type => "text"}/
