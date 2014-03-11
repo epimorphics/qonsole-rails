@@ -63,9 +63,10 @@ var qonsole = function() {
       var elem = $(e.currentTarget);
       updatePrefixDeclaration( $.trim( elem.parent().text() ), elem.val(), elem.is(":checked") );
     } );
-    $("ul.examples").on( "click", "a", function( e ) {
+    $("ul.examples").on( "click", "input[type=button]", function( e ) {
       var elem = $(e.currentTarget);
-      $("ul.examples a").removeClass( "active" );
+      $("ul.examples input").removeClass( "active" );
+      $(elem).addClass( "active" );
       _.defer( function() {showCurrentQuery();} );
     } );
     $(".endpoints").on( "click", "a", function( e ) {
