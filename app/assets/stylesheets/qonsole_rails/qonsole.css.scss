@@ -133,6 +133,13 @@ footer p {
   -webkit-font-smoothing: antialiased;
 }
 
+.prefixes {
+  label {
+    font-weight: normal;
+    margin: 0 0.75em;
+  }
+}
+
 .auto-overflow {
   overflow: auto;
 }

@@ -12,7 +12,7 @@ module QonsoleRails
     def render_prefixes( config )
       capture do
         config.prefixes.each do |prefix, uri|
-          render_button( prefix, 'data-uri' => uri )
+          concat render_checkbox( prefix, uri )
         end
       end
     end
@@ -41,6 +41,21 @@ module QonsoleRails
              )
         end
       )
+    end
+
+    def render_checkbox( label, uri, options = {} )
+      capture do
+        concat(
+          content_tag( "label" ) do
+            concat tag( "input", { class: "checkbox form-control",
+                                   type: "checkbox",
+                                   value: uri,
+                                   checked: true,
+                                 }.merge( options ) )
+            concat " #{label}"
+          end
+        )
+      end
     end
   end
 end

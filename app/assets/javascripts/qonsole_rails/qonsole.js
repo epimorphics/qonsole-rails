@@ -140,7 +140,7 @@ var qonsole = function() {
 
   /** Return the currently active named example */
   var currentNamedExample = function() {
-    return namedExample( $.trim( $("ul.examples input.active").first().data("queryDefinitionPrefixes") ) );
+    return $("ul.examples input.active").first().data( "query" );
   };
 
   /** Return the DOM node representing the query editor */
@@ -212,9 +212,9 @@ var qonsole = function() {
 
   /** Return an array comprising the currently selected prefixes */
   var assembleCurrentPrefixes = function() {
-    var l = $("ul.prefixes a.active" ).map( function( i, elt ) {
-      return {name: $.trim( $(elt).text() ),
-              uri: $(elt).data( "uri" )};
+    var l = $("ul.prefixes input[type=checkbox]:checked" ).map( function( i, elt ) {
+      return {name: $.trim( $(elt).parent().text() ),
+              uri: $(elt).val()};
     } );
     return $.makeArray(l);
   };
