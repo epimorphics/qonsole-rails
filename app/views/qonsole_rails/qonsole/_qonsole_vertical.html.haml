@@ -32,7 +32,7 @@
             %label{:for => "sparqlEndpoint"} SPARQL endpoint
           %br
           .col-xs-12
-            %input#sparqlEndpoint.form-control{:type => "text", style: "width: 100%"}/
+            %input#sparqlEndpoint.form-control{:type => "text", style: "width: 100%", value: @config.endpoints["default"]}/
         .form-group.col-md-2
           %label{:for => "displayFormat"}
             Results
@@ -55,7 +55,7 @@
             &nbsp;
             %br
           %br
-          %button.btn-success.run-query.form-control{:href => "#"} perform query
+          %input.btn.btn-success.run-query.form-control{:href => "#", type: :submit, value: "perform query"}
 
   #results-block.row.sparql.sparql-results
     .col-md-12
