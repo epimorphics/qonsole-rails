@@ -18,35 +18,44 @@
       #query-edit-cm
 
     .query-chrome
-      .form-group
-        %label{:for => "sparqlEndpoint"}
-        .dropdown
-          %a.btn.btn-custom2{"data-toggle" => "dropdown", :href => "#"}
-            Select endpoint
-            %i.icon-collapse
-          %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
-            = render_endpoints( @config )
-      .form-group
-        %label{:for => "sparqlEndpoint"} SPARQL endpoint
-        %input#sparqlEndpoint.form-control{:type => "text"}/
-      .form-group
-        %label{:for => "displayFormat"} Results
-        .dropdown
-          %a.btn.btn-custom2.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
-            %span table
-            %i.icon-collapse
-          %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
-            %li{:role => "presentation"}
-              %a{"data-value" => "tsv", :href => "#", :role => "menuitem", :tabindex => "-1"} table
-            %li{:role => "presentation"}
-              %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1"} plain text
-            %li{:role => "presentation"}
-              %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1"} JSON
-            %li{:role => "presentation"}
-              %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1"} XML
-      .form-group
-        %label &nbsp;
-        %button.btn-success.run-query.form-control{:href => "#"} perform query
+      .row
+        .form-group.col-md-2
+          %label{:for => "sparqlEndpoint"} &nbsp;
+          .dropdown
+            %a.btn.btn-custom2{"data-toggle" => "dropdown", :href => "#"}
+              Select endpoint
+              %i.icon-collapse
+            %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
+              = render_endpoints( @config )
+        .form-group.col-md-5
+          .col-sm-8
+            %label{:for => "sparqlEndpoint"} SPARQL endpoint
+          %br
+          .col-xs-12
+            %input#sparqlEndpoint.form-control{:type => "text", style: "width: 100%"}/
+        .form-group.col-md-2
+          %label{:for => "displayFormat"}
+            Results
+            %br
+          .dropdown
+            %a.btn.btn-custom2.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
+              %span table
+              %i.icon-collapse
+            %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
+              %li{:role => "presentation"}
+                %a{"data-value" => "tsv", :href => "#", :role => "menuitem", :tabindex => "-1"} table
+              %li{:role => "presentation"}
+                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1"} plain text
+              %li{:role => "presentation"}
+                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1"} JSON
+              %li{:role => "presentation"}
+                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1"} XML
+        .form-group.col-md-3
+          %label
+            &nbsp;
+            %br
+          %br
+          %button.btn-success.run-query.form-control{:href => "#"} perform query
 
   #results-block.row.sparql.sparql-results
     .col-md-12
