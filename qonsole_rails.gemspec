@@ -5,7 +5,7 @@ require "qonsole_rails/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "qonsole_rails"
+  s.name        = "qonsole-rails"
   s.version     = QonsoleRails::VERSION
   s.authors     = ["Ian Dickinson"]
   s.email       = ["ian@epimorphics.com"]
@@ -17,4 +17,10 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.0.2"
+  s.add_dependency "codemirror-rails"
+  s.add_dependency "html5shiv-rails"
+  s.add_dependency "respond-rails", "~> 1.0"
+
+  s.add_dependency "haml"
+  s.add_dependency "fontawesome-rails"
 end
