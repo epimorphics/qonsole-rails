@@ -8,6 +8,7 @@
   .col-md-12.well.vertical
     %h2 Prefixes
     %ul.list-inline.prefixes
+      = render_prefixes( @config )
       %li.keep
         %button{type: :submit, title: "Add a SPARQL prefix", name: "add-prefix"}
           %i.fa.fa-plus
