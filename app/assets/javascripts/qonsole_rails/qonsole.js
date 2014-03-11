@@ -53,6 +53,8 @@ var qonsole = function() {
     $.ajaxSetup( {
       converters: {"script json": true}
     } );
+
+    setFirstQueryActive();
   };
 
   /** Bind events that we want to manage */
@@ -98,7 +100,7 @@ var qonsole = function() {
   /** Set the default active query */
   var setFirstQueryActive = function() {
     if (_outstandingQueries === 0) {
-      $("ul.examples").find("a").first().addClass( "active" );
+      $("ul.examples").find("input[type=button]").first().addClass( "active" );
       showCurrentQuery();
     }
   };
@@ -138,7 +140,7 @@ var qonsole = function() {
 
   /** Return the currently active named example */
   var currentNamedExample = function() {
-    return namedExample( $.trim( $("ul.examples a.active").first().text() ) );
+    return namedExample( $.trim( $("ul.examples input.active").first().data("queryDefinitionPrefixes") ) );
   };
 
   /** Return the DOM node representing the query editor */
