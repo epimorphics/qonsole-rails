@@ -59,9 +59,9 @@ var qonsole = function() {
 
   /** Bind events that we want to manage */
   var bindEvents = function() {
-    $("ul.prefixes").on( "click", "a.btn", function( e ) {
+    $("ul.prefixes").on( "click", "input[type=checkbox]", function( e ) {
       var elem = $(e.currentTarget);
-      updatePrefixDeclaration( $.trim( elem.text() ), elem.data( "uri" ), !elem.is(".active") );
+      updatePrefixDeclaration( $.trim( elem.parent().text() ), elem.val(), elem.is(":checked") );
     } );
     $("ul.examples").on( "click", "a", function( e ) {
       var elem = $(e.currentTarget);
