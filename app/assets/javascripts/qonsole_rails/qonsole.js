@@ -4,7 +4,7 @@ var qonsole = function() {
   "use strict";
 
   /* JsLint */
-  /*global sprintf, testCSS, loadConfig, bindEvents, $, onConfigLoaded, updatePrefixDeclaration, _,
+  /*global sprintf, testCSS, bindEvents, $, updatePrefixDeclaration, _,
     showCurrentQuery, setCurrentEndpoint, setCurrentFormat, elementVisible, runQuery, onLookupPrefix,
     startTimingResults, onAddPrefix, initQuery, CodeMirror, onQuerySuccess,
     onQueryFail, ajaxDataType, resetResults, XMLSerializer,
@@ -12,8 +12,6 @@ var qonsole = function() {
    */
 
   /* --- module vars --- */
-  /** The loaded configuration */
-  var _config = {};
   var _query_editor = null;
   var _startTime = 0;
   var _outstandingQueries = 0;
@@ -49,28 +47,12 @@ var qonsole = function() {
   /* --- application code --- */
 
   /** Initialisation - only called once */
-  var init = function( config ) {
-    loadConfig( config );
+  var init = function() {
     bindEvents();
 
     $.ajaxSetup( {
       converters: {"script json": true}
     } );
-  };
-
-  /** Load the configuration definition */
-  var loadConfig = function( config ) {
-    if (config.configURL) {
-      $.getJSON( config.configURL, onConfigLoaded );
-    }
-    else {
-      onConfigLoaded( config );
-    }
-  };
-
-  /** Return the current config object */
-  var config = function() {
-    return _config;
   };
 
   /** Bind events that we want to manage */
@@ -113,34 +95,6 @@ var qonsole = function() {
     $("#addPrefix").on( "click", onAddPrefix );
   };
 
-  /** List the current defined prefixes from the config */
-  var initPrefixes = function( config ) {
-    var prefixAdd = $("ul.prefixes li:last" );
-    $.each( config.prefixes, function( key, value ) {
-      var html = sprintf( "<li><a class='btn btn-custom2 btn-sm active' data-toggle='button' data-uri='%s'>%s</a></li>", value, key );
-      $(html).insertBefore( prefixAdd);
-    } );
-  };
-
-  /** List the example queries from the config */
-  var initExamples = function( config ) {
-    var examples = $("ul.examples");
-
-    examples.empty();
-
-    $.each( config.queries, function( i, queryDesc ) {
-      var html = sprintf( "<li><a class='btn btn-custom2 btn-sm' data-toggle='button'>%s</a></li>",
-                          queryDesc.name );
-      examples.append( html );
-
-      if (queryDesc.queryURL) {
-        loadRemoteQuery( queryDesc.name, queryDesc.queryURL );
-      }
-    } );
-
-    setFirstQueryActive();
-  };
-
   /** Set the default active query */
   var setFirstQueryActive = function() {
     if (_outstandingQueries === 0) {
@@ -172,28 +126,6 @@ var qonsole = function() {
     $.ajax( url, options );
   };
 
-  /** Set up the drop-down list of end-points */
-  var initEndpoints = function( config ) {
-    var endpoints = $("ul.endpoints");
-    endpoints.empty();
-
-    $.each( config.endpoints, function( key, url ) {
-      var html = sprintf( "<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>%s</a></li>",
-                          url );
-      endpoints.append( html );
-    } );
-
-    setCurrentEndpoint( config.endpoints["default"] );
-  };
-
-  /** Successfully loaded the configuration */
-  var onConfigLoaded = function( config, status, jqXHR ) {
-    _config = config;
-    initPrefixes( config );
-    initExamples( config );
-    initEndpoints( config );
-  };
-
   /** Set the current endpoint text */
   var setCurrentEndpoint = function( url ) {
     $("[id=sparqlEndpoint]").val( url );
@@ -202,11 +134,6 @@ var qonsole = function() {
   /** Return the current endpoint text */
   var currentEndpoint = function( url ) {
     return $("[id=sparqlEndpoint]").val();
-  };
-
-  /** Return the query definition with the given name */
-  var namedExample = function( name ) {
-    return _.find( config().queries, function( ex ) {return ex.name === name;} );
   };
 
   /** Return the currently active named example */
@@ -373,18 +300,6 @@ var qonsole = function() {
     setCurrentQueryText( lines.join( "\n" ) );
   };
 
-  /** Return the sparql service we're querying against */
-  var sparqlService = function() {
-    var service = config().service;
-    if (!service) {
-      // default is the remote service
-      config().service = new RemoteSparqlService();
-      service = config().service;
-    }
-
-    return service;
-  };
-
   /** Perform the query */
   var runQuery = function( e ) {
     e.preventDefault();
@@ -452,7 +367,7 @@ var qonsole = function() {
 
   /** Query succeeded - use display type to determine how to render */
   var onQuerySuccess = function( data, format ) {
-    var options = data.asFormat( format, config() );
+    var options = data.asFormat( format );
 
     if (options && !options.table) {
       showCodeMirrorResult( options );
