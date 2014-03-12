@@ -78,7 +78,7 @@ var qonsole = function() {
       setCurrentFormat( elem.data( "value" ), $.trim( elem.text() ) );
     } );
 
-    $("a.run-query").on( "click", runQuery );
+    $("input.run-query").on( "click", runQuery );
 
     $(document)
       .ajaxStart(function() {
@@ -248,6 +248,18 @@ var qonsole = function() {
     } );
   };
 
+  /** Return the current configuration, primarily prefixes */
+  var currentConfiguration = function() {
+    var config = {};
+
+    var prefixList = assembleCurrentPrefixes();
+    config.prefixes = {};
+
+    _.each( prefixList, function( pair ) {config.prefixes[pair.name] = pair.uri;} );
+
+    return config;
+  };
+
   /** Split a query into leader (prefixes and leading blank lines) and body */
   var queryLeader = function( query ) {
     var pattern = /(prefix [^>]+>[\s\n]*)/;
@@ -312,15 +324,21 @@ var qonsole = function() {
     var query = currentQueryText();
 
     var options = {
-      url: currentEndpoint(),
-      format: format,
       success: function( data ) {
         onQuerySuccess( data, format );
       },
-      error: onQueryFail
+      error: onQueryFail,
+      method: "post",
+      data: {
+        output: format,
+        url: currentEndpoint(),
+        q: query
+      }
     };
 
-    sparqlService().execute( query, options );
+    // sparqlService().execute( query, options );
+    var formURL = $("form.qonsole").attr( "action" );
+    $.ajax( formURL, options );
   };
 
 
@@ -370,7 +388,8 @@ var qonsole = function() {
 
   /** Query succeeded - use display type to determine how to render */
   var onQuerySuccess = function( data, format ) {
-    var options = data.asFormat( format );
+    var result = new RemoteSparqlServiceResult( data.result, format );
+    var options = result.asFormat( format, currentConfiguration() );
 
     if (options && !options.table) {
       showCodeMirrorResult( options );

@@ -146,35 +146,3 @@ _.extend( RemoteSparqlServiceResult.prototype, {
 
 } );
 
-
-/** This class proxies a service which is behind a remote SPARQL endpoint URL */
-var RemoteSparqlService = function() {
-};
-
-
-_.extend( RemoteSparqlService.prototype, {
-  execute: function( query, options ) {
-
-    var ajaxDataType = function( format ) {
-      return {
-        tsv: "html",
-        csv: "html",
-      }[format] || format;
-    };
-
-    var url = options.url;
-    var format = options.format;
-    var onSuccess = options.success;
-
-    var ajaxOptions = {
-      data: {query: query, output: format},
-      success: function( data ) {
-        onSuccess.call( null, new RemoteSparqlServiceResult( data, format ) );
-      },
-      error: options.error,
-      dataType: ajaxDataType( format )
-    };
-
-    return $.ajax( url, ajaxOptions );
-  }
-} );

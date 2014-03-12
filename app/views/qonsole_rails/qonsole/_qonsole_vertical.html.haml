@@ -3,12 +3,12 @@
   .col-md-12.well
     %h2 Example queries
     %ul.list-inline.examples
-      = render_examples( @config )
+      = render_examples( @qconfig )
 
   .col-md-12.well.vertical
     %h2 Prefixes
     %ul.list-inline.prefixes
-      = render_prefixes( @config )
+      = render_prefixes( @qconfig )
       %li.keep
         %button{type: :submit, title: "Add a SPARQL prefix", name: "add-prefix"}
           %i.fa.fa-plus
@@ -26,13 +26,13 @@
               Select endpoint
               %i.icon-collapse
             %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
-              = render_endpoints( @config )
+              = render_endpoints( @qconfig )
         .form-group.col-md-5
           .col-sm-8
             %label{:for => "sparqlEndpoint"} SPARQL endpoint
           %br
           .col-xs-12
-            %input#sparqlEndpoint.form-control{:type => "text", style: "width: 100%", value: @config.endpoints["default"]}/
+            %input#sparqlEndpoint.form-control{:type => "text", style: "width: 100%", value: @qconfig.endpoints["default"]}/
         .form-group.col-md-2
           %label{:for => "displayFormat"}
             Results
