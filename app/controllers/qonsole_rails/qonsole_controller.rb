@@ -16,7 +16,7 @@ module QonsoleRails
 
       result = get_from_api( url, {query: query, output: output})
 
-      render json: {result: result.body}, layout: false
+      render json: result, layout: false
     end
 
     def qconfig
@@ -29,12 +29,20 @@ module QonsoleRails
       output_format = options[:output]
 
       response = conn.get do |req|
-        req.headers['Accept'] = output_to_mime( output_format )
+        req.headers['Accept'] = "application/json,text/html,application/xhtml+xml,application/xml,text/plain" #output_to_mime( output_format )
         req.params.merge! options
       end
 
-      raise "Failed to read from #{http_url}: #{response.status.inspect}" unless ok?( response )
-      response
+      result = {status: response.status}
+
+      if ok?(response)
+        result[:result] = response.body
+      else
+        binding.pry
+        result[:error] = response.body
+      end
+
+      result
     end
 
     def create_http_connection( http_url )

@@ -381,21 +381,30 @@ var qonsole = function() {
 
   /** Report query failure */
   var onQueryFail = function( jqXHR, textStatus, errorThrown ) {
-    showResultsTimeAndCount( 0 );
     var text = jqXHR.valueOf().responseText || sprintf( "Sorry, that didn't work because: '%s'", jqXHR.valueOf().statusText );
-    $("#results").html( sprintf( "<pre class='text-danger'>%s</pre>", _.escape(text) ) );
+    renderFailure( text );
   };
+
+  var renderFailure = function( message ) {
+    showResultsTimeAndCount( 0 );
+    $("#results").html( sprintf( "<pre class='bg-danger'>%s</pre>", _.escape(message) ) );
+  }
 
   /** Query succeeded - use display type to determine how to render */
   var onQuerySuccess = function( data, format ) {
-    var result = new RemoteSparqlServiceResult( data.result, format );
-    var options = result.asFormat( format, currentConfiguration() );
+    if (data.status >= 200 && data.status <= 299) {
+      var result = new RemoteSparqlServiceResult( data.result, format );
+      var options = result.asFormat( format, currentConfiguration() );
 
-    if (options && !options.table) {
-      showCodeMirrorResult( options );
+      if (options && !options.table) {
+        showCodeMirrorResult( options );
+      }
+      else if (options && options.table) {
+        showTableResult( options );
+      }
     }
-    else if (options && options.table) {
-      showTableResult( options );
+    else {
+      renderFailure( data.error );
     }
   };
 
