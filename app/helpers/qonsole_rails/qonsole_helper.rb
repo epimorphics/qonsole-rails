@@ -3,6 +3,10 @@ module QonsoleRails
 
     def render_examples( config )
       capture do
+        if config.given_query
+          render_button( "current search selection", 'data-query' => config.given_query )
+        end
+
         config.queries.each do |example_query|
           render_button( example_query[:name], 'data-query' => example_query[:query] )
         end
@@ -19,14 +23,12 @@ module QonsoleRails
 
     def render_endpoints( config )
       capture do
+        if config.given_endpoint
+          render_endpoint_item( :current_search, config.given_endpoint )
+        end
+
         config.endpoints.each do |key, endpoint_url|
-          concat(
-            content_tag( "li", role: "presentation" ) do
-              content_tag( "a", role: "menuitem", tabindex: -1, href: "#", data: {key: key} ) do
-                endpoint_url
-              end
-            end
-          )
+          render_endpoint_item( key, endpoint_url )
         end
       end
     end
@@ -56,6 +58,16 @@ module QonsoleRails
           end
         )
       end
+    end
+
+    def render_endpoint_item( key, endpoint_url)
+      concat(
+        content_tag( "li", role: "presentation" ) do
+          content_tag( "a", role: "menuitem", tabindex: -1, href: "#", data: {key: key} ) do
+            endpoint_url
+          end
+        end
+      )
     end
   end
 end

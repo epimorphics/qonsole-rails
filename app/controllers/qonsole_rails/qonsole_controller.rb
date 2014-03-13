@@ -20,7 +20,7 @@ module QonsoleRails
     end
 
     def qconfig
-      @qconfig ||= QonsoleConfig.new
+      @qconfig ||= QonsoleConfig.new( params )
     end
 
     # probably should refactor all this to a service object
