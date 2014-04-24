@@ -38,7 +38,6 @@ module QonsoleRails
       if ok?(response)
         result[:result] = response.body
       else
-        binding.pry
         result[:error] = response.body
       end
 
