@@ -11,12 +11,13 @@ module QonsoleRails
     def create
       qconfig
       query = params[:q]
-      url = params[:url]
-      output = params[:output]
+      if url = validate_url
+        output = params[:output]
 
-      result = get_from_api( url, {query: query, output: output})
+        result = get_from_api( url, {query: query, output: output})
 
-      render json: result, layout: false
+        render json: result, layout: false
+      end
     end
 
     def qconfig
@@ -80,6 +81,16 @@ module QonsoleRails
         xml: "text/xml",
         text: "text/plain"
       }[output_format.to_sym]
+    end
+
+    def validate_url
+      url = params[:url]
+      if qconfig.endpoints.include?( url )
+        url
+      else
+        render :text => "You do not have access to the given SPARQL endpoint", :status => :forbidden, layout: false
+        false
+      end
     end
 
   end
