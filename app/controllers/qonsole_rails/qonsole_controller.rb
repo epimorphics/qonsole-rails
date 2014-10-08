@@ -85,7 +85,7 @@ module QonsoleRails
 
     def validate_url
       url = params[:url]
-      if qconfig.endpoints.include?( url )
+      if qconfig.known_endpoint?( url )
         url
       else
         render :text => "You do not have access to the given SPARQL endpoint", :status => :forbidden, layout: false
