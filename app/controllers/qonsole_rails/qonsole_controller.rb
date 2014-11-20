@@ -35,11 +35,12 @@ module QonsoleRails
       end
 
       result = {status: response.status}
+      body = response.body.gsub( /Fuseki - version.*(\n|\Z)/, "Apache Jena Fuseki" )
 
       if ok?(response)
-        result[:result] = remove_version_information( response.body )
+        result[:result] = body
       else
-        result[:error] = response.body
+        result[:error] = body
       end
 
       result
