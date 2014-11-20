@@ -36,7 +36,7 @@ module QonsoleRails
       result = {status: response.status}
 
       if ok?(response)
-        result[:result] = response.body
+        result[:result] = remove_version_information( response.body )
       else
         result[:error] = response.body
       end
@@ -80,6 +80,11 @@ module QonsoleRails
         xml: "text/xml",
         text: "text/plain"
       }[output_format.to_sym]
+    end
+
+    # To keep the penetration test auditors happy
+    def remove_version_information( text )
+      text.gsub( /Fuseki - version.*(\n|\Z)/, "Apache Jena Fuseki" )
     end
 
   end
