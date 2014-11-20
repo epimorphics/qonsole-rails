@@ -27,5 +27,9 @@ module QonsoleRails
     def default_endpoint
       given_endpoint || endpoints[:default]
     end
+
+    def known_endpoint?( url )
+      endpoints.has_value?( url )
+    end
   end
 end

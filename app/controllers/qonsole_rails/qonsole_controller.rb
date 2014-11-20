@@ -11,12 +11,13 @@ module QonsoleRails
     def create
       qconfig
       query = params[:q]
-      url = params[:url]
-      output = params[:output]
+      if url = validate_url
+        output = params[:output]
 
-      result = get_from_api( url, {query: query, output: output})
+        result = get_from_api( url, {query: query, output: output})
 
-      render json: result, layout: false
+        render json: result, layout: false
+      end
     end
 
     def qconfig
@@ -85,6 +86,16 @@ module QonsoleRails
     # To keep the penetration test auditors happy
     def remove_version_information( text )
       text.gsub( /Fuseki - version.*(\n|\Z)/, "Apache Jena Fuseki" )
+    end
+
+    def validate_url
+      url = params[:url]
+      if qconfig.known_endpoint?( url )
+        url
+      else
+        render :text => "You do not have access to the given SPARQL endpoint", :status => :forbidden, layout: false
+        false
+      end
     end
 
   end
