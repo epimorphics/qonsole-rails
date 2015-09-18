@@ -5,11 +5,11 @@ module QonsoleRails
     layout "application"
 
     def index
-      @qconfig = QonsoleConfig.new( params )
+      @qconfig = QonsoleConfig.new( params, hostname )
     end
 
     def create
-      qonfig = QonsoleConfig.new( params )
+      qonfig = QonsoleConfig.new( params, hostname )
 
       if qonfig.valid_endpoint?
         query_service = QonsoleRails::SparqlQueryService.new( qonfig )
@@ -17,6 +17,12 @@ module QonsoleRails
       else
         render text: "You do not have access to the given SPARQL endpoint", status: :forbidden, layout: false
       end
+    end
+
+    :private
+
+    def hostname
+      "http://{request.host}"
     end
   end
 end
