@@ -22,7 +22,7 @@ module QonsoleRails
     :private
 
     def hostname
-      "http://{request.host}"
+      "http://#{request.host}"
     end
   end
 end
