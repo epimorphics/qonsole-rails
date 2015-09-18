@@ -33,20 +33,23 @@ describe QonsoleRails::QonsoleConfig do
   it "should return the endpoint extracted from the request parameters" do
     alt_qonfig = QonsoleRails::QonsoleConfig.new( "url" => "http://foo" )
     alt_qonfig.given_endpoint.must_equal "http://foo"
+    alt_qonfig.endpoint.must_equal "http://foo"
   end
 
   it "should use the default endpoint if no URL is given in the request parameters" do
-    qonfig.given_endpoint.must_equal "http://landregistry.data.gov.uk/landregistry/query"
+    qonfig.given_endpoint.must_be_nil
+    qonfig.endpoint.must_equal "http://landregistry.data.gov.uk/landregistry/query"
   end
 
   it "should return an absolute URL for the endpoint if given a relative URL and a hostname" do
     alt_qonfig = QonsoleRails::QonsoleConfig.new( {"url" => "/foo"}, "http://foo.com" )
-    alt_qonfig.endpoint.must_equal "http://foo.com/foo"
+    alt_qonfig.endpoint.must_equal "/foo"
+    alt_qonfig.absolute_endpoint.must_equal "http://foo.com/foo"
   end
 
   it "should not fail if given a relative URL and no hostname" do
     alt_qonfig = QonsoleRails::QonsoleConfig.new( "url" => "/foo" )
-    alt_qonfig.endpoint.must_equal "/foo"
+    alt_qonfig.absolute_endpoint.must_equal "/foo"
   end
 
   it "should return true for valid endpoints" do

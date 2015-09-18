@@ -36,15 +36,19 @@ module QonsoleRails
     end
 
     def given_endpoint
-      config[:url] || default_endpoint
+      config[:url]
     end
 
     def endpoint
-      absolute_url( given_endpoint )
+      given_endpoint || default_endpoint
+    end
+
+    def absolute_endpoint
+      absolute_url( endpoint )
     end
 
     def valid_endpoint?
-      known_endpoint?( given_endpoint )
+      known_endpoint?( endpoint )
     end
 
     def known_endpoint?( url )

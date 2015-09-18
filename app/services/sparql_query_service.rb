@@ -11,7 +11,7 @@ module QonsoleRails
     end
 
     def run
-      as_result( get_from_api( create_connection( qonfig.endpoint ) ) )
+      as_result( get_from_api( create_connection( qonfig.absolute_endpoint ) ) )
     end
 
     def get_from_api( conn )
