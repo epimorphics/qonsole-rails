@@ -2,6 +2,7 @@ module QonsoleRails
   class QonsoleConfig
     CONFIG_DIR = "config"
     DEFAULT_CONFIG_FILE = "qonsole.json"
+    DEFAULT_QUERY_TIMEOUT = 60
 
     attr_reader :config, :host
 
@@ -50,6 +51,17 @@ module QonsoleRails
       endpoints.has_value?( url )
     end
 
+    def sparql_service_options
+      {
+        output: output_format,
+        query: query
+      }
+    end
+
+    def query_timeout
+      config[:query_timeout] || DEFAULT_QUERY_TIMEOUT
+    end
+
     :private
 
     def qonsole_json( config_file_name = DEFAULT_CONFIG_FILE )
@@ -66,5 +78,6 @@ module QonsoleRails
     def absolute_url( url )
       url.start_with?( "http:" ) ? url : "#{host}#{url}"
     end
+
   end
 end
