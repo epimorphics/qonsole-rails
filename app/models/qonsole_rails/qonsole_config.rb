@@ -1,35 +1,70 @@
 module QonsoleRails
   class QonsoleConfig
-    attr_reader :given_query, :given_endpoint
+    CONFIG_DIR = "config"
+    DEFAULT_CONFIG_FILE = "qonsole.json"
 
-    def initialize( params, config_file_name = 'qonsole.json' )
-      config = File.join( Rails.root, 'config', 'qonsole.json' )
-      raise "Missing qonsole configuration file config/#{config_file_name}" unless File.exist?( config )
+    attr_reader :config, :host
 
-      @config = JSON.parse( IO.read( config ) ).with_indifferent_access
-
-      @given_query = params[:query]
-      @given_endpoint = params[:sapi]
+    def initialize( params, host = nil  )
+      @config = qonsole_json.merge( params ).with_indifferent_access
+      @host = host
     end
 
     def queries
-      @config[:queries]
+      config[:queries]
     end
 
     def endpoints
-      @config[:endpoints]
+      config[:endpoints]
     end
 
     def prefixes
-      @config[:prefixes]
+      config[:prefixes]
+    end
+
+    def query
+      config[:q]
+    end
+
+    def output_format
+      config[:output]
     end
 
     def default_endpoint
-      given_endpoint || endpoints[:default]
+      endpoints[:default]
+    end
+
+    def given_endpoint
+      config[:url] || default_endpoint
+    end
+
+    def endpoint
+      absolute_url( given_endpoint )
+    end
+
+    def valid_endpoint?
+      known_endpoint?( given_endpoint )
     end
 
     def known_endpoint?( url )
       endpoints.has_value?( url )
+    end
+
+    :private
+
+    def qonsole_json( config_file_name = DEFAULT_CONFIG_FILE )
+      unless defined? @@static_config
+        config = File.join( Rails.root, CONFIG_DIR, config_file_name )
+        raise "Missing qonsole configuration file config/#{config_file_name}" unless File.exist?( config )
+
+        @@static_config = JSON.parse( IO.read( config ) )
+      end
+
+      @@static_config
+    end
+
+    def absolute_url( url )
+      url.start_with?( "http:" ) ? url : "#{host}#{url}"
     end
   end
 end
