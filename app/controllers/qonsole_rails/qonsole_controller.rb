@@ -5,6 +5,7 @@ module QonsoleRails
     layout "application"
 
     def index
+      @qconfig = QonsoleConfig.new( params )
     end
 
     def create
