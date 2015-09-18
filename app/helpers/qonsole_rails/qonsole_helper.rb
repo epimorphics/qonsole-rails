@@ -3,8 +3,8 @@ module QonsoleRails
 
     def render_examples( config )
       capture do
-        if config.given_query
-          render_button( "current search selection", 'data-query' => config.given_query )
+        if config.query
+          render_button( "current search selection", 'data-query' => config.query )
         end
 
         config.queries.each do |example_query|
