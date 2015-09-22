@@ -11,7 +11,11 @@ module QonsoleRails
     end
 
     def run
-      as_result( get_from_api( create_connection( qonfig.absolute_endpoint ) ) )
+      begin
+        as_result( get_from_api( create_connection( qonfig.absolute_endpoint ) ) )
+      rescue e
+        raise "#{e}"
+      end
     end
 
     def get_from_api( conn )

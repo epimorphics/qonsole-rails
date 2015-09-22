@@ -19,10 +19,42 @@ module QonsoleRails
       end
     end
 
+    unless Rails.application.config.consider_all_requests_local
+      rescue_from ActionController::RoutingError, :with => :render_404
+      rescue_from Exception, with: :render_exception
+    end
+
+    def render_exception( e )
+      if e.instance_of?( ArgumentError ) || e.instance_of?( RuntimeError )
+        render_error( 400, e )
+      elsif e.instance_of? ActionController::InvalidAuthenticityToken
+        Rails.logger.warn "Invalid authenticity token #{e}"
+        render_error( 403, e )
+      else
+        Rails.logger.warn "No explicit error page for exception #{e} - #{e.class.name}"
+        render_error( 500, e )
+      end
+    end
+
+    def render_404( e = nil )
+      render_error( 404, e )
+    end
+
+    def render_error( status, e )
+      respond_to do |format|
+        format.html { render( layout: false,
+                              file: Rails.root.join( 'public', 'landing', status.to_s ),
+                              status: status ) }
+        format.all { render text: e ? "#{e}" : status.to_s, status: status }
+      end
+    end
+
     :private
 
     def hostname
       "http://#{request.host}"
     end
+
+
   end
 end
