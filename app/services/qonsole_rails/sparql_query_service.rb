@@ -13,7 +13,8 @@ module QonsoleRails
     def run
       begin
         as_result( get_from_api( create_connection( qonfig.absolute_endpoint ) ) )
-      rescue e
+      rescue Faraday::ClientError => e
+        Rails.logger.error( e )
         raise "#{e}"
       end
     end

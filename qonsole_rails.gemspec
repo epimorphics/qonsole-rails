@@ -16,10 +16,17 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.2"
+  s.add_dependency "rails", "~> 4.2.6"
 
-  s.add_dependency "haml"
-  s.add_dependency "fontawesome-rails"
+  s.add_dependency "jquery-rails"
+  s.add_dependency "haml-rails"
+  s.add_dependency "font-awesome-rails"
+  s.add_dependency "modulejs-rails"
+  s.add_dependency "lodash-rails"
+  s.add_dependency "codemirror-rails"
+  s.add_dependency 'faraday'
+  s.add_dependency 'faraday_middleware'
+
 
   s.add_development_dependency "minitest-spec-rails"
   s.add_development_dependency "minitest-rails"

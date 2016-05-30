@@ -97,4 +97,6 @@
         %button#addPrefix.btn.btn-primary{"data-dismiss" => "modal", :type => "button"} add prefix
 
 :javascript
-  $( qonsole.init );
+  $( function() {
+    modulejs.require( "qonsole" ).init()
+  } );

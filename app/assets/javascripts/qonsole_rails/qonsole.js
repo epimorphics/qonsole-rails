@@ -1,50 +1,26 @@
-/* Copyright (c) 2012-2013 Epimorphics Ltd. Released under Apache License 2.0 http://www.apache.org/licenses/ */
+/* Copyright (c) 2012-2016 Epimorphics Ltd. Released under Apache License 2.0 http://www.apache.org/licenses/ */
 
-var qonsole = function() {
+modulejs.define( "qonsole", [
+  "lib/lodash",
+  "lib/jquery",
+  "lib/codemirror",
+  "sprintf",
+  "sparql-service-result"
+], function(
+  _,
+  $,
+  CodeMirror,
+  Sprintf,
+  SparqlServiceResult
+) {
   "use strict";
 
-  /* JsLint */
-  /*global sprintf, testCSS, bindEvents, $, updatePrefixDeclaration, _,
-    showCurrentQuery, setCurrentEndpoint, setCurrentFormat, elementVisible, runQuery, onLookupPrefix,
-    startTimingResults, onAddPrefix, initQuery, CodeMirror, onQuerySuccess,
-    onQueryFail, ajaxDataType, resetResults, XMLSerializer,
-    showTableResult, showCodeMirrorResult
-   */
-
   /* --- module vars --- */
-  var _query_editor = null;
+  var _queryEditor = null;
   var _startTime = 0;
   var _outstandingQueries = 0;
+  var _config;
 
-  /* --- utils --- */
-
-  /** Return the string representation of the given XML value, which may be a string or a DOM object */
-  var xmlToString = function( xmlData ) {
-    var xs = _.isString( xmlData ) ? xmlData : null;
-
-    if (!xs && window.ActiveXObject && xmlData.xml) {
-      xs = xmlData.xml;
-    }
-
-    if (!xs) {
-      xs = new XMLSerializer().serializeToString( xmlData );
-    }
-
-    return xs;
-  };
-
-  /** Browser sniffing */
-  var isOpera = function() {return !!(window.opera && window.opera.version);};  // Opera 8.0+
-  var isFirefox = function() {return testCSS('MozBoxSizing');};                 // FF 0.8+
-  var isSafari = function() {return Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;};    // At least Safari 3+: "[object HTMLElementConstructor]"
-  var isChrome = function() {return !isSafari() && testCSS('WebkitTransform');};  // Chrome 1+
-  var isIE = function() {return /*@cc_on!@*/false || testCSS('msTransform');};  // At least IE6
-
-  var testCSS =  function(prop) {
-    return document.documentElement.style.hasOwnProperty( prop );
-  };
-
-  /* --- application code --- */
 
   /** Initialisation - only called once */
   var init = function() {
@@ -55,6 +31,10 @@ var qonsole = function() {
     } );
 
     setFirstQueryActive();
+  };
+
+  var config = function() {
+    return _config;
   };
 
   /** Bind events that we want to manage */
@@ -93,7 +73,7 @@ var qonsole = function() {
     $("#prefixEditor").on( "click", "#lookupPrefix", onLookupPrefix )
                       .on( "keyup", "#inputPrefix", function( e ) {
                         var elem = $(e.currentTarget);
-                        $("#lookupPrefix span").text( sprintf( "'%s'", elem.val() ));
+                        $("#lookupPrefix span").text( Sprintf.sprintf( "'%s'", elem.val() ));
                       } );
     $("#addPrefix").on( "click", onAddPrefix );
   };
@@ -106,36 +86,13 @@ var qonsole = function() {
     }
   };
 
-  /** Load a remote query */
-  var loadRemoteQuery = function( name, url ) {
-    _outstandingQueries++;
-
-    var options = {
-      success: function( data, xhr ) {
-        namedExample( name ).query = data;
-
-        _outstandingQueries--;
-        setFirstQueryActive();
-      },
-      failure: function() {
-        namedExample( name ).query = "Not found: " + url;
-
-        _outstandingQueries--;
-        setFirstQueryActive();
-      },
-      dataType: "text"
-    };
-
-    $.ajax( url, options );
-  };
-
   /** Set the current endpoint text */
   var setCurrentEndpoint = function( url ) {
     $("[id=sparqlEndpoint]").val( url );
   };
 
   /** Return the current endpoint text */
-  var currentEndpoint = function( url ) {
+  var currentEndpoint = function() {
     return $("[id=sparqlEndpoint]").val();
   };
 
@@ -146,13 +103,13 @@ var qonsole = function() {
 
   /** Return the DOM node representing the query editor */
   var queryEditor = function() {
-    if (!_query_editor) {
-      _query_editor = new CodeMirror( $("#query-edit-cm").get(0), {
+    if (!_queryEditor) {
+      _queryEditor = new CodeMirror( $("#query-edit-cm").get(0), {
         lineNumbers: true,
         mode: "sparql"
       } );
     }
-    return _query_editor;
+    return _queryEditor;
   };
 
   /** Return the current value of the query edit area */
@@ -175,9 +132,9 @@ var qonsole = function() {
   var displayQuery = function( query ) {
     if (query) {
       var queryBody = query.query ? query.query : query;
-      var prefixes = assemblePrefixes( queryBody, query.prefixes )
+      var prefixes = assemblePrefixes( queryBody, query.prefixes );
 
-      var q = sprintf( "%s\n\n%s", renderPrefixes( prefixes ), stripLeader( queryBody ) );
+      var q = Sprintf.sprintf( "%s\n\n%s", renderPrefixes( prefixes ), stripLeader( queryBody ) );
       setCurrentQueryText( q );
 
       syncPrefixButtonState( prefixes );
@@ -284,7 +241,7 @@ var qonsole = function() {
   /** Return a string comprising the given prefixes */
   var renderPrefixes = function( prefixes ) {
     return _.map( prefixes, function( p ) {
-      return sprintf( "prefix %s: <%s>", p.name, p.uri );
+      return Sprintf.sprintf( "prefix %s: <%s>", p.name, p.uri );
     } ).join( "\n" );
   };
 
@@ -306,7 +263,7 @@ var qonsole = function() {
     if (!found && added) {
       for (i = 0; i < lines.length; i++) {
         if (!lines[i].match( /^prefix/ )) {
-          lines.splice( i, 0, sprintf( "prefix %s: <%s>", prefix, uri ) );
+          lines.splice( i, 0, Sprintf.sprintf( "prefix %s: <%s>", prefix, uri ) );
           break;
         }
       }
@@ -367,7 +324,7 @@ var qonsole = function() {
     var m = Math.floor( duration / 60 );
     var suffix = (count !== 1) ? "s" : "";
 
-    var html = sprintf( "%s result%s in %d min %d.%03d s", count, suffix, m, s, ms );
+    var html = Sprintf.sprintf( "%s result%s in %d min %d.%03d s", count, suffix, m, s, ms );
 
     $(".timeTaken").html( html );
     elementVisible( ".timeTaken", true );
@@ -380,20 +337,20 @@ var qonsole = function() {
   };
 
   /** Report query failure */
-  var onQueryFail = function( jqXHR, textStatus, errorThrown ) {
-    var text = jqXHR.valueOf().responseText || sprintf( "Sorry, that didn't work because: '%s'", jqXHR.valueOf().statusText );
+  var onQueryFail = function( jqXHR ) {
+    var text = jqXHR.valueOf().responseText || Sprintf.sprintf( "Sorry, that didn't work because: '%s'", jqXHR.valueOf().statusText );
     renderFailure( text );
   };
 
   var renderFailure = function( message ) {
     showResultsTimeAndCount( 0 );
-    $("#results").html( sprintf( "<pre class='bg-danger'>%s</pre>", _.escape(message) ) );
-  }
+    $("#results").html( Sprintf.sprintf( "<pre class='bg-danger'>%s</pre>", _.escape(message) ) );
+  };
 
   /** Query succeeded - use display type to determine how to render */
   var onQuerySuccess = function( data, format ) {
     if (data.status >= 200 && data.status <= 299) {
-      var result = new RemoteSparqlServiceResult( data.result, format );
+      var result = new SparqlServiceResult( data.result, format );
       var options = result.asFormat( format, currentConfiguration() );
 
       if (options && !options.table) {
@@ -412,7 +369,7 @@ var qonsole = function() {
   var showCodeMirrorResult = function( options ) {
     showResultsTimeAndCount( options.count );
 
-    var editor = new CodeMirror( $("#results").get(0), {
+    new CodeMirror( $("#results").get(0), {
       value: options.data,
       mode: options.mime,
       lineNumbers: true,
@@ -429,9 +386,9 @@ var qonsole = function() {
     showResultsTimeAndCount( options.count );
 
     $("#results").empty()
-                 .append( '<div class="auto-overflow"></div>')
+                 .append( "<div class='auto-overflow'></div>")
                  .children()
-                 .append( '<table cellpadding="0" cellspacing="0" border="0" class="display"></table>' )
+                 .append( "<table cellpadding='0' cellspacing='0' border='0' class='display'></table>" )
                  .children()
                  .dataTable( options );
   };
@@ -444,7 +401,7 @@ var qonsole = function() {
     $("#inputURI").val("");
 
     if (prefix) {
-      $.getJSON( sprintf( "http://prefix.cc/%s.file.json", prefix ),
+      $.getJSON( Sprintf.sprintf( "http://prefix.cc/%s.file.json", prefix ),
                 function( data ) {
                   $("#inputURI").val( data[prefix] );
                 }
@@ -453,7 +410,7 @@ var qonsole = function() {
   };
 
   /** User wishes to add the prefix */
-  var onAddPrefix = function( e ) {
+  var onAddPrefix = function() {
     var prefix = $.trim( $("#inputPrefix").val() );
     var uri = $.trim( $("#inputURI").val() );
 
@@ -469,23 +426,23 @@ var qonsole = function() {
     $("ul.prefixes a.btn").each( function( i, a ) {selections[$(a).text()] = $(a).hasClass("active");} );
 
     $("ul.prefixes li[class!=keep]").remove();
-    initPrefixes( _config );
+    // initPrefixes( config() );
 
     // restore selections state
     $.each( selections, function( k, v ) {
       if (!v) {
-        $(sprintf("ul.prefixes a.btn:contains('%s')", k)).removeClass("active");
+        $(Sprintf.sprintf("ul.prefixes a.btn:contains('%s')", k)).removeClass("active");
       }
     } );
 
     var lines = currentQueryText().split("\n");
     lines = _.reject( lines, function( line ) {return line.match( /^prefix/ );} );
-    var q = sprintf( "%s\n%s", renderPrefixes( assembleCurrentPrefixes() ), lines.join( "\n" ) );
+    var q = Sprintf.sprintf( "%s\n%s", renderPrefixes( assembleCurrentPrefixes() ), lines.join( "\n" ) );
     setCurrentQueryText( q );
   };
 
   return {
     init: init
   };
-}();
+} );
 
