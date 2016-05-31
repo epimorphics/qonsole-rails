@@ -12,7 +12,7 @@ module QonsoleRails
 
     def run
       begin
-        as_result( get_from_api( create_connection( qonfig.absolute_endpoint ) ) )
+        as_result( post_to_api( create_connection( qonfig.absolute_endpoint ) ) )
       rescue Faraday::ClientError => e
         Rails.logger.error( e )
         raise "#{e}"
@@ -23,6 +23,13 @@ module QonsoleRails
       conn.get do |req|
         set_mime_type( req )
         add_sparql_service_params( req )
+      end
+    end
+
+    def post_to_api( conn )
+      conn.post do |req|
+        set_mime_type( req )
+        req.body = qonfig.sparql_service_options
       end
     end
 
