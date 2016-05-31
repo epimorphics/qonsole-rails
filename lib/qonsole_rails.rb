@@ -10,8 +10,9 @@ require "font-awesome-rails"
 require "modulejs-rails"
 require "lodash-rails"
 require "codemirror-rails"
-require 'faraday'
-require 'faraday_middleware'
+require "faraday"
+require "faraday_middleware"
+require "jquery-datatables-rails"
 
 module QonsoleRails
 end
