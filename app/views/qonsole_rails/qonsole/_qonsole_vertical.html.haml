@@ -22,7 +22,7 @@
         .form-group.col-md-2
           %label{:for => "sparqlEndpoint"} &nbsp;
           .dropdown
-            %a.btn.btn-custom2{"data-toggle" => "dropdown", :href => "#"}
+            %a.btn.btn-dropdown{"data-toggle" => "dropdown", :href => "#"}
               Select endpoint
               %i.icon-collapse
             %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
@@ -38,7 +38,7 @@
             Results
             %br
           .dropdown
-            %a.btn.btn-custom2.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
+            %a.btn.btn-dropdown.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
               %span table
               %i.icon-collapse
             %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
