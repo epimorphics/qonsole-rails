@@ -140,7 +140,7 @@ function(
       var lines = _.compact(data.split( "\n" ));
 
       var columnHeaders = _.map( lines.shift().split("\t"), function( header) {
-        return {sTitle: header};
+        return {sTitle: header.replace( /^\?/, "" )};
       } );
 
       var rows = _.map( lines, function( line ) {
