@@ -88,7 +88,7 @@ modulejs.define( "qonsole", [
 
   /** Display the given query */
   var showGivenQuery = function( query ) {
-    if (query === "_localstorage") {
+    if (query === "_localstore") {
       query = Util.Browser.getSessionStore( "qonsole.query" );
     }
     displayQuery( query );
