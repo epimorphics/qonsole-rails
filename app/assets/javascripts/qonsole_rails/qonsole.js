@@ -5,12 +5,14 @@ modulejs.define( "qonsole", [
   "lib/jquery",
   "lib/codemirror",
   "sprintf",
+  "lib/util",
   "sparql-service-result"
 ], function(
   _,
   $,
   CodeMirror,
   Sprintf,
+  Util,
   SparqlServiceResult
 ) {
   "use strict";
@@ -30,7 +32,13 @@ modulejs.define( "qonsole", [
       converters: {"script json": true}
     } );
 
-    setFirstQueryActive();
+    var params = Util.URL.searchParams();
+    if (params.query) {
+      showGivenQuery( params.query );
+    }
+    else {
+      setFirstQueryActive();
+    }
   };
 
   var config = function() {
@@ -76,6 +84,14 @@ modulejs.define( "qonsole", [
                         $("#lookupPrefix span").text( Sprintf.sprintf( "'%s'", elem.val() ));
                       } );
     $("#addPrefix").on( "click", onAddPrefix );
+  };
+
+  /** Display the given query */
+  var showGivenQuery = function( query ) {
+    if (query === "_localstorage") {
+      query = Util.Browser.getSessionStore( "qonsole.query" );
+    }
+    displayQuery( query );
   };
 
   /** Set the default active query */
