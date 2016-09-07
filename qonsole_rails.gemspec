@@ -18,11 +18,11 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 5.0.0.1"
 
-  s.add_dependency "jquery-rails", "~> 4.1.1"
+  s.add_dependency "jquery-rails", "~> 4.2.1"
   s.add_dependency "haml-rails", "~> 0.9.0"
   s.add_dependency "font-awesome-rails", "~> 4.6.3.0"
   s.add_dependency "modulejs-rails", "~> 1.9.0.1"
-  s.add_dependency "lodash-rails", "~> 4.12.0"
+  s.add_dependency "lodash-rails", "~> 4.15.0"
   s.add_dependency "codemirror-rails", "~> 5.11"
   s.add_dependency "faraday", "~> 0.9.2"
   s.add_dependency "faraday_middleware", "~> 0.10.0"
