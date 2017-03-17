@@ -9,7 +9,7 @@ module QonsoleRails
 
     def initialize(params, host = nil)
       @config = qonsole_json.with_indifferent_access
-      @config['q'] = URI.unescape(params['q'])
+      @config['q'] = URI.unescape(params['q']) if params['q']
       @host = host
     end
 
