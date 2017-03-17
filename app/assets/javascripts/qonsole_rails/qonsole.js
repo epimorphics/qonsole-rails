@@ -169,7 +169,7 @@ modulejs.define( "qonsole", [
 
   /** Assemble the set of prefixes to use when initially rendering the query */
   var assemblePrefixes = function( queryBody, queryDefinitionPrefixes ) {
-    if (queryBody.match( /^prefix/ )) {
+    if (queryBody.match( /^prefix/i )) {
       // strategy 1: there are prefixes encoded in the query body
       return assemblePrefixesFromQuery( queryBody );
     }
