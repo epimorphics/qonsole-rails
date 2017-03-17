@@ -8,7 +8,8 @@ module QonsoleRails
     attr_reader :config, :host
 
     def initialize(params, host = nil)
-      @config = qonsole_json.merge(params).with_indifferent_access
+      @config = qonsole_json.with_indifferent_access
+      @config['q'] = URI.unescape(params['q'])
       @host = host
     end
 
