@@ -2,106 +2,105 @@
 
 module QonsoleRails
   class SparqlQueryService
-    STANDARD_MIME_TYPES = "application/json,text/html,application/xhtml+xml,application/xml,text/plain"
+    STANDARD_MIME_TYPES =
+      'application/json,text/html,application/xhtml+xml,application/xml,text/plain'.freeze
 
     attr_reader :qonfig
 
-    def initialize( qonfig )
+    def initialize(qonfig)
       @qonfig = qonfig
     end
 
     def run
-      begin
-        as_result( post_to_api( create_connection( qonfig.absolute_endpoint ) ) )
-      rescue Faraday::ClientError => e
-        Rails.logger.error( e )
-        raise "#{e}"
-      end
+      endpoint = qonfig.absolute_endpoint
+      conn = create_connection(endpoint)
+      result = post_to_api(conn)
+      as_result(result)
+    rescue Faraday::ClientError => e
+      Rails.logger.error(e)
+      raise e.to_s
     end
 
-    def get_from_api( conn )
+    def get_from_api(conn)
       conn.get do |req|
-        set_mime_type( req )
-        add_sparql_service_params( req )
+        set_mime_type(req)
+        add_sparql_service_params(req)
       end
     end
 
-    def post_to_api( conn )
+    def post_to_api(conn)
       conn.post do |req|
-        set_mime_type( req )
+        set_mime_type(req)
         req.body = qonfig.sparql_service_options
       end
     end
 
-    def as_result( response )
-      result = {status: response.status}
-      result[ok?(response) ? :result : :error] = response_body( response )
+    def as_result(response)
+      result = { status: response.status }
+      result[ok?(response) ? :result : :error] = response_body(response)
       result
     end
 
-    def response_body( response )
-      remove_version_information( response.body )
+    def response_body(response)
+      remove_version_information(response.body)
     end
 
-    def create_connection( http_url )
-      set_connection_timeout( create_http_connection( http_url ) )
+    def create_connection(http_url)
+      set_connection_timeout(create_http_connection(http_url))
     end
 
-    def create_http_connection( http_url )
-      Faraday.new( url: http_url ) do |faraday|
+    def create_http_connection(http_url)
+      Faraday.new(url: http_url) do |faraday|
         faraday.request  :url_encoded
         faraday.use      FaradayMiddleware::FollowRedirects
         faraday.adapter  :net_http
         faraday.response :logger
-        set_logger_if_rails( faraday )
+        set_logger_if_rails(faraday)
       end
     end
 
-    def set_connection_timeout( conn )
+    def set_connection_timeout(conn)
       conn.options[:timeout] = qonfig.query_timeout
       conn
     end
 
-    def set_mime_type( req )
-      req.headers["Accept"] = output_as_mime( qonfig.output_format )
+    def set_mime_type(req)
+      req.headers["Accept"] = output_as_mime(qonfig.output_format)
     end
 
-    def add_sparql_service_params( req )
-      req.params.merge!( qonfig.sparql_service_options )
+    def add_sparql_service_params(req)
+      req.params.merge!(qonfig.sparql_service_options)
     end
 
-    def ok?( response )
-      (200..207).include?( response.status )
+    def ok?(response)
+      (200..207).cover?(response.status)
     end
 
-    def set_logger_if_rails( faraday )
-      if defined?( Rails )
-        faraday.response :logger, Rails.logger
-      end
+    def set_logger_if_rails(faraday)
+      faraday.response(:logger, Rails.logger) if defined?(Rails)
     end
 
-    def as_http_api( api )
-      api.start_with?( "http:" ) ? api : "#{url}#{api}"
+    def as_http_api(api)
+      api.start_with?("http:") ? api : "#{url}#{api}"
     end
 
     # To keep the penetration test auditors happy
-    def remove_version_information( text )
-      text.gsub( /Fuseki - version.*(\n|\Z)/, "Apache Jena Fuseki" )
+    def remove_version_information(text)
+      text.gsub(/Fuseki - version.*(\n|\Z)/, "Apache Jena Fuseki")
     end
 
-    :private
+    private
 
-    def output_as_mime( output_format )
+    def output_as_mime(output_format)
       return STANDARD_MIME_TYPES unless output_format
 
-      { tsv: "text/tab-separated-values",
+      {
+        tsv: "text/tab-separated-values",
         csv: "text/csv",
         json: "application/json",
         xml: "text/xml",
         text: "text/plain"
       }[output_format.to_sym]
     end
-
   end
-
 end
