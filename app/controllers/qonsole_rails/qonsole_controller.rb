@@ -14,7 +14,8 @@ module QonsoleRails
 
       if qonfig.valid_endpoint?
         query_service = QonsoleRails::SparqlQueryService.new(qonfig)
-        render json: query_service.run, layout: false
+        json = query_service.run
+        render json: json, layout: false
       else
         render(text: "You do not have access to the given SPARQL endpoint",
                status: :forbidden,
