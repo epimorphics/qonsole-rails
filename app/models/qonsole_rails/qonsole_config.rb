@@ -1,11 +1,14 @@
 module QonsoleRails
   # Domain model to encapsulate a Qonsole configuration
   class QonsoleConfig
-    CONFIG_DIR = "config".freeze
-    DEFAULT_CONFIG_FILE = "qonsole.json".freeze
+    CONFIG_DIR = 'config'.freeze
+    DEFAULT_CONFIG_FILE = 'qonsole.json'.freeze
     DEFAULT_QUERY_TIMEOUT = 60
 
     attr_reader :config, :host
+
+    # class instance variable to cache the configuration
+    @static_config = nil
 
     def initialize(params, host = nil)
       @config = qonsole_json.with_indifferent_access
@@ -69,21 +72,30 @@ module QonsoleRails
       config[:query_timeout] || DEFAULT_QUERY_TIMEOUT
     end
 
+    def self.static_config
+      @static_config
+    end
+
+    def self.static_config=(config)
+      @static_config = config
+    end
+
     private
 
     def qonsole_json(config_file_name = DEFAULT_CONFIG_FILE)
-      unless defined? @@static_config
+      unless static_config
         config = File.join(Rails.root, CONFIG_DIR, config_file_name)
-        raise "Missing qonsole configuration file config/#{config_file_name}" unless File.exist?(config)
+        error = "Missing qonsole configuration file config/#{config_file_name}"
+        raise error unless File.exist?(config)
 
-        @@static_config = JSON.parse(IO.read(config))
+        static_config = JSON.parse(IO.read(config))
       end
 
-      @@static_config
+      static_config
     end
 
     def absolute_url(url)
-      url.start_with?("http:") ? url : "#{host}#{url}"
+      url.start_with?('http:') ? url : "#{host}#{url}"
     end
   end
 end

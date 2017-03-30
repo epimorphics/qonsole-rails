@@ -1,9 +1,9 @@
-require_dependency "qonsole_rails/application_controller"
+require_dependency 'qonsole_rails/application_controller'
 
 module QonsoleRails
   # Controller for Qonsole Rails engine
   class QonsoleController < ApplicationController
-    layout "application"
+    layout 'application'
 
     def index
       @qconfig = QonsoleConfig.new(params, hostname)
@@ -17,7 +17,7 @@ module QonsoleRails
         json = query_service.run
         render json: json, layout: false
       else
-        render(text: "You do not have access to the given SPARQL endpoint",
+        render(text: 'You do not have access to the given SPARQL endpoint',
                status: :forbidden,
                layout: false)
       end

@@ -1,6 +1,5 @@
-# Service object which manages the process of sending SPARQL queries to the remote endpoint
-
 module QonsoleRails
+  # Service object which manages the process of sending SPARQL queries to the remote endpoint
   class SparqlQueryService
     STANDARD_MIME_TYPES =
       'application/json,text/html,application/xhtml+xml,application/xml,text/plain'.freeze
@@ -23,14 +22,14 @@ module QonsoleRails
 
     def get_from_api(conn)
       conn.get do |req|
-        set_mime_type(req)
+        with_mime_type(req)
         add_sparql_service_params(req)
       end
     end
 
     def post_to_api(conn)
       conn.post do |req|
-        set_mime_type(req)
+        with_mime_type(req)
         req.body = qonfig.sparql_service_options
       end
     end
@@ -46,7 +45,7 @@ module QonsoleRails
     end
 
     def create_connection(http_url)
-      set_connection_timeout(create_http_connection(http_url))
+      with_connection_timeout(create_http_connection(http_url))
     end
 
     def create_http_connection(http_url)
@@ -55,17 +54,17 @@ module QonsoleRails
         faraday.use      FaradayMiddleware::FollowRedirects
         faraday.adapter  :net_http
         faraday.response :logger
-        set_logger_if_rails(faraday)
+        with_logger_if_rails(faraday)
       end
     end
 
-    def set_connection_timeout(conn)
+    def with_connection_timeout(conn)
       conn.options[:timeout] = qonfig.query_timeout
       conn
     end
 
-    def set_mime_type(req)
-      req.headers["Accept"] = output_as_mime(qonfig.output_format)
+    def with_mime_type(req)
+      req.headers['Accept'] = output_as_mime(qonfig.output_format)
     end
 
     def add_sparql_service_params(req)
@@ -76,17 +75,17 @@ module QonsoleRails
       (200..207).cover?(response.status)
     end
 
-    def set_logger_if_rails(faraday)
+    def with_logger_if_rails(faraday)
       faraday.response(:logger, Rails.logger) if defined?(Rails)
     end
 
     def as_http_api(api)
-      api.start_with?("http:") ? api : "#{url}#{api}"
+      api.start_with?('http:') ? api : "#{url}#{api}"
     end
 
     # To keep the penetration test auditors happy
     def remove_version_information(text)
-      text.gsub(/Fuseki - version.*(\n|\Z)/, "Apache Jena Fuseki")
+      text.gsub(/Fuseki - version.*(\n|\Z)/, 'Apache Jena Fuseki')
     end
 
     private
@@ -95,11 +94,11 @@ module QonsoleRails
       return STANDARD_MIME_TYPES unless output_format
 
       {
-        tsv: "text/tab-separated-values",
-        csv: "text/csv",
-        json: "application/json",
-        xml: "text/xml",
-        text: "text/plain"
+        tsv: 'text/tab-separated-values',
+        csv: 'text/csv',
+        json: 'application/json',
+        xml: 'text/xml',
+        text: 'text/plain'
       }[output_format.to_sym]
     end
   end
