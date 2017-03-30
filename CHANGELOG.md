@@ -8,4 +8,4 @@ to display, edit and run SPARQL queries in a larger Rails app.
 * Updated the `.rubocop.yml` config file, and resolved all
   outstanding Rubocop warnings
 
-* Bump Rails version dependency to 5.0.2
+* Bump versions for dependent libraries
