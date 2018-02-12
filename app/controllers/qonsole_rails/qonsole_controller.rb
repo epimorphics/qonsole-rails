@@ -61,6 +61,7 @@ module QonsoleRails
     private
 
     def hostname
+      Rails.logger.debug "Request headers: #{request.headers.inspect}"
       "http://#{request.host}"
     end
   end
