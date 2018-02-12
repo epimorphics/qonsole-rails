@@ -12,8 +12,9 @@ module QonsoleRails
 
     def initialize(params, host = nil)
       @config = qonsole_json.with_indifferent_access
-      @config['q'] = URI.unescape(params['q']) if params.key?('q')
+      @config['q'] = URI.decode_www_form_component(params['q']) if params.key?('q')
       @config['output'] = params['output'] if params.key?('output')
+      @config['url'] = params['url'] if params.key?('url')
       @host = host
     end
 
@@ -84,7 +85,7 @@ module QonsoleRails
 
     def qonsole_json(config_file_name = DEFAULT_CONFIG_FILE)
       unless self.class.static_config
-        config = File.join(Rails.root, CONFIG_DIR, config_file_name)
+        config = Rails.root.join(CONFIG_DIR, config_file_name)
         error = "Missing qonsole configuration file config/#{config_file_name}"
         raise error unless File.exist?(config)
 
