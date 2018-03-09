@@ -12,9 +12,11 @@ module QonsoleRails
 
     def initialize(params, host = nil)
       @config = qonsole_json.with_indifferent_access
-      @config['q'] = URI.unescape(params['q']) if params.key?('q')
-      @config['output'] = params['output'] if params.key?('output')
       @host = host
+
+      %w[q output url].each do |param|
+        @config[param] = URI.decode_www_form_component(params[param]) if params.key?(param)
+      end
     end
 
     def queries
