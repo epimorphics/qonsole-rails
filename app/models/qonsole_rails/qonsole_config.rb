@@ -86,7 +86,7 @@ module QonsoleRails
 
     def qonsole_json(config_file_name = DEFAULT_CONFIG_FILE)
       unless self.class.static_config
-        config = File.join(Rails.root, CONFIG_DIR, config_file_name)
+        config = Rails.root.join(CONFIG_DIR, config_file_name)
         error = "Missing qonsole configuration file config/#{config_file_name}"
         raise error unless File.exist?(config)
 

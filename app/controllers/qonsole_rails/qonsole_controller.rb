@@ -60,8 +60,20 @@ module QonsoleRails
 
     private
 
+    # Responding to issue #9, we need to check which protocol to use for the hostname
+    # we are sending the query to. There are three cases:
+    #
+    # - header `X-Forwarded-Proto` is set, meaning that we're most likely in a load-
+    #   balancer and need to respect the original request
+    # - the protocol is specified by the request that we have received
+    # - default to `http` for compatibility with previous versions
     def hostname
-      "http://#{request.host}"
+      protocol = request.headers['HTTP_X_FORWARDED_PROTO'] ||
+                 request.protocol ||
+                 'http'
+      protocol += '://' unless protocol.match?(%r{://})
+
+      "#{protocol}#{request.host}"
     end
   end
 end
