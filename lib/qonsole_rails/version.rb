@@ -1,3 +1,6 @@
 module QonsoleRails
-  VERSION = '0.3.5'.freeze
+  MAJOR = 0
+  MINOR = 4
+  FIX = 0
+  VERSION = "#{MAJOR}.#{MINOR}.#{FIX}".freeze
 end
