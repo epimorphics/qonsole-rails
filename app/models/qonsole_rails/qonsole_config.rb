@@ -10,9 +10,9 @@ module QonsoleRails
     # class instance variable to cache the configuration
     @static_config = nil
 
-    def initialize(params, host = nil)
-      @config = qonsole_json.with_indifferent_access
-      @host = host
+    def initialize(params, options = {})
+      @config = qonsole_json(options).with_indifferent_access
+      @host = options[:host]
 
       %w[q output url].each do |param|
         @config[param] = URI.decode_www_form_component(params[param]) if params.key?(param)
@@ -74,26 +74,19 @@ module QonsoleRails
       config[:query_timeout] || DEFAULT_QUERY_TIMEOUT
     end
 
-    def self.static_config
-      @static_config
-    end
-
-    def self.static_config=(config)
-      @static_config = config
-    end
-
     private
 
-    def qonsole_json(config_file_name = DEFAULT_CONFIG_FILE)
-      unless self.class.static_config
+    def qonsole_json(options)
+      unless defined?(@qonsole_json)
+        config_file_name = options[:config_file_name] || DEFAULT_CONFIG_FILE
         config = Rails.root.join(CONFIG_DIR, config_file_name)
-        error = "Missing qonsole configuration file config/#{config_file_name}"
+        error = "Missing qonsole configuration file: config/#{config_file_name}"
         raise error unless File.exist?(config)
 
-        self.class.static_config = JSON.parse(IO.read(config))
+        @qonsole_json = JSON.parse(IO.read(config))
       end
 
-      self.class.static_config
+      @qonsole_json
     end
 
     def absolute_url(url)

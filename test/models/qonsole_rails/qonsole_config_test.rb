@@ -2,6 +2,7 @@ require 'test_helper'
 
 # :nodoc:
 describe QonsoleRails::QonsoleConfig do
+  # Will read the test config from ./test/dummy/config/qonsole.json
   let(:qonfig) { QonsoleRails::QonsoleConfig.new({}) }
 
   it 'should read the default endpoint from the loaded configuration' do
@@ -43,7 +44,7 @@ describe QonsoleRails::QonsoleConfig do
   end
 
   it 'should return an absolute URL for the endpoint if given a relative URL and a hostname' do
-    alt_qonfig = QonsoleRails::QonsoleConfig.new({ 'url' => '/foo' }, 'http://foo.com')
+    alt_qonfig = QonsoleRails::QonsoleConfig.new({ 'url' => '/foo' }, host: 'http://foo.com')
     alt_qonfig.endpoint.must_equal '/foo'
     alt_qonfig.absolute_endpoint.must_equal 'http://foo.com/foo'
   end
