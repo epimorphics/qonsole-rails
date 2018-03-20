@@ -11,7 +11,7 @@ module QonsoleRails
     end
 
     def run
-      endpoint = qonfig.absolute_endpoint
+      endpoint = qonfig.service_destination
       conn = create_connection(endpoint)
       result = post_to_api(conn)
       as_result(result)
@@ -50,11 +50,11 @@ module QonsoleRails
 
     def create_http_connection(http_url)
       Faraday.new(url: http_url) do |faraday|
-        faraday.request  :url_encoded
-        faraday.use      FaradayMiddleware::FollowRedirects
-        faraday.adapter  :net_http
+        faraday.request :url_encoded
+        faraday.use FaradayMiddleware::FollowRedirects
         faraday.response :logger
         with_logger_if_rails(faraday)
+        faraday.adapter :net_http
       end
     end
 

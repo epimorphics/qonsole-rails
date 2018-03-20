@@ -51,19 +51,20 @@ module QonsoleRails
       given_endpoint || default_endpoint
     end
 
-    def absolute_endpoint
-      absolute_url(endpoint)
+    def absolute_endpoint(dest = endpoint)
+      absolute_url(dest)
     end
 
-    def valid_endpoint?
-      known_endpoint?(endpoint)
+    def valid_endpoint?(dest = endpoint)
+      known_endpoint?(dest)
     end
 
     # The service destination defaults to the current endpoint, but can be overridden
     # via a service alias table
-    def service_destination
-      return nil unless valid_endpoint?
-      alias_for(endpoint) || endpoint
+    def service_destination(dest = endpoint)
+      abs_dest = absolute_endpoint(dest)
+      return nil unless valid_endpoint?(abs_dest)
+      alias_for(abs_dest) || abs_dest
     end
 
     def known_endpoint?(url)
