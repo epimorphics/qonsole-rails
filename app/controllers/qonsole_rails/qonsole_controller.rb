@@ -6,11 +6,11 @@ module QonsoleRails
     layout 'application'
 
     def index
-      @qconfig = QonsoleConfig.new(params, hostname)
+      @qconfig = QonsoleConfig.new(params, host: hostname)
     end
 
     def create
-      qonfig = QonsoleConfig.new(params, hostname)
+      qonfig = QonsoleConfig.new(params, host: hostname)
 
       if qonfig.valid_endpoint?
         query_service = QonsoleRails::SparqlQueryService.new(qonfig)
