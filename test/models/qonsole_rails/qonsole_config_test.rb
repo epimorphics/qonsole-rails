@@ -63,4 +63,22 @@ describe QonsoleRails::QonsoleConfig do
     alt_qonfig = QonsoleRails::QonsoleConfig.new('url' => 'http://scamsters.com/scam')
     alt_qonfig.valid_endpoint?.must_equal false
   end
+
+  it 'should return identity if no alternative endpoint alias is defined' do
+    alt_qonfig = QonsoleRails::QonsoleConfig.new('url' => 'http://lr-pres-dev.epimorphics.net/landregistry/query')
+    alt_qonfig.service_destination.must_equal('http://lr-pres-dev.epimorphics.net/landregistry/query')
+  end
+
+  it 'should return nil if a non-permitted URL is given' do
+    alt_qonfig = QonsoleRails::QonsoleConfig.new('url' => 'http://lr-pres-dev.epimorphics.not/landregistry/query')
+    alt_qonfig.service_destination.must_be_nil
+  end
+
+  it 'should return the service alias if an alternative endpoint is configured' do
+    alt_qonfig = QonsoleRails::QonsoleConfig.new(
+      { 'url' => 'http://lr-pres-dev.epimorphics.net/landregistry/query' },
+      config_file_name: 'qonsole-1.json'
+    )
+    alt_qonfig.service_destination.must_equal('http://internal.alias.net/landregistry/query')
+  end
 end

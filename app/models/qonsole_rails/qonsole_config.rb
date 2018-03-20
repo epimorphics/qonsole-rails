@@ -59,6 +59,13 @@ module QonsoleRails
       known_endpoint?(endpoint)
     end
 
+    # The service destination defaults to the current endpoint, but can be overridden
+    # via a service alias table
+    def service_destination
+      return nil unless valid_endpoint?
+      alias_for(endpoint) || endpoint
+    end
+
     def known_endpoint?(url)
       endpoints.value?(url)
     end
@@ -91,6 +98,11 @@ module QonsoleRails
 
     def absolute_url(url)
       url.start_with?('http:') ? url : "#{host}#{url}"
+    end
+
+    def alias_for(url)
+      key = endpoints.invert[url]
+      key && config[:alias] && config[:alias][key]
     end
   end
 end

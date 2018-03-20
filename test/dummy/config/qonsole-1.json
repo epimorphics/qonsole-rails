@@ -3,6 +3,10 @@
     "default": "http://landregistry.data.gov.uk/landregistry/query",
     "dev": "http://lr-pres-dev.epimorphics.net/landregistry/query"
   },
+  "alias": {
+    "default": "http://internal.alias.net/landregistry/query",
+    "dev": "http://internal.alias.net/landregistry/query"
+  },
   "prefixes": {
     "rdf":      "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs":     "http://www.w3.org/2000/01/rdf-schema#",
