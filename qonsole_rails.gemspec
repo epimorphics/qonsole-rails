@@ -1,4 +1,6 @@
-$LOAD_PATH.push File.expand_path('../lib', __FILE__)
+# frozen-string-literal: true
+
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
 require 'qonsole_rails/version'
@@ -16,7 +18,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'rails', '~> 5.0.2'
+  s.add_dependency 'rails', '~> 5.2.1'
 
   s.add_dependency 'codemirror-rails', '~> 5.11'
   s.add_dependency 'faraday', '~> 0.14.0'
