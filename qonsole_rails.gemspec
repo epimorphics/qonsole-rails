@@ -18,13 +18,13 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'rails', '~> 5.2.1'
+  s.add_dependency 'rails', '~> 5.2.3'
 
   s.add_dependency 'codemirror-rails', '~> 5.11'
-  s.add_dependency 'faraday', '~> 0.14.0'
-  s.add_dependency 'faraday_middleware', '~> 0.12.2'
+  s.add_dependency 'faraday', '~> 0.15.0'
+  s.add_dependency 'faraday_middleware', '~> 0.13.1'
   s.add_dependency 'font-awesome-rails', '~> 4.7.0.1'
-  s.add_dependency 'haml-rails', '~> 1.0.0'
+  s.add_dependency 'haml-rails', '~> 2.0.0'
   s.add_dependency 'jquery-datatables-rails', '~> 3.4.0'
   s.add_dependency 'jquery-rails', '~> 4.3.1'
   s.add_dependency 'lodash-rails', '~> 4.17.4'
