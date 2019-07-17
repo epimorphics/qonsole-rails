@@ -28,23 +28,23 @@ module QonsoleRails
       rescue_from Exception, with: :render_exception
     end
 
-    def render_exception(e)
+    def render_exception(err) # rubocop:disable Metrics/AbcSize
       if e.instance_of?(ArgumentError) || e.instance_of?(RuntimeError)
-        render_error(400, e)
+        render_error(400, err)
       elsif e.instance_of? ActionController::InvalidAuthenticityToken
-        Rails.logger.warn "Invalid authenticity token #{e}"
-        render_error(403, e)
+        Rails.logger.warn "Invalid authenticity token #{err}"
+        render_error(403, err)
       else
-        Rails.logger.warn "No explicit error page for exception #{e} - #{e.class.name}"
-        render_error(500, e)
+        Rails.logger.warn "No explicit error page for exception #{err} - #{err.class.name}"
+        render_error(500, err)
       end
     end
 
-    def render_404(e = nil)
-      render_error(404, e)
+    def render_404(err = nil)
+      render_error(404, err)
     end
 
-    def render_error(status, e)
+    def render_error(status, err)
       respond_to do |format|
         format.html do
           render(layout: false,
@@ -53,7 +53,7 @@ module QonsoleRails
         end
 
         format.all do
-          render(text: (e || status).to_s, status: status)
+          render(text: (err || status).to_s, status: status)
         end
       end
     end

@@ -63,6 +63,7 @@ module QonsoleRails
     # via a service alias table
     def service_destination(dest = endpoint)
       return nil unless valid_endpoint?(dest)
+
       absolute_endpoint(alias_for(dest) || dest)
     end
 

@@ -3,9 +3,7 @@ module QonsoleRails
   module QonsoleHelper
     def render_examples(config)
       capture do
-        if config.query
-          render_button('current search selection', 'data-query' => config.query)
-        end
+        render_button('current search selection', 'data-query' => config.query) if config.query
 
         config.queries.each do |example_query|
           render_button(example_query[:name], 'data-query' => example_query[:query])
@@ -23,9 +21,7 @@ module QonsoleRails
 
     def render_endpoints(config)
       capture do
-        if config.given_endpoint
-          render_endpoint_item(:current_search, config.given_endpoint)
-        end
+        render_endpoint_item(:current_search, config.given_endpoint) if config.given_endpoint
 
         config.endpoints.each do |key, endpoint_url|
           render_endpoint_item(key, endpoint_url)
@@ -43,8 +39,7 @@ module QonsoleRails
       )
     end
 
-    # rubocop:disable Metrics/MethodLength
-    def render_checkbox(label, uri, options = {})
+    def render_checkbox(label, uri, options = {}) # rubocop:disable Metrics/MethodLength
       capture do
         concat(
           content_tag('label') do
