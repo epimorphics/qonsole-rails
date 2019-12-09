@@ -12,5 +12,5 @@ AllCops:
   Exclude:
     - 'test/dummy/**/*'
     - 'bin/*'
-TrivialAccessors:
+Style/TrivialAccessors:
   IgnoreClassMethods: true
