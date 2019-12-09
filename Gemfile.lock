@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    qonsole-rails (0.5.5)
+    qonsole-rails (0.5.6)
       codemirror-rails (~> 5.11)
       faraday (~> 0.17.0)
       faraday_middleware (~> 0.13.1)
