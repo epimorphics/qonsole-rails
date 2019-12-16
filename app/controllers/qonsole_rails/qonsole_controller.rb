@@ -48,7 +48,7 @@ module QonsoleRails
       respond_to do |format|
         format.html do
           render(layout: false,
-                 file: Rails.root.join('public', 'landing', status.to_s),
+                 file: Rails.root.join('public', status.to_s),
                  status: status)
         end
 
