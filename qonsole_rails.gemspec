@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'rails', '~> 5.2.3'
+  s.add_dependency 'rails', '~> 5.2.4'
 
   s.add_dependency 'codemirror-rails', '~> 5.11'
   s.add_dependency 'faraday', '~> 0.17.0'
