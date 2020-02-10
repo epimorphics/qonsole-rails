@@ -1,3 +1,5 @@
+require_dependency 'faraday/encoding'
+
 module QonsoleRails
   # Service object which manages the process of sending SPARQL queries to the remote endpoint
   class SparqlQueryService
@@ -52,6 +54,7 @@ module QonsoleRails
       Faraday.new(url: http_url) do |faraday|
         faraday.request :url_encoded
         faraday.use FaradayMiddleware::FollowRedirects
+        faraday.response :encoding
         faraday.response :logger
         with_logger_if_rails(faraday)
         faraday.adapter :net_http
