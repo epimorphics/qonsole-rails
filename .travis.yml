@@ -1,8 +1,0 @@
-dist: bionic
-language: ruby
-rvm:
-  - 2.6
-script: bundle exec rake test
-before_install:
-  - gem install bundler -v 2.1.4
-  - yarn install
