@@ -1,11 +1,12 @@
-qonsole-ruby
-============
+# qonsole-rails
 
-A version of the SPARQL qonsole that runs as a Rails engine
+**_Warning: While this project has not yet been replaced and should continue to receive required bug fixes and any minor feature requests, future development of qonsole will be done as part of the [qonsole-sfc](https://github.com/epimorphics/qonsole-sfc) project. (2022-07-04)_**
 
-# installation
+A version of the [SPARQL qonsole](https://github.com/epimorphics/qonsole) that runs as a Rails engine
 
-## Older versions of I.E:
+## Installation
+
+### Older versions of I.E:
 
 Include 
 
