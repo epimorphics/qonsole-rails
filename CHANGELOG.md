@@ -39,10 +39,10 @@ to display, edit and run SPARQL queries in a larger Rails app.
   to be directed to an internal server. Spefically:
 
     "endpoints": {
-      "default": "http://landregistry.data.gov.uk/landregistry/query",
+      "default": "<http://landregistry.data.gov.uk/landregistry/query>",
     },
     "alias": {
-      "default": "http://internal.alias.net/landregistry/query",
+      "default": "<http://internal.alias.net/landregistry/query>",
     }
 
   will mean that queries are presented as going to the `landregistry.data.gov.uk`
