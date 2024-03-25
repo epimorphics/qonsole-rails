@@ -6,9 +6,9 @@ A version of the [SPARQL qonsole](https://github.com/epimorphics/qonsole) that r
 
 ## Installation
 
-### Older versions of I.E:
+### Older versions of I.E
 
-Include 
+Include
 
     <!--[if lt IE 9]>
       <%= javascript_include_tag 'html5shiv-printshiv' %>
