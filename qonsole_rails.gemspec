@@ -18,17 +18,17 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'rails', '~> 5.2.4'
+  s.add_dependency 'rails'
 
-  s.add_dependency 'faraday', '~> 0.17.0'
-  s.add_dependency 'faraday-encoding', '~> 0.0.5'
-  s.add_dependency 'faraday_middleware', '~> 0.13.1'
-  s.add_dependency 'font-awesome-rails', '~> 4.7.0.1'
-  s.add_dependency 'haml-rails', '~> 2.0.0'
-  s.add_dependency 'jquery-datatables-rails', '~> 3.4.0'
-  s.add_dependency 'jquery-rails', '~> 4.3.1'
-  s.add_dependency 'lodash-rails', '~> 4.17.4'
-  s.add_dependency 'modulejs-rails', '~> 2.2.0.0'
+  s.add_dependency 'faraday'
+  s.add_dependency 'faraday-encoding'
+  s.add_dependency 'faraday_middleware'
+  s.add_dependency 'font-awesome-rails'
+  s.add_dependency 'haml-rails'
+  s.add_dependency 'jquery-datatables-rails'
+  s.add_dependency 'jquery-rails'
+  s.add_dependency 'lodash-rails'
+  s.add_dependency 'modulejs-rails'
 
   s.add_development_dependency 'byebug'
   s.add_development_dependency 'minitest-rails'
