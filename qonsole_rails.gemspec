@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '~> 5.2.4'
 
-  s.add_dependency 'codemirror-rails', '~> 5.11'
   s.add_dependency 'faraday', '~> 0.17.0'
   s.add_dependency 'faraday-encoding', '~> 0.0.5'
   s.add_dependency 'faraday_middleware', '~> 0.13.1'
