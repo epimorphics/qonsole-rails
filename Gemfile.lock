@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    qonsole-rails (0.6.1)
+    qonsole-rails (1.0.0)
       faraday
       faraday-encoding
       faraday_middleware
