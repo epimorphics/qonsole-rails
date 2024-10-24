@@ -4,10 +4,10 @@
 //= require bootstrap
 //= require sprintf
 //= require codemirror
-//= require codemirror/modes/sparql
-//= require codemirror/modes/turtle
-//= require codemirror/modes/xml
-//= require codemirror/modes/javascript
+//= require codemirror-sparql
+//= require codemirror-turtle
+//= require codemirror-xml
+//= require codemirror-javascript
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 
