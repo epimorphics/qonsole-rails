@@ -43,7 +43,7 @@ module QonsoleRails
       capture do
         concat(
           content_tag('label') do
-            concat tag('input', { class: 'checkbox form-control',
+            concat tag('input', { class: 'checkbox',
                                   type: 'checkbox',
                                   value: uri,
                                   checked: true }.merge(options))
