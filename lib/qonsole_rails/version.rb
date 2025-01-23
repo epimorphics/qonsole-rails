@@ -1,6 +1,6 @@
 module QonsoleRails
-  MAJOR = 1
+  MAJOR = 2
   MINOR = 0
-  PATCH = 2
+  PATCH = 0
   VERSION = "#{MAJOR}.#{MINOR}.#{PATCH}".freeze
 end
