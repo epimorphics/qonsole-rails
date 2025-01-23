@@ -3,8 +3,8 @@
 module QonsoleRails
   # Domain model to encapsulate a Qonsole configuration
   class QonsoleConfig
-    CONFIG_DIR = 'config'.freeze
-    DEFAULT_CONFIG_FILE = 'qonsole.json'.freeze
+    CONFIG_DIR = 'config'
+    DEFAULT_CONFIG_FILE = 'qonsole.json'
     DEFAULT_QUERY_TIMEOUT = 60
 
     attr_reader :config, :host
