@@ -93,7 +93,8 @@ module QonsoleRails
         error = "Missing qonsole configuration file: config/#{config_file_name}"
         raise error unless File.exist?(config)
 
-        @qonsole_json = JSON.parse(IO.read(config))
+        # `File.read` is safer than `IO.read`. (convention:Security/IoMethods)
+        @qonsole_json = JSON.parse(File.read(config))
       end
 
       @qonsole_json
