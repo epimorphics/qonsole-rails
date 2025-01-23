@@ -5,6 +5,8 @@ require 'rake/testtask'
 
 require 'rdoc/task'
 
+Bundler::GemHelper.install_tasks
+
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'QonsoleRails'
@@ -12,10 +14,6 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('README.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
-
-Bundler::GemHelper.install_tasks
-
-require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
