@@ -32,7 +32,7 @@ module QonsoleRails
     end
 
     unless Rails.application.config.consider_all_requests_local
-      rescue_from ActionController::RoutingError, with: :render_404
+      rescue_from ActionController::RoutingError, with: :render_404 # rubocop:disable Naming/VariableNumber
       rescue_from Exception, with: :render_exception
     end
 
@@ -48,7 +48,7 @@ module QonsoleRails
       end
     end
 
-    def render_404(err = nil)
+    def render_404(err = nil) # rubocop:disable Naming/VariableNumber
       render_error(404, err)
     end
 
