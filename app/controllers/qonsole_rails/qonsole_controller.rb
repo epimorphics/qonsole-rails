@@ -36,12 +36,15 @@ module QonsoleRails
       rescue_from Exception, with: :render_exception
     end
 
-    def render_exception(err)
+    def render_exception(err) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       if err.instance_of?(ArgumentError) || err.instance_of?(RuntimeError)
         render_error(400, err)
       elsif err.instance_of? ActionController::InvalidAuthenticityToken
         Rails.logger.warn "Invalid authenticity token #{err}"
         render_error(403, err)
+      elsif err.instance_of?(Faraday::TimeoutError) || err.instance_of?(Faraday::ConnectionFailed)
+        Rails.logger.error "Connection error: #{err}"
+        render_error(504, err)
       else
         Rails.logger.warn "No explicit error page for exception #{err} - #{err.class.name}"
         render_error(500, err)
