@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_dependency 'qonsole_rails/application_controller'
 
 module QonsoleRails

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Load the Rails engine
 require 'qonsole_rails/engine'
 
 # We do load the gem dependencies here because this is a gem,

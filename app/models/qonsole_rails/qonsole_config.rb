@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module QonsoleRails
   # Domain model to encapsulate a Qonsole configuration
   class QonsoleConfig
