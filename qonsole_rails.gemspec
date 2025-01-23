@@ -29,8 +29,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
   s.add_dependency 'lodash-rails'
   s.add_dependency 'modulejs-rails'
-
-  s.add_development_dependency 'byebug'
-  s.add_development_dependency 'minitest-rails'
-  s.add_development_dependency 'minitest-spec-rails'
 end
