@@ -26,7 +26,12 @@ module QonsoleRails
     end
 
     def endpoints
-      config[:endpoints]
+      if Rails.env.development?
+        dev_endpoint = { dev: 'https://hmlr-dev-pres.epimorphics.net/landregistry/query' }
+        config[:endpoints].merge(dev_endpoint)
+      else
+        config[:endpoints]
+      end
     end
 
     def prefixes
@@ -61,8 +66,8 @@ module QonsoleRails
       known_endpoint?(dest)
     end
 
-    # The service destination defaults to the current endpoint, but can be overridden
-    # via a service alias table
+    # The service destination defaults to the current endpoint,
+    # but can be overridden via a service alias table
     def service_destination(dest = endpoint)
       return nil unless valid_endpoint?(dest)
 
