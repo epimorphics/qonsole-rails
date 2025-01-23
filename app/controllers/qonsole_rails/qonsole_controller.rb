@@ -54,16 +54,18 @@ module QonsoleRails
 
     def render_error(status, err)
       respond_to do |format|
-        format.html do
-          render(layout: false,
-                 file: Rails.root.join('public', status.to_s),
-                 status: status)
-        end
+        format.html { render_error_message(status) }
 
-        format.all do
-          render(text: (err || status).to_s, status: status)
-        end
+        format.all { render text: err || Rack::Utils::HTTP_STATUS_CODES[status].to_s, status: status } # rubocop:disable Layout/LineLength
       end
+    end
+
+    def render_error_message(status)
+      render(
+        plain: "Sorry, that didn't work because: #{Rack::Utils::HTTP_STATUS_CODES[status]}",
+        status: status,
+        layout: false
+      )
     end
 
     private
