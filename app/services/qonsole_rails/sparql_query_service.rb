@@ -47,17 +47,25 @@ module QonsoleRails
     end
 
     def create_connection(http_url)
+      Rails.logger.info("Connecting to #{http_url}")
+
       with_connection_timeout(create_http_connection(http_url))
     end
 
-    def create_http_connection(http_url)
-      Faraday.new(url: http_url) do |faraday|
-        faraday.request :url_encoded
-        faraday.use FaradayMiddleware::FollowRedirects
-        faraday.response :encoding
-        faraday.response :logger
-        with_logger_if_rails(faraday)
-        faraday.adapter :net_http
+    def create_http_connection(http_url, auth: false)
+      Faraday.new(url: http_url) do |config|
+        config.use Faraday::Request::UrlEncoded
+        config.use Faraday::Request::Retry
+        config.use FaradayMiddleware::FollowRedirects
+
+        config.basic_auth(api_user, api_pw) if auth
+
+        config.response :encoding
+        config.response :raise_error
+        with_logger_if_rails(config)
+
+        # setting the adapter must be the final step, otherwise we get a warning from Faraday
+        config.adapter(:net_http)
       end
     end
 
@@ -78,12 +86,23 @@ module QonsoleRails
       (200..207).cover?(response.status)
     end
 
-    def with_logger_if_rails(faraday)
-      faraday.response(:logger, Rails.logger) if defined?(Rails)
+    def with_logger_if_rails(config)
+      return config.response :logger unless defined?(Rails)
+
+      level = Rails.env.production? ? :info : :debug
+      config.response(
+        :logger,
+        Rails.logger,
+        headers: false,
+        bodies: false,
+        errors: true,
+        log_level: level.to_sym
+      )
     end
 
     def as_http_api(api)
-      api.start_with?('http:') ? api : "#{url}#{api}"
+      uri = URI.parse(api)
+      uri.scheme ? api : "#{url}#{api}"
     end
 
     # To keep the penetration test auditors happy

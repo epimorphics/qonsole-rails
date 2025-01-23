@@ -32,9 +32,12 @@ module QonsoleRails
     def render_button(value, options)
       concat(
         content_tag('li') do
-          tag('input', { class: 'btn',
-                         type: 'button',
-                         value: value }.merge(options))
+          tag.input(
+            class: 'btn',
+            type: 'button',
+            value: value,
+            data: { query: options['data-query'] }
+          )
         end
       )
     end
@@ -43,10 +46,13 @@ module QonsoleRails
       capture do
         concat(
           content_tag('label') do
-            concat tag('input', { class: 'checkbox',
-                                  type: 'checkbox',
-                                  value: uri,
-                                  checked: true }.merge(options))
+            concat tag.input(
+              class: 'checkbox',
+              type: 'checkbox',
+              value: uri,
+              checked: true,
+              data: { query: options['data-query'] }
+            )
             concat " #{label}"
           end
         )

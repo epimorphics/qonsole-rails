@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 
@@ -9,8 +9,8 @@ require 'qonsole_rails/version'
 Gem::Specification.new do |s|
   s.name        = 'qonsole-rails'
   s.version     = QonsoleRails::VERSION
-  s.authors     = ['Ian Dickinson']
-  s.email       = ['ian.dickinson@epimorphics.com']
+  s.authors     = ['Epimorphics Ltd', 'Ian Dickinson']
+  s.email       = ['info@epimorphics.com']
   s.homepage    = 'https://github.com/epimorphics/qonsole-rails'
   s.summary     = 'SPARQL Qonsole engine for Rails'
   s.description = 'Rails engine providing a dynamic console for editing and running SPARQL queries'
@@ -29,8 +29,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
   s.add_dependency 'lodash-rails'
   s.add_dependency 'modulejs-rails'
-
-  s.add_development_dependency 'byebug'
-  s.add_development_dependency 'minitest-rails'
-  s.add_development_dependency 'minitest-spec-rails'
 end

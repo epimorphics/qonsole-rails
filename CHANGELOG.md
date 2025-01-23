@@ -1,7 +1,16 @@
 # Change log for Qonsole Rails
 
-Qonsole Rails is a Ruby-on-Rails engine for embedding the ability
-to display, edit and run SPARQL queries in a larger Rails app.
+Qonsole Rails is a Ruby-on-Rails engine for embedding the ability to display,
+edit and run SPARQL queries in a larger Rails app.
+
+## 2.0.0 - 2025-01
+
+- Updated the error handling for the qonsole gem by ensuring that the proper
+  error types are returned and handled accordingly
+- Updated the formatting for the error messages to be more user-friendly
+- Updated the logging of errors to improve the debugging process
+- Updated the tag helpers to render the correct HTML tags for the query form
+  elements
 
 ## 1.0.2 - 2024-11-01
 
@@ -25,13 +34,13 @@ to display, edit and run SPARQL queries in a larger Rails app.
 
 ## 0.6.0 - 2020-02-10
 
-- Fix for GH-14: add a Faraday middleware to ensure that the encoding
-  header in the response is correctly reflected in the return body.
+- Fix for GH-14: add a Faraday middleware to ensure that the encoding header in
+  the response is correctly reflected in the return body.
 
 ## 0.5.7 - 2019-12-16
 
-- Fix a problem with displaying error pages, which are no longer
-  assumed to be the in `public/landing` subfolder
+- Fix a problem with displaying error pages, which are no longer assumed to be
+  the in `public/landing` subfolder
 
 ## 0.5.6 - 2019-12-09
 
@@ -40,10 +49,9 @@ to display, edit and run SPARQL queries in a larger Rails app.
 
 ## 0.5.5 - 2019-10-09
 
-- Updated gem dependencies, in particular to address CVE-2019-5477
-  The update to minitest suggested changes to prepare for minitest-6.0,
-  in particular to wrap test expressions in `_(...)` before applying
-  assertions like `must_be_nil`
+- Updated gem dependencies, in particular to address CVE-2019-5477 The update to
+  minitest suggested changes to prepare for minitest-6.0, in particular to wrap
+  test expressions in `_(...)` before applying assertions like `must_be_nil`
 
 ## 0.5.4 - 2019-07-17
 
@@ -51,19 +59,16 @@ to display, edit and run SPARQL queries in a larger Rails app.
 
 ## 0.5.0 - 2018-03-20
 
-- Add a feature to the qonsole.json configuration file to allow service calls
-  to be directed to an internal server. Spefically:
+- Add a feature to the qonsole.json configuration file to allow service calls to
+  be directed to an internal server. Spefically:
 
-    "endpoints": {
-      "default": "http://landregistry.data.gov.uk/landregistry/query",
-    },
-    "alias": {
-      "default": "http://internal.alias.net/landregistry/query",
-    }
+    "endpoints": { "default":
+      "<http://landregistry.data.gov.uk/landregistry/query>", }, "alias": {
+    "default": "<http://internal.alias.net/landregistry/query>", }
 
-  will mean that queries are presented as going to the `landregistry.data.gov.uk`
-  endpoint in the UI, but will actually be routed to the `internal.alias.net`
-  server for execution.
+  will mean that queries are presented as going to the
+  `landregistry.data.gov.uk` endpoint in the UI, but will actually be routed to
+  the `internal.alias.net` server for execution.
 
 - Add options param to allow QonsoleConfig.new() to override default
   configuration file name
@@ -74,7 +79,7 @@ to display, edit and run SPARQL queries in a larger Rails app.
 
 ## 0.3.5 - 2017-03-30
 
-- Updated the `.rubocop.yml` config file, and resolved all
-  outstanding Rubocop warnings
+- Updated the `.rubocop.yml` config file, and resolved all outstanding Rubocop
+  warnings
 
 - Bump versions for dependent libraries

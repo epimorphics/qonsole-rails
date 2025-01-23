@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module QonsoleRails
   # Domain model to encapsulate a Qonsole configuration
   class QonsoleConfig
-    CONFIG_DIR = 'config'.freeze
-    DEFAULT_CONFIG_FILE = 'qonsole.json'.freeze
+    CONFIG_DIR = 'config'
+    DEFAULT_CONFIG_FILE = 'qonsole.json'
     DEFAULT_QUERY_TIMEOUT = 60
 
     attr_reader :config, :host
@@ -24,7 +26,12 @@ module QonsoleRails
     end
 
     def endpoints
-      config[:endpoints]
+      if Rails.env.development?
+        dev_endpoint = { dev: 'https://hmlr-dev-pres.epimorphics.net/landregistry/query' }
+        config[:endpoints].merge(dev_endpoint)
+      else
+        config[:endpoints]
+      end
     end
 
     def prefixes
@@ -59,8 +66,8 @@ module QonsoleRails
       known_endpoint?(dest)
     end
 
-    # The service destination defaults to the current endpoint, but can be overridden
-    # via a service alias table
+    # The service destination defaults to the current endpoint,
+    # but can be overridden via a service alias table
     def service_destination(dest = endpoint)
       return nil unless valid_endpoint?(dest)
 
@@ -91,14 +98,16 @@ module QonsoleRails
         error = "Missing qonsole configuration file: config/#{config_file_name}"
         raise error unless File.exist?(config)
 
-        @qonsole_json = JSON.parse(IO.read(config))
+        # `File.read` is safer than `IO.read`. (convention:Security/IoMethods)
+        @qonsole_json = JSON.parse(File.read(config))
       end
 
       @qonsole_json
     end
 
     def absolute_url(url)
-      url.start_with?('http:') ? url : "#{host}#{url}"
+      uri = URI.parse(url)
+      uri.scheme ? url : "#{host}#{url}"
     end
 
     def alias_for(url)

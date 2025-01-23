@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Load the Rails engine
 require 'qonsole_rails/engine'
 
 # We do load the gem dependencies here because this is a gem,
@@ -5,7 +8,6 @@ require 'qonsole_rails/engine'
 require 'haml-rails'
 require 'rails'
 require 'jquery-rails'
-require 'haml-rails'
 require 'font-awesome-rails'
 require 'modulejs-rails'
 require 'lodash-rails'
