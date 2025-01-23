@@ -83,7 +83,8 @@ module QonsoleRails
     end
 
     def as_http_api(api)
-      api.start_with?('http:') ? api : "#{url}#{api}"
+      uri = URI.parse(api)
+      uri.scheme ? api : "#{url}#{api}"
     end
 
     # To keep the penetration test auditors happy

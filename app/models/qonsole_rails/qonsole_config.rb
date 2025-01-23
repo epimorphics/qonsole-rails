@@ -101,7 +101,8 @@ module QonsoleRails
     end
 
     def absolute_url(url)
-      url.start_with?('http:') ? url : "#{host}#{url}"
+      uri = URI.parse(url)
+      uri.scheme ? url : "#{host}#{url}"
     end
 
     def alias_for(url)
