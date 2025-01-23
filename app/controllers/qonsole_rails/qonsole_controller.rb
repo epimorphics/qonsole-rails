@@ -11,17 +11,23 @@ module QonsoleRails
       @qconfig = QonsoleConfig.new(params, host: hostname)
     end
 
-    def create
+    def create # rubocop:disable Metrics/MethodLength
       qonfig = QonsoleConfig.new(params, host: hostname)
 
       if qonfig.valid_endpoint?
         query_service = QonsoleRails::SparqlQueryService.new(qonfig)
         json = query_service.run
-        render json: json, layout: false
+        render(
+          json: json,
+          status: :ok,
+          layout: false
+        )
       else
-        render(text: 'You do not have access to the given SPARQL endpoint',
-               status: :forbidden,
-               layout: false)
+        render(
+          plain: 'You do not have access to the given SPARQL endpoint',
+          status: :forbidden,
+          layout: false
+        )
       end
     end
 
