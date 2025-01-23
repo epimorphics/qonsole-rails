@@ -3,6 +3,13 @@
 Qonsole Rails is a Ruby-on-Rails engine for embedding the ability
 to display, edit and run SPARQL queries in a larger Rails app.
 
+## 2.0.0 - 2025-01
+
+- Updated the error handling for the qonsole gem by ensuring that the proper error types are returned and handled accordingly
+- Updated the formatting for the error messages to be more user-friendly
+- Updated the logging of errors to improve the debugging process
+- Updated the tag helpers to render the correct HTML tags for the query form elements
+
 ## 1.0.2 - 2024-11-01
 
 - Fixed an issue with CSS for the checkboxes in the query form
@@ -55,10 +62,10 @@ to display, edit and run SPARQL queries in a larger Rails app.
   to be directed to an internal server. Spefically:
 
     "endpoints": {
-      "default": "http://landregistry.data.gov.uk/landregistry/query",
+      "default": "<http://landregistry.data.gov.uk/landregistry/query>",
     },
     "alias": {
-      "default": "http://internal.alias.net/landregistry/query",
+      "default": "<http://internal.alias.net/landregistry/query>",
     }
 
   will mean that queries are presented as going to the `landregistry.data.gov.uk`
