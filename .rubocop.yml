@@ -1,16 +1,37 @@
 require: rubocop-rails
-Metrics/LineLength:
-  Max: 100
-Style/FrozenStringLiteralComment:
-  Enabled: false
-Rails:
-  Enabled: true
-Metrics/BlockLength:
-  Exclude:
-    - 'test/**/*.rb'
+
 AllCops:
+  NewCops: enable
   Exclude:
     - 'test/dummy/**/*'
     - 'bin/*'
+
+# https://docs.rubocop.org/rubocop/cops_gemspec.html#enforcedstyle_-forbidden-gemspecdependencyversion
+# Enforce that gem dependency version specifications or a commit reference
+# (branch, ref, or tag) are either required or forbidden.
+Gemspec/DependencyVersion:
+  EnforcedStyle: forbidden
+
+Layout/LineLength:
+  Max: 100
+  Exclude:
+    - qonsole_rails.gemspec
+    - 'test/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - qonsole_rails.gemspec
+    - 'test/**/*'
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
+  Exclude:
+    - 'test/**/*'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Style/TrivialAccessors:
   IgnoreClassMethods: true
