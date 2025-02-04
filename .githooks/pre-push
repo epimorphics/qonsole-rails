@@ -6,7 +6,7 @@ listRE="^($(printf '%s\n' "$list" | tr ' ' '|'))/"
 
 BRANCH_NAME=$(git branch --show-current | grep -E "$listRE" | sed 's/* //')
 
-printf '\n\033[0;105mChecking "%s"... \033[0m\n', "$BRANCH_NAME"
+printf '\n\033[0;105mChecking "%s"... \033[0m\n' "$BRANCH_NAME"
 
 if echo "$BRANCH_NAME" | grep -q '^(rebase)|(production)*$'; then
  	printf '\n\033[0;32mNo checks necessary on "%s", pushing now... 🎉\033[0m\n' "$BRANCH_NAME"
@@ -24,7 +24,6 @@ if [ -z "$TEST_FILES" ]; then
   printf '\n\033[0;31mThere are currently no new tests found in "%s". 🤨\033[0m\n' "$BRANCH_NAME"
   while true; do
     read -p 'Are you sure you want to continue (y/n)? ' -n 1 -r RESPONSE
-    echo
     case $RESPONSE in
       [Yy]* )
         printf '\n\033[0;31mContinuing without new tests... 😖\033[0m\n'
@@ -34,6 +33,7 @@ if [ -z "$TEST_FILES" ]; then
         exit 1;;
     esac
   done
+  echo
 fi
 
 
