@@ -9,7 +9,7 @@ BRANCH_NAME=$(git branch --show-current | grep -E "$listRE" | sed 's/* //')
 printf '\n\033[0;105mChecking "%s"... \033[0m\n', "$BRANCH_NAME"
 
 if echo "$BRANCH_NAME" | grep -q '^(rebase)|(production)*$'; then
- 	printf '\n\033[0;32mNo checks necessary on "%s", pushing now... 🎉\033[0m\n', "$BRANCH_NAME"
+ 	printf '\n\033[0;32mNo checks necessary on "%s", pushing now... 🎉\033[0m\n' "$BRANCH_NAME"
 	exit 0
 fi
 
@@ -21,7 +21,7 @@ PRE_STATUS="$(git status | wc -l)"
 WORK_DONE=0
 
 if [ -z "$TEST_FILES" ]; then
-  printf '\n\033[0;41mThere are currently no new tests found in "%s". 🤨\033[0m\n', "$BRANCH_NAME"
+  printf '\n\033[0;31mThere are currently no new tests found in "%s". 🤨\033[0m\n' "$BRANCH_NAME"
   printf '\n\033[0;32mExiting now to allow tests to be added... 🎉\033[0m\n'
   exit 1
 fi
