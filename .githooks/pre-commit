@@ -18,7 +18,25 @@ fi
 
 RUBY_FILES="$(git diff --diff-filter=d --name-only --cached | grep -E '(Gemfile|Rakefile|\.(rb|rake|ru))$')"
 PRE_STATUS="$(git status | wc -l)"
+
 WORK_DONE=0
+
+if [ -z "$RUBY_FILES" ]; then
+  printf 'There are currently no updated files in "%s".\n', "$BRANCH_NAME"
+	# while true; do
+  #   read -r "Are you sure you want to continue (y/n)?" yn
+  #   case $yn in
+  #     [Yy]* )
+  #       printf '\n\033[0;31mContinuing without any new changes... 😖\033[0m\n'
+  #       break;;
+  #     [Nn]* )
+  #       printf '\n\033[0;32mExiting now to allow changes to be made... 🎉\033[0m\n'
+  #       exit 1;;
+  #     * ) echo "Please answer yes or no.";;
+  #   esac
+	# done
+fi
+
 
 if [ -n "$RUBY_FILES" ]; then
   printf '\nRunning Rubocop...'
@@ -26,7 +44,6 @@ if [ -n "$RUBY_FILES" ]; then
   RUBOCOP_EXIT_CODE=$?
   WORK_DONE=1
 else
-  printf '\nNo changed files, Rubocop linting not needed ...'
   RUBOCOP_EXIT_CODE=0
 fi
 
