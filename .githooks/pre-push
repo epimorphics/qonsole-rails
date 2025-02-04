@@ -22,8 +22,9 @@ WORK_DONE=0
 
 if [ -z "$TEST_FILES" ]; then
   printf '\n\033[0;31mThere are currently no new tests found in "%s". 🤨\033[0m\n' "$BRANCH_NAME"
-  while true ; do
-    read -rp 'Are you sure you want to continue (y/n)? ' RESPONSE
+  while true; do
+    read -p 'Are you sure you want to continue (y/n)? ' -n 1 -r RESPONSE
+    echo
     case $RESPONSE in
       [Yy]* )
         printf '\n\033[0;31mContinuing without new tests... 😖\033[0m\n'
