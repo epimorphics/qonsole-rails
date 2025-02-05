@@ -3,6 +3,14 @@
 Qonsole Rails is a Ruby-on-Rails engine for embedding the ability to display,
 edit and run SPARQL queries in a larger Rails app.
 
+# 2.1.0 - 2025-02
+
+- Added gem creation and publishing workflows for easier updates.
+- Updated rubocop rules for better readability and style.
+- Adjusted gemspec to meet new guidelines from rubocop linting.
+- Implemented pre-commit and pre-push githooks for linting/testing.
+- Revamped README with the latest info on the gem and publishing process.
+
 ## 2.0.0 - 2025-01
 
 - Updated the error handling for the qonsole gem by ensuring that the proper
