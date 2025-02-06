@@ -7,7 +7,7 @@ require 'qonsole_rails/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
-  spec.name        = 'qonsole-rails'
+  spec.name        = 'qonsole_rails'
   spec.version     = QonsoleRails::VERSION
   spec.authors     = ['Epimorphics Ltd', 'Ian Dickinson']
   spec.email       = ['info@epimorphics.com']
