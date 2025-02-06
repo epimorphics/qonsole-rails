@@ -2,9 +2,6 @@ name: Release and Publish Gem
 on:
   workflow_dispatch: {}
 
-env:
-  GEM_NAME: qonsole-rails
-
 #---- Below this line should not require editing ----
 jobs:
   build:
@@ -38,7 +35,7 @@ jobs:
         draft: false
         prerelease: false
         files: |
-          $GEM_NAME-${{ steps.gitinfo.outputs.version }}.gem
+          qonsole_rails-${{ steps.gitinfo.outputs.version }}.gem
 
     - name: "Publish gem"
       run: |
