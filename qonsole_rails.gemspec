@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   # This gem will work with 3.3.5 or greater...
   spec.required_ruby_version = '~> 3.3'
 
-  spec.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
+  spec.files = Dir['{app,bin,config,lib,vendor}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 
