@@ -6,27 +6,34 @@ $LOAD_PATH.push File.expand_path('lib', __dir__)
 require 'qonsole_rails/version'
 
 # Describe your gem and declare its dependencies:
-Gem::Specification.new do |s|
-  s.name        = 'qonsole-rails'
-  s.version     = QonsoleRails::VERSION
-  s.authors     = ['Epimorphics Ltd', 'Ian Dickinson']
-  s.email       = ['info@epimorphics.com']
-  s.homepage    = 'https://github.com/epimorphics/qonsole-rails'
-  s.summary     = 'SPARQL Qonsole engine for Rails'
-  s.description = 'Rails engine providing a dynamic console for editing and running SPARQL queries'
+Gem::Specification.new do |spec|
+  spec.name        = 'qonsole-rails'
+  spec.version     = QonsoleRails::VERSION
+  spec.authors     = ['Epimorphics Ltd', 'Ian Dickinson']
+  spec.email       = ['info@epimorphics.com']
+  spec.homepage    = 'https://github.com/epimorphics/qonsole-rails'
+  spec.summary     = 'SPARQL Qonsole engine for Rails'
+  spec.description = 'Rails engine providing a dynamic console for editing and running SPARQL queries'
+  spec.license     = 'MIT'
 
-  s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
-  s.test_files = Dir['test/**/*']
+  # This gem will work with 3.3.5 or greater...
+  spec.required_ruby_version = '~> 3.3'
 
-  s.add_dependency 'rails'
+  spec.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
 
-  s.add_dependency 'faraday'
-  s.add_dependency 'faraday-encoding'
-  s.add_dependency 'faraday_middleware'
-  s.add_dependency 'font-awesome-rails'
-  s.add_dependency 'haml-rails'
-  s.add_dependency 'jquery-datatables-rails'
-  s.add_dependency 'jquery-rails'
-  s.add_dependency 'lodash-rails'
-  s.add_dependency 'modulejs-rails'
+  spec.metadata['rubygems_mfa_required'] = 'true'
+
+  spec.add_dependency 'rails'
+
+  spec.add_dependency 'faraday'
+  spec.add_dependency 'faraday-encoding'
+  spec.add_dependency 'faraday_middleware'
+  spec.add_dependency 'font-awesome-rails'
+  spec.add_dependency 'haml-rails'
+  spec.add_dependency 'jquery-datatables-rails'
+  spec.add_dependency 'jquery-rails'
+  spec.add_dependency 'lodash-rails'
+  spec.add_dependency 'modulejs-rails'
+  spec.add_dependency 'rubocop'
+  spec.add_dependency 'rubocop-rails'
 end
