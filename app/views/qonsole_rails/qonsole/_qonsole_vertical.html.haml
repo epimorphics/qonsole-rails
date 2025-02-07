@@ -72,11 +72,9 @@
                   %span.hidden
                     (display results as SPARQL XML)
         .form-group.col-md-3
-          %label
-            &nbsp;
-            %br
           %br
-          %input.btn.btn-success.run-query{:href => "#", type: :submit, value: "perform query"}
+          %label
+            %input.btn.btn-success.run-query{:href => "#", type: :submit, value: "perform query"}
 
   #results-block.row.sparql.sparql-results
     .col-md-12
