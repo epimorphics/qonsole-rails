@@ -1,6 +1,7 @@
 - content_for(:title, 'SPARQL Query Console')
+/
+  = "Copyright (c) 2012-#{Time.current.year} Epimorphics Ltd. Released under Apache License 2.0 http://www.apache.org/licenses/"
 
-/ Copyright (c) 2012-2014 Epimorphics Ltd. Released under Apache License 2.0 http://www.apache.org/licenses/
 %form.qonsole.form-inline{:role => "form", action: qonsole_rails.query_path}
   .col-md-12.well
     %h2 Example queries
