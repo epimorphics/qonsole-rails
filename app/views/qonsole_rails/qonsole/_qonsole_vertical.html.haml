@@ -27,6 +27,9 @@
           .dropdown
             %a.btn.btn-dropdown{"data-toggle" => "dropdown", :href => "#"}
               Select endpoint
+              %span#dropdownMenu1.visuallyhidden
+                , currently
+                = @qconfig.default_endpoint
               %i.icon-collapse
             %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
               = render_endpoints( @qconfig )
@@ -39,6 +42,9 @@
         .form-group.col-md-2
           %label{:for => "displayFormat"}
             Results
+            %span#dropdownMenu2.visuallyhidden
+              , currently displayed as
+              = "table"
             %br
           .dropdown
             %a.btn.btn-dropdown.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
@@ -46,13 +52,25 @@
               %i.icon-collapse
             %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
               %li{:role => "presentation"}
-                %a{"data-value" => "tsv", :href => "#", :role => "menuitem", :tabindex => "-1"} table
+                %a{"data-value" => "tsv", :href => "#", :role => "menuitem", :tabindex => "-1"}
+                  table
+                  %span.hidden
+                    (display results as tab-separated values)
               %li{:role => "presentation"}
-                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1"} plain text
+                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1"}
+                  plain text
+                  %span.hidden
+                    (display results as SPARQL text)
               %li{:role => "presentation"}
-                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1"} JSON
+                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1"}
+                  JSON
+                  %span.hidden
+                    (display results as SPARQL JSON)
               %li{:role => "presentation"}
-                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1"} XML
+                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1"}
+                  XML
+                  %span.hidden
+                    (display results as SPARQL XML)
         .form-group.col-md-3
           %label
             &nbsp;
