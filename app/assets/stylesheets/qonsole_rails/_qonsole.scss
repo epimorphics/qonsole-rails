@@ -2,12 +2,30 @@
   font-size: 14px;
   margin-top: 2em;
 
+  .mx-auto {
+    display: inline-block;
+    margin-inline: auto;
+    width: fit-content;
+  }
+
   h2, .query-chrome label {
     font-size: 10px;
     color: #666666;
     margin: 0;
     text-transform: uppercase;
     display: inline-block;
+    font-weight: normal;
+  }
+
+  .prefix {
+    padding-top: 0.5em;
+  }
+
+  .prefix input {
+    margin-left: 0.5em;
+  }
+
+  .prefix label {
     font-weight: normal;
   }
 
