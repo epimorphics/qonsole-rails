@@ -22,24 +22,21 @@
 
     .query-chrome
       .row
-        .form-group.col-md-2
-          %label{:for => "sparqlEndpoint"} &nbsp;
+        .form-group.col-lg-2
           .dropdown
             %a.btn.btn-dropdown{"data-toggle" => "dropdown", :href => "#"}
               Select endpoint
               %span#dropdownMenu1.visuallyhidden
                 , currently
                 = @qconfig.default_endpoint
-              %i.icon-collapse
+              %i{class: "fa fa-caret-down", "aria-hidden" => "true"}
             %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
               = render_endpoints( @qconfig )
-        .form-group.col-md-5
-          .col-sm-8
-            %label{:for => "sparqlEndpoint"} SPARQL endpoint
-          %br
-          .col-xs-12
-            %input#sparqlEndpoint.form-control{:type => "text", style: "width: 100%", value: @qconfig.default_endpoint}/
-        .form-group.col-md-2
+        .form-group.col-lg-5
+          %label{:for => "sparqlEndpoint"}
+            SPARQL endpoint
+          %input#sparqlEndpoint.form-control{:type => "url", style: "width: 100%", value: @qconfig.default_endpoint, "autocomplete" => false}/
+        .form-group.col-lg-2
           %label{:for => "displayFormat"}
             Results
             %span#dropdownMenu2.visuallyhidden
@@ -47,34 +44,24 @@
               = "table"
             %br
           .dropdown
-            %a.btn.btn-dropdown.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
+            %a.btn.btn-dropdown.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#", :role => "button", :id => "displayFormat"}
               %span table
-              %i.icon-collapse
+              %i{class: "fa fa-caret-down", "aria-hidden" => "true"}
             %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
               %li{:role => "presentation"}
-                %a{"data-value" => "tsv", :href => "#", :role => "menuitem", :tabindex => "-1"}
+                %a{:data => {"value" => "tsv"}, :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as tab-separated values"}
                   table
-                  %span.hidden
-                    (display results as tab-separated values)
               %li{:role => "presentation"}
-                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1"}
+                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL text"}
                   plain text
-                  %span.hidden
-                    (display results as SPARQL text)
               %li{:role => "presentation"}
-                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1"}
+                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL JSON"}
                   JSON
-                  %span.hidden
-                    (display results as SPARQL JSON)
               %li{:role => "presentation"}
-                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1"}
+                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL XML"}
                   XML
-                  %span.hidden
-                    (display results as SPARQL XML)
-        .form-group.col-md-3
-          %br
-          %label
-            %input.btn.btn-success.run-query{:href => "#", type: :submit, value: "perform query"}
+        .form-group.col-lg-3
+          %input.btn.btn-success.run-query{type: :submit, value: "perform query"}
 
   #results-block.row.sparql.sparql-results
     .col-md-12
