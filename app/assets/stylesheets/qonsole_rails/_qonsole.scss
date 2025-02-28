@@ -7,30 +7,80 @@
     margin-inline: auto;
     width: fit-content;
   }
+  h2 {
+    line-height: 2;
+  }
 
   h2, .query-chrome label {
     font-size: 10px;
     color: #666666;
     margin: 0;
     text-transform: uppercase;
-    display: inline-block;
+    display: block;
     font-weight: normal;
   }
 
-  .prefix {
-    padding-top: 0.5em;
-  }
+  .examples {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
 
-  .prefix input {
-    margin-left: 0.5em;
-  }
+    @media (max-width: 32em) {
+      flex-direction: column;
+      > li {
+        width: 100%;
+        input.btn {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
 
-  .prefix label {
-    font-weight: normal;
+    input.btn {
+      border: 1px solid #ddd;
+      &.active,
+      &:active,
+      &:focus,
+      &:hover {
+        border: 1px solid #ccc;
+        -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      }
+    }
   }
 
   .well {
     padding: 5px;
+
+    &.vertical {
+      line-height: 2;
+      h2 {
+        display: inline-block;
+        margin-right: 1em;
+      }
+      input {
+        &.form-control {
+          height: unset;
+          &.checkbox {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+
+      .prefixes {
+        margin-left: 1rem;
+        .prefix {
+          input {
+            margin-left: 0.5em;
+            margin-right: 0.25rem;
+          }
+          label {
+            font-weight: normal;
+          }
+        }
+      }
+    }
 
     ul {
       margin-bottom: 0;
@@ -48,6 +98,29 @@
 
   .query-chrome {
     margin-top: 1em;
+    .row {
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      width: 100%;
+      margin-inline: unset;
+      @media(max-width: 44em) {
+        flex-wrap: wrap;
+        label {
+          width: 50%;
+        }
+      }
+      @media (max-width: 22em) {
+        flex-direction: column;
+      }
+
+      .form-group {
+        @media (min-width: 44em) {
+          text-align: end;
+        }
+      }
+    }
   }
 
   .timeTaken {
@@ -66,19 +139,6 @@
 
   a.run-query {
     margin-left: 10px;
-  }
-
-  .prefixes {
-    margin-left: 1rem;
-
-    label {
-      font-weight: normal;
-      margin: 0.75rem;
-
-      input {
-        margin-right: 0.25rem;
-      }
-    }
   }
 
   .auto-overflow {
