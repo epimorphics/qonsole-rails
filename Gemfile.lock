@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    qonsole_rails (2.0.0)
+    qonsole_rails (2.0.1)
       faraday
       faraday-encoding
       faraday_middleware
@@ -128,7 +128,16 @@ GEM
     faraday-retry (1.0.3)
     faraday_middleware (1.2.1)
       faraday (~> 1.0)
+    ffi (1.17.1-aarch64-linux-gnu)
+    ffi (1.17.1-aarch64-linux-musl)
+    ffi (1.17.1-arm-linux-gnu)
+    ffi (1.17.1-arm-linux-musl)
+    ffi (1.17.1-arm64-darwin)
+    ffi (1.17.1-x86-linux-gnu)
+    ffi (1.17.1-x86-linux-musl)
     ffi (1.17.1-x86_64-darwin)
+    ffi (1.17.1-x86_64-linux-gnu)
+    ffi (1.17.1-x86_64-linux-musl)
     font-awesome-rails (4.7.0.9)
       railties (>= 3.2, < 9.0)
     globalid (1.2.1)
@@ -340,6 +349,8 @@ DEPENDENCIES
   minitest-rails
   minitest-spec-rails
   qonsole_rails!
+  rubocop
+  rubocop-rails
 
 BUNDLED WITH
    2.5.20
