@@ -3,6 +3,36 @@
 Qonsole Rails is a Ruby-on-Rails engine for embedding the ability to display,
 edit and run SPARQL queries in a larger Rails app.
 
+## 2.0.1 - 2025-02
+
+- fix: adjusted un-used modal attributes
+  - Removed unnecessary aria-labelledby attribute from the modal.
+- build: Update gem dependencies and versions
+  - Renamed `qonsole-rails` to `qonsole_rails`
+  - Updated `date` gem from 3.3.4 to 3.4.1
+  - Upgraded several gems:
+    - `faraday-multipart` from 1.0.4 to 1.1.0
+    - `net-imap` from 0.4.17 to 0.5.5
+    - `net-smtp` from 0.5.0 to 0.5.1
+    - `nio4r` from 2.7.3 to 2.7.4
+    - `parser` from 3.3.7.0 to 3.3.7.1
+  - Updated other gems like `ffi`, `font-awesome-rails`, and more
+
+- style: Add new styles for layout and prefix elements
+  - Introduced a `.mx-auto` class for centering elements.
+  - Added styling for `.prefix` to adjust padding and input margins.
+  - Updated label styles within the `.prefix` class.
+- fix: Refactor button layout in vertical view
+  - Moved the submit button inside the label for better semantics.
+  - Cleaned up unnecessary HTML elements to simplify structure.
+- feat: Add visual hints for dropdown selections
+  - Added visually hidden text to indicate the currently selected endpoint.
+  - Included descriptions for each display format option in the dropdowns.
+  - Enhanced accessibility by providing context for users on what is currently selected.
+- refactor: Update copyright notice
+  - Included current year in copyright statement.
+  - Updated existing copyright text for clarity.
+
 ## 2.0.0 - 2025-02
 
 - Added gem creation and publishing workflows for easier updates.

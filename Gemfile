@@ -13,4 +13,6 @@ group :development, :test do
   gem 'byebug'
   gem 'minitest-rails'
   gem 'minitest-spec-rails'
+  gem 'rubocop'
+  gem 'rubocop-rails'
 end

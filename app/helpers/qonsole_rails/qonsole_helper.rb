@@ -16,6 +16,7 @@ module QonsoleRails
         config.prefixes.each do |prefix, uri|
           concat render_checkbox(prefix, uri)
         end
+        # concat render_prefix_editor_button
       end
     end
 
@@ -45,16 +46,32 @@ module QonsoleRails
     def render_checkbox(label, uri, options = {}) # rubocop:disable Metrics/MethodLength
       capture do
         concat(
-          content_tag('label') do
-            concat tag.input(
-              class: 'checkbox',
-              type: 'checkbox',
-              value: uri,
-              checked: true,
-              data: { query: options['data-query'] }
-            )
-            concat " #{label}"
+          content_tag('li', class: 'prefix') do
+            content_tag('label') do
+              concat tag.input(
+                class: 'checkbox',
+                type: 'checkbox',
+                value: uri,
+                checked: true,
+                data: { query: options['data-query'] }
+              )
+              concat " #{label}"
+            end
           end
+        )
+      end
+    end
+
+    def render_prefix_editor_button # rubocop:disable Metrics/MethodLength
+      content_tag('li', class: 'keep') do
+        concat tag.a(
+          tag.i(class: 'fa fa-plus-circle'),
+          class: 'btn btn-sm btn-default',
+          title: 'Add a SPARQL prefix',
+          data: {
+            toggle: 'modal',
+            target: '#prefixEditor'
+          }
         )
       end
     end

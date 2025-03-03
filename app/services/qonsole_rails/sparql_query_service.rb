@@ -47,7 +47,7 @@ module QonsoleRails
     end
 
     def create_connection(http_url)
-      Rails.logger.info("Connecting to #{http_url}")
+      Rails.logger.debug { "Connecting to #{http_url}" }
 
       with_connection_timeout(create_http_connection(http_url))
     end

@@ -1,6 +1,7 @@
 - content_for(:title, 'SPARQL Query Console')
+/
+  = "Copyright (c) 2012-#{Time.current.year} Epimorphics Ltd. Released under Apache License 2.0 http://www.apache.org/licenses/"
 
-/ Copyright (c) 2012-2014 Epimorphics Ltd. Released under Apache License 2.0 http://www.apache.org/licenses/
 %form.qonsole.form-inline{:role => "form", action: qonsole_rails.query_path}
   .col-md-12.well
     %h2 Example queries
@@ -21,43 +22,46 @@
 
     .query-chrome
       .row
-        .form-group.col-md-2
-          %label{:for => "sparqlEndpoint"} &nbsp;
+        .form-group.col-lg-2
           .dropdown
             %a.btn.btn-dropdown{"data-toggle" => "dropdown", :href => "#"}
               Select endpoint
-              %i.icon-collapse
+              %span#dropdownMenu1.visuallyhidden
+                , currently
+                = @qconfig.default_endpoint
+              %i{class: "fa fa-caret-down", "aria-hidden" => "true"}
             %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
               = render_endpoints( @qconfig )
-        .form-group.col-md-5
-          .col-sm-8
-            %label{:for => "sparqlEndpoint"} SPARQL endpoint
-          %br
-          .col-xs-12
-            %input#sparqlEndpoint.form-control{:type => "text", style: "width: 100%", value: @qconfig.default_endpoint}/
-        .form-group.col-md-2
+        .form-group.col-lg-5
+          %label{:for => "sparqlEndpoint"}
+            SPARQL endpoint
+          %input#sparqlEndpoint.form-control{:type => "url", style: "width: 100%", value: @qconfig.default_endpoint, "autocomplete" => false}/
+        .form-group.col-lg-2
           %label{:for => "displayFormat"}
             Results
+            %span#dropdownMenu2.visuallyhidden
+              , currently displayed as
+              = "table"
             %br
           .dropdown
-            %a.btn.btn-dropdown.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#"}
+            %a.btn.btn-dropdown.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#", :role => "button", :id => "displayFormat"}
               %span table
-              %i.icon-collapse
+              %i{class: "fa fa-caret-down", "aria-hidden" => "true"}
             %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
               %li{:role => "presentation"}
-                %a{"data-value" => "tsv", :href => "#", :role => "menuitem", :tabindex => "-1"} table
+                %a{:data => {"value" => "tsv"}, :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as tab-separated values"}
+                  table
               %li{:role => "presentation"}
-                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1"} plain text
+                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL text"}
+                  plain text
               %li{:role => "presentation"}
-                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1"} JSON
+                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL JSON"}
+                  JSON
               %li{:role => "presentation"}
-                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1"} XML
-        .form-group.col-md-3
-          %label
-            &nbsp;
-            %br
-          %br
-          %input.btn.btn-success.run-query{:href => "#", type: :submit, value: "perform query"}
+                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL XML"}
+                  XML
+        .form-group.col-lg-3
+          %input.btn.btn-success.run-query{type: :submit, value: "perform query"}
 
   #results-block.row.sparql.sparql-results
     .col-md-12
@@ -72,7 +76,7 @@
             %h2.col-md-12 Query results
 
 / modal dialogue
-#prefixEditor.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+#prefixEditor.modal.fade{"aria-hidden" => "true", :role => "dialog", :tabindex => "-1"}
   .modal-dialog
     .modal-content
       .modal-header

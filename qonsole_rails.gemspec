@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.homepage    = 'https://github.com/epimorphics/qonsole-rails'
   spec.summary     = 'SPARQL Qonsole engine for Rails'
   spec.description = 'Rails engine providing a dynamic console for editing and running SPARQL queries'
-  spec.license     = 'MIT'
+  spec.license     = 'Apache-2.0'
 
   # This gem will work with 3.3.5 or greater...
   spec.required_ruby_version = '~> 3.3'
