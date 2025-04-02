@@ -6,7 +6,7 @@ module QonsoleRails
   # Service object which manages the process of sending SPARQL queries to the remote endpoint
   class SparqlQueryService
     STANDARD_MIME_TYPES =
-      'application/json,text/html,application/xhtml+xml,application/xml,text/plain'.freeze
+      'application/json,text/html,application/xhtml+xml,application/xml,text/plain'
 
     attr_reader :qonfig
 
