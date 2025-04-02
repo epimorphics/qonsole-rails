@@ -90,6 +90,11 @@ modulejs.define( "qonsole", [
   var showGivenQuery = function( query ) {
     if (query === "_localstore") {
       query = Util.Browser.getSessionStore( "qonsole.query" );
+      if (window.location.hostname === "localhost" && !query) {
+        if(confirm('No query found in local storage due to cross-origin blocking, returning you to UKHPI instance. Please check the sessionStorage tab in your browser\'s dev tools for the SPARQL query value.')){
+          window.history.go(-1)
+        }
+      }
     }
     displayQuery( query );
   };
