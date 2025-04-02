@@ -3,6 +3,26 @@
 Qonsole Rails is a Ruby-on-Rails engine for embedding the ability to display,
 edit and run SPARQL queries in a larger Rails app.
 
+## 2.0.2 - 2025-04
+
+- feat: Now uses built-in JavaScript `URL` and `URLSearchParams` for robust URL
+  parameter parsing
+  - This ensures that the code can handle non-standard characters and encodings,
+    improving compatibility with a wider range of URLs received
+- feat: Added a conditional check to handle potential cross-origin blocking
+  issues when retrieving queries from local storage while developing locally,
+  now redirects developer back to the UKHPI instance with a confirmation prompt
+  explaining as such
+- fix: Implemented more specific Faraday error handling in the SPARQL query
+  service
+  - Now logs warnings for `Faraday::ClientError` (4xx errors), specifically
+    excluding 404 errors from raising exceptions, and logs errors for
+    `Faraday::ServerError` (5xx errors)
+- fix: Added frozen string literal comment
+  - Added a frozen string literal comment to the top of the
+    `app/services/qonsole_rails/sparql_query_service.rb` file to improve
+    performance and memory usage
+
 ## 2.0.1 - 2025-02
 
 - fix: adjusted un-used modal attributes
@@ -28,7 +48,8 @@ edit and run SPARQL queries in a larger Rails app.
 - feat: Add visual hints for dropdown selections
   - Added visually hidden text to indicate the currently selected endpoint.
   - Included descriptions for each display format option in the dropdowns.
-  - Enhanced accessibility by providing context for users on what is currently selected.
+  - Enhanced accessibility by providing context for users on what is currently
+    selected.
 - refactor: Update copyright notice
   - Included current year in copyright statement.
   - Updated existing copyright text for clarity.
