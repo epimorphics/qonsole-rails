@@ -32,9 +32,14 @@ modulejs.define( "qonsole", [
       converters: {"script json": true}
     } );
 
-    var params = Util.URL.searchParams();
-    if (params.query) {
-      showGivenQuery( params.query );
+    const currentUrl = new URL(window.location);
+
+    let params = currentUrl.searchParams;
+
+
+    if (params.has('query')) {
+      let queryParams = params.get('query');
+      showGivenQuery( queryParams );
     }
     else {
       setFirstQueryActive();
@@ -90,6 +95,9 @@ modulejs.define( "qonsole", [
   var showGivenQuery = function( query ) {
     if (query === "_localstore") {
       query = Util.Browser.getSessionStore( "qonsole.query" );
+      if (window.location.hostname === "localhost" && !query) {
+        console.error('No query found in local storage due to cross-origin blocking. Please check the sessionStorage tab in your browser\'s dev tools for the SPARQL query value.')
+      }
     }
     displayQuery( query );
   };

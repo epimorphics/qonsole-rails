@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_dependency 'faraday/encoding'
 
 module QonsoleRails
@@ -18,6 +20,13 @@ module QonsoleRails
       result = post_to_api(conn)
       as_result(result)
     rescue Faraday::ClientError => e
+      # Faraday client error class. Represents 4xx status responses.
+      Rails.logger.warn(e)
+      # 404 is a valid response for a non-existent endpoint
+      # and should not be raised as an error
+      raise e.to_s if e.response[:status] != 404
+    rescue Faraday::ServerError => e
+      # Faraday server error class. Represents 5xx status responses.
       Rails.logger.error(e)
       raise e.to_s
     end
