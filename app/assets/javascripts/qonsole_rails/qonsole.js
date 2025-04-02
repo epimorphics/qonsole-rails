@@ -32,9 +32,14 @@ modulejs.define( "qonsole", [
       converters: {"script json": true}
     } );
 
-    var params = Util.URL.searchParams();
-    if (params.query) {
-      showGivenQuery( params.query );
+    const currentUrl = new URL(window.location);
+
+    let params = currentUrl.searchParams;
+
+
+    if (params.has('query')) {
+      let queryParams = params.get('query');
+      showGivenQuery( queryParams );
     }
     else {
       setFirstQueryActive();
