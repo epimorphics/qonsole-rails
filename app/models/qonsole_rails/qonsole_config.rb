@@ -89,7 +89,6 @@ module QonsoleRails
       absolute_endpoint(alias_for(dest) || dest)
     end
 
-
     def sparql_service_options
       {
         output: output_format,
