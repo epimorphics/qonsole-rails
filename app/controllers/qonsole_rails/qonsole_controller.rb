@@ -85,8 +85,10 @@ module QonsoleRails
                  request.protocol ||
                  'http'
       protocol += '://' unless protocol.match?(%r{://})
+      host = request.headers['HTTP_X_FORWARDED_HOST'] || request.host
 
-      "#{protocol}#{request.host}"
+      raise StandardError, "Invalid host: #{host}" unless host.present?
+      "#{protocol}#{host}"
     end
   end
 end
