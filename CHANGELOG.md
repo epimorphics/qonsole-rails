@@ -11,6 +11,9 @@ edit and run SPARQL queries in a larger Rails app.
 - Improve host validation and connection management
 - Refactor validation and normalise styles
 - Update configuration; make optional component adjustable
+- Add automation for local verification through GitHooks
+- Refactor endpoint validation method for improved clarity
+- Configure system to maintain full timezone offset
 
 ## 2.0.2 - 2025-04
 
