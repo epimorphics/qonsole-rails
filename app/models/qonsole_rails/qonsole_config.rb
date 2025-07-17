@@ -62,8 +62,23 @@ module QonsoleRails
       absolute_url(dest)
     end
 
+    # The endpoint is valid if the dest is in the list of known endpoints
+    # @param dest [String] the endpoint to check
+    # @return [Boolean] true if the endpoint is valid, false otherwise
     def valid_endpoint?(dest = endpoint)
-      known_endpoint?(dest)
+      # Convert to a URI object and check if the URI has a scheme (e.g. http, https)
+      uri = URI.parse(dest)
+      # If it does, use the path of the URI; otherwise, use the dest as is
+      path = uri.scheme ? uri.path : dest
+      # This allows for both absolute and relative URLs to be valid endpoints if known
+      known_endpoint?(path)
+    end
+
+    # Check if the endpoint is known by comparing it to the list of known endpoints
+    # @param path [String] the endpoint to check
+    # @return [Boolean] true if the endpoint is known, false otherwise
+    def known_endpoint?(path)
+      endpoints.value?(path)
     end
 
     # The service destination defaults to the current endpoint,
@@ -74,9 +89,6 @@ module QonsoleRails
       absolute_endpoint(alias_for(dest) || dest)
     end
 
-    def known_endpoint?(url)
-      endpoints.value?(url)
-    end
 
     def sparql_service_options
       {
