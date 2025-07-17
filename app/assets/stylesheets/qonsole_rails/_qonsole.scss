@@ -1,5 +1,5 @@
 .qonsole {
-  font-size: 14px;
+  font-size: 1.2rem;
   margin-top: 2em;
 
   .mx-auto {
@@ -105,6 +105,17 @@
       gap: 1rem;
       width: 100%;
       margin-inline: unset;
+
+      .form-group {
+        &:first-of-type {
+          text-align: start;
+        }
+
+        @media (min-width: 44em) {
+          text-align: end;
+
+        }
+      }
       @media(max-width: 44em) {
         flex-wrap: wrap;
         label {
@@ -113,12 +124,6 @@
       }
       @media (max-width: 22em) {
         flex-direction: column;
-      }
-
-      .form-group {
-        @media (min-width: 44em) {
-          text-align: end;
-        }
       }
     }
   }
@@ -145,9 +150,10 @@
     overflow: auto;
   }
 
-  table th {
+  table th,
+  table td {
     font-weight: normal;
-    font-size: 14px;
+    font-size: 1.4rem;
   }
 
   .btn-dropdown {

@@ -14,5 +14,5 @@ group :development, :test do
   gem 'minitest-rails'
   gem 'minitest-spec-rails'
   gem 'rubocop'
-  gem 'rubocop-rails'
+  gem 'rubocop-rails', require: false
 end

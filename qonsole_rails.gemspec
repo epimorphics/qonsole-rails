@@ -17,23 +17,25 @@ Gem::Specification.new do |spec|
   spec.license     = 'Apache-2.0'
 
   # This gem will work with 3.3.5 or greater...
-  spec.required_ruby_version = '~> 3.3'
+  spec.required_ruby_version = '~> 3.4'
 
   spec.files = Dir['{app,bin,config,lib,vendor}/**/*', 'LICENSE', 'Rakefile', 'README.rdoc']
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 
-  spec.add_dependency 'rails'
+  spec.add_dependency 'rails', '~> 8.0'
 
-  spec.add_dependency 'faraday'
-  spec.add_dependency 'faraday-encoding'
-  spec.add_dependency 'faraday_middleware'
-  spec.add_dependency 'font-awesome-rails'
-  spec.add_dependency 'haml-rails'
-  spec.add_dependency 'jquery-datatables-rails'
-  spec.add_dependency 'jquery-rails'
-  spec.add_dependency 'lodash-rails'
-  spec.add_dependency 'modulejs-rails'
-  spec.add_dependency 'rubocop'
-  spec.add_dependency 'rubocop-rails'
+  # * Resolves `WARNING:  open-ended dependency on rails (>= 0) is not recommended use a bounded requirement`
+  spec.add_dependency 'faraday', '~> 1.10'
+  spec.add_dependency 'faraday-encoding', '~> 0.0.6'
+  spec.add_dependency 'faraday_middleware', '~> 1.2'
+  spec.add_dependency 'font-awesome-rails', '~> 4.7.0'
+  spec.add_dependency 'haml-rails', '~> 2.1'
+  spec.add_dependency 'jquery-datatables-rails', '~> 3.4'
+  spec.add_dependency 'jquery-rails', '~> 4.6'
+  spec.add_dependency 'lodash-rails', '~> 4.17'
+  spec.add_dependency 'modulejs-rails', '~> 2.2.0'
+  spec.add_dependency 'rubocop', '~> 1.78'
+  spec.add_dependency 'rubocop-ast', '~> 1.46'
+  spec.add_dependency 'rubocop-rails', '~> 2.16'
 end

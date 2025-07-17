@@ -4,7 +4,7 @@ require_dependency 'faraday/encoding'
 
 module QonsoleRails
   # Service object which manages the process of sending SPARQL queries to the remote endpoint
-  class SparqlQueryService
+  class SparqlQueryService # rubocop:disable Metrics/ClassLength
     STANDARD_MIME_TYPES =
       'application/json,text/html,application/xhtml+xml,application/xml,text/plain'
 
@@ -14,11 +14,34 @@ module QonsoleRails
       @qonfig = qonfig
     end
 
-    def run
+    def run # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       endpoint = qonfig.service_destination
+      log_fields = { message: "Calling SPARQL endpoint: #{endpoint}" }
+      log_fields[:path] = endpoint
+      log_fields[:method] = 'POST'
+      log_fields[:request_status] = 'processing'
+      Rails.logger.info(JSON.generate(log_fields))
+      # first, we need to create a connection to the SPARQL endpoint
       conn = create_connection(endpoint)
+      start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
+      # then, we need to send the query to the endpoint
       result = post_to_api(conn)
-      as_result(result)
+      # next, calculate the elapsed time in milliseconds by dividing the difference in time by 1000
+      elapsed_time = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start_time) / 1000 # rubocop:disable Layout/LineLength
+      # finally, we need to process the response
+      results = as_result(result)
+      # log the number of rows returned
+      returned_rows = results[:items] ? results[:items].size : 0
+      # log the response and status code
+      log_fields[:message] =
+        "SPARQL query returned #{returned_rows} #{'row'.pluralize(returned_rows)} from #{endpoint}"
+      log_fields[:method] = result.env.method.upcase
+      log_fields[:request_status] = 'completed'
+      log_fields[:request_time] = elapsed_time
+      log_fields[:status] = result.status
+
+      Rails.logger.info(JSON.generate(log_fields))
+      results
     rescue Faraday::ClientError => e
       # Faraday client error class. Represents 4xx status responses.
       Rails.logger.warn(e)
@@ -45,19 +68,7 @@ module QonsoleRails
       end
     end
 
-    def as_result(response)
-      result = { status: response.status }
-      result[ok?(response) ? :result : :error] = response_body(response)
-      result
-    end
-
-    def response_body(response)
-      remove_version_information(response.body)
-    end
-
     def create_connection(http_url)
-      Rails.logger.debug { "Connecting to #{http_url}" }
-
       with_connection_timeout(create_http_connection(http_url))
     end
 
@@ -112,6 +123,37 @@ module QonsoleRails
     def as_http_api(api)
       uri = URI.parse(api)
       uri.scheme ? api : "#{url}#{api}"
+    end
+
+    def as_result(response)
+      result = { status: response.status }
+      result[ok?(response) ? :result : :error] = response_body(response)
+      result[:items] = count_results(result)
+      result
+    end
+
+    def count_results(result) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      return [] unless result[:result].is_a?(String)
+
+      case output_as_mime(qonfig.output_format)
+      when 'text/tab-separated-values', 'text/csv'
+        result[:result].split("\n").drop(1) # Assuming the first line is a header
+      when 'application/json'
+        JSON.parse(result[:result])['results']['bindings']
+      when 'text/xml', 'application/xml'
+        # Assuming the XML response has a <results> tag containing <result> tags
+        result[:result].scan(/<result>/m)
+      when 'text/plain'
+        # Assuming the plain text response has a header lines that we want to skip
+        result[:result].split("\n").drop(3).pop # Skip first 3 lines and last line
+      end
+    rescue StandardError => e
+      Rails.logger.error("Error counting results: #{e.message}")
+      []
+    end
+
+    def response_body(response)
+      remove_version_information(response.body)
     end
 
     # To keep the penetration test auditors happy
