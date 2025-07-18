@@ -11,7 +11,7 @@ module QonsoleRails
       @qconfig = QonsoleConfig.new(params, host: hostname)
     end
 
-    def create # rubocop:disable Metrics/MethodLength
+    def create
       qonfig = QonsoleConfig.new(params, host: hostname)
 
       if qonfig.valid_endpoint?
@@ -36,7 +36,7 @@ module QonsoleRails
       rescue_from Exception, with: :render_exception
     end
 
-    def render_exception(err) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def render_exception(err) # rubocop:disable Metrics/MethodLength
       if err.instance_of?(ArgumentError) || err.instance_of?(RuntimeError)
         render_error(400, err)
       elsif err.instance_of? ActionController::InvalidAuthenticityToken
