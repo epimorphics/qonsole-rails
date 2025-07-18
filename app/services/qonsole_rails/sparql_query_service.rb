@@ -33,8 +33,8 @@ module QonsoleRails
       # log the number of rows returned
       returned_rows = results[:items] ? results[:items].size : 0
       # log the response and status code
-      log_fields[:message] =
-        "SPARQL query returned #{returned_rows} #{'row'.pluralize(returned_rows)} from #{endpoint}"
+      log_fields[:message] = "SPARQL query returned #{returned_rows} "
+      log_fields[:message] += "#{'result'.pluralize(returned_rows)} from #{endpoint}"
       log_fields[:method] = result.env.method.upcase
       log_fields[:request_status] = 'completed'
       log_fields[:request_time] = elapsed_time
@@ -132,7 +132,7 @@ module QonsoleRails
       result
     end
 
-    def count_results(result) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def count_results(result) # rubocop:disable Metrics/MethodLength
       return [] unless result[:result].is_a?(String)
 
       case output_as_mime(qonfig.output_format)
@@ -144,8 +144,8 @@ module QonsoleRails
         # Assuming the XML response has a <results> tag containing <result> tags
         result[:result].scan(/<result>/m)
       when 'text/plain'
-        # Assuming the plain text response has a header lines that we want to skip
-        result[:result].split("\n").drop(3).pop # Skip first 3 lines and last line
+        # Assuming the plain text response has 3 header lines and a footer row of `=` that we want to skip
+        result[:result].split("\n").drop(3).tap(&:pop) # Skip first 3 lines and remove last line
       end
     rescue StandardError => e
       Rails.logger.error("Error counting results: #{e.message}")
