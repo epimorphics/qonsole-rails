@@ -15,18 +15,46 @@ Gemspec/DependencyVersion:
 
 Layout/LineLength:
   Max: 100
+  AllowedPatterns: ['^(\s*#)']
   Exclude:
     - qonsole_rails.gemspec
     - "test/**/*"
 
+Metrics/AbcSize:
+  Max: 30
+  Exclude:
+    - qonsole_rails.gemspec
+    - test/**/*
 Metrics/BlockLength:
+  Max: 30
   Exclude:
     - qonsole_rails.gemspec
     - "test/**/*"
+
+Metrics/ClassLength:
+  CountAsOne: ["array", "hash", "heredoc", "method_call"]
+  Exclude:
+    - test/**/*
+
+Metrics/MethodLength:
+  CountAsOne: ["array", "hash", "heredoc", "method_call"]
+  Exclude:
+    - test/**/*
+    - lib/tasks/**/*
 
 Rails:
   Enabled: true
 
+Style/FormatStringToken:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+    
+Style/ClassAndModuleChildren:
+  Exclude:
+    - test/**/*
+    
 Style/Documentation:
   Exclude:
     - "test/**/*"
