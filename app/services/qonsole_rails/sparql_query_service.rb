@@ -73,19 +73,23 @@ module QonsoleRails
     end
 
     def create_http_connection(http_url, auth: false)
+      retry_options = {
+        max: 2,
+        interval: 0.05,
+        interval_randomness: 0.5,
+        backoff_factor: 2
+      }
+
       Faraday.new(url: http_url) do |config|
         config.use Faraday::Request::UrlEncoded
-        config.use Faraday::Request::Retry
-        config.use FaradayMiddleware::FollowRedirects
+        config.use Faraday::FollowRedirects::Middleware
+        config.request :authorization, :basic, api_user, api_pw if auth
+        # config.request :instrumentation - TBC ~ JRH 2025-07
+        config.request :retry, retry_options
 
-        config.basic_auth(api_user, api_pw) if auth
-
-        config.response :encoding
+        config.response :json
         config.response :raise_error
         with_logger_if_rails(config)
-
-        # setting the adapter must be the final step, otherwise we get a warning from Faraday
-        config.adapter(:net_http)
       end
     end
 
@@ -110,14 +114,21 @@ module QonsoleRails
       return config.response :logger unless defined?(Rails)
 
       level = Rails.env.production? ? :info : :debug
-      config.response(
-        :logger,
-        Rails.logger,
-        headers: false,
+
+      config.response :logger, Rails.logger, {
+        headers: true,
         bodies: false,
         errors: true,
         log_level: level.to_sym
-      )
+      }
+      # config.response(
+      #   :logger,
+      #   Rails.logger,
+      #   headers: false,
+      #   bodies: false,
+      #   errors: true,
+      #   log_level: level.to_sym
+      # )
     end
 
     def as_http_api(api)

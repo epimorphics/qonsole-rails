@@ -21,18 +21,22 @@ ${AUTH}:
 ${GEM}: ${SPEC} ./lib/${NAME}/version.rb
 	gem build ${SPEC}
 
+assets:
+	@echo "Installing assets..."
+	@bundle install
+
 auth: ${AUTH}
 
-build: gem
+build: clean gem
 
 clean:
+	@echo "Cleaning up ${NAME}..."
 	@rm -rf ${GEM}
 
 gem: ${GEM}
 	@echo ${GEM}
 
-lint:
-	@bundle install
+lint: assets
 	@echo "Running rubocop..."
 	@bundle exec rubocop
 
@@ -47,8 +51,8 @@ realclean: clean
 tags:
 	@echo version=${VERSION}
 
-test:
-	@bundle install
+test: assets
+	@echo "Running tests..."
 	@bundle exec rake test
 
 vars:
