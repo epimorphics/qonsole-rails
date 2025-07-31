@@ -37,7 +37,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'jquery-rails', '~> 4.6'
   spec.add_dependency 'lodash-rails', '~> 4.17'
   spec.add_dependency 'modulejs-rails', '~> 2.2.0'
-  spec.add_dependency 'rubocop', '~> 1.78'
-  spec.add_dependency 'rubocop-ast', '~> 1.46'
-  spec.add_dependency 'rubocop-rails', '~> 2.16'
 end
