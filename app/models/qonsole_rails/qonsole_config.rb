@@ -66,10 +66,7 @@ module QonsoleRails
     # @param dest [String] the endpoint to check
     # @return [Boolean] true if the endpoint is valid, false otherwise
     def valid_endpoint?(dest = endpoint)
-      # If the destinatio is not an absolute URL, we can convert to an absolute URL
-      point = absolute_url(dest)
-      # This allows for both absolute and relative URLs to be valid endpoints if known
-      known_endpoint?(point)
+      known_endpoint?(dest)
     end
 
     # Check if the endpoint is known by comparing it to the list of known endpoints
