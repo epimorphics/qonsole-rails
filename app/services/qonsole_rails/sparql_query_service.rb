@@ -8,6 +8,18 @@ module QonsoleRails
     STANDARD_MIME_TYPES =
       'application/json,text/html,application/xhtml+xml,application/xml,text/plain'
 
+    FARADAY_RETRY_OPTIONS = {
+      max: 2,
+      interval: 0.05,
+      interval_randomness: 0.5,
+      backoff_factor: 2,
+      exceptions: [
+        Faraday::TimeoutError,
+        Faraday::ConnectionFailed,
+        Faraday::ResourceNotFound
+      ]
+    }
+
     attr_reader :qonfig
 
     def initialize(qonfig)
@@ -73,19 +85,14 @@ module QonsoleRails
     end
 
     def create_http_connection(http_url, auth: false)
-      retry_options = {
-        max: 2,
-        interval: 0.05,
-        interval_randomness: 0.5,
-        backoff_factor: 2
-      }
+
 
       Faraday.new(url: http_url) do |config|
         config.use Faraday::Request::UrlEncoded
         config.use Faraday::FollowRedirects::Middleware
         config.request :authorization, :basic, api_user, api_pw if auth
         # config.request :instrumentation - TBC ~ JRH 2025-07
-        config.request :retry, retry_options
+        config.request :retry, FARADAY_RETRY_OPTIONS
 
         config.response :json
         config.response :raise_error
@@ -121,14 +128,6 @@ module QonsoleRails
         errors: true,
         log_level: level.to_sym
       }
-      # config.response(
-      #   :logger,
-      #   Rails.logger,
-      #   headers: false,
-      #   bodies: false,
-      #   errors: true,
-      #   log_level: level.to_sym
-      # )
     end
 
     def as_http_api(api)
