@@ -70,10 +70,10 @@ module QonsoleRails
     end
 
     # Check if the endpoint is known by comparing it to the list of known endpoints
-    # @param path [String] the endpoint to check
+    # @param url [String] the endpoint to check
     # @return [Boolean] true if the endpoint is known, false otherwise
-    def known_endpoint?(path)
-      endpoints.value?(path)
+    def known_endpoint?(url)
+      endpoints.value?(url)
     end
 
     # The service destination defaults to the current endpoint,
