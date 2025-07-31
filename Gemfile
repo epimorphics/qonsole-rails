@@ -13,6 +13,10 @@ group :development, :test do
   gem 'byebug'
   gem 'minitest-rails'
   gem 'minitest-spec-rails'
+
+  gem 'ruby-lsp', require: false
+  gem 'solargraph', require: false
+
   gem 'rubocop'
-  gem 'rubocop-rails'
+  gem 'rubocop-rails', require: false
 end

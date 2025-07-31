@@ -43,7 +43,7 @@ module QonsoleRails
       )
     end
 
-    def render_checkbox(label, uri, options = {}) # rubocop:disable Metrics/MethodLength
+    def render_checkbox(label, uri, options = {})
       capture do
         concat(
           content_tag('li', class: 'prefix') do
@@ -62,7 +62,7 @@ module QonsoleRails
       end
     end
 
-    def render_prefix_editor_button # rubocop:disable Metrics/MethodLength
+    def render_prefix_editor_button
       content_tag('li', class: 'keep') do
         concat tag.a(
           tag.i(class: 'fa fa-plus-circle'),

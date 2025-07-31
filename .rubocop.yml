@@ -1,10 +1,11 @@
-require: rubocop-rails
+plugins:
+  - rubocop-rails
 
 AllCops:
   NewCops: enable
   Exclude:
-    - 'test/dummy/**/*'
-    - 'bin/*'
+    - "test/dummy/**/*"
+    - "bin/*"
 
 # https://docs.rubocop.org/rubocop/cops_gemspec.html#enforcedstyle_-forbidden-gemspecdependencyversion
 # Enforce that gem dependency version specifications or a commit reference
@@ -14,21 +15,49 @@ Gemspec/DependencyVersion:
 
 Layout/LineLength:
   Max: 100
+  AllowedPatterns: ['^(\s*#)']
   Exclude:
     - qonsole_rails.gemspec
-    - 'test/**/*'
+    - "test/**/*"
 
-Metrics/BlockLength:
+Metrics/AbcSize:
+  Max: 30
   Exclude:
     - qonsole_rails.gemspec
-    - 'test/**/*'
+    - test/**/*
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - qonsole_rails.gemspec
+    - "test/**/*"
+
+Metrics/ClassLength:
+  CountAsOne: ["array", "hash", "heredoc", "method_call"]
+  Exclude:
+    - test/**/*
+
+Metrics/MethodLength:
+  CountAsOne: ["array", "hash", "heredoc", "method_call"]
+  Exclude:
+    - test/**/*
+    - lib/tasks/**/*
 
 Rails:
   Enabled: true
 
+Style/FormatStringToken:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+    
+Style/ClassAndModuleChildren:
+  Exclude:
+    - test/**/*
+    
 Style/Documentation:
   Exclude:
-    - 'test/**/*'
+    - "test/**/*"
 
 Style/FrozenStringLiteralComment:
   Enabled: false

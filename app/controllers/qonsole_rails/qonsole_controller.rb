@@ -11,7 +11,7 @@ module QonsoleRails
       @qconfig = QonsoleConfig.new(params, host: hostname)
     end
 
-    def create # rubocop:disable Metrics/MethodLength
+    def create
       qonfig = QonsoleConfig.new(params, host: hostname)
 
       if qonfig.valid_endpoint?
@@ -33,10 +33,11 @@ module QonsoleRails
 
     unless Rails.application.config.consider_all_requests_local
       rescue_from ActionController::RoutingError, with: :render_404 # rubocop:disable Naming/VariableNumber
+      rescue_from Faraday::ResourceNotFound, with: :render_404 # rubocop:disable Naming/VariableNumber
       rescue_from Exception, with: :render_exception
     end
 
-    def render_exception(err) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def render_exception(err) # rubocop:disable Metrics/MethodLength
       if err.instance_of?(ArgumentError) || err.instance_of?(RuntimeError)
         render_error(400, err)
       elsif err.instance_of? ActionController::InvalidAuthenticityToken
@@ -85,8 +86,11 @@ module QonsoleRails
                  request.protocol ||
                  'http'
       protocol += '://' unless protocol.match?(%r{://})
+      host = request.headers['HTTP_X_FORWARDED_HOST'] || request.host
 
-      "#{protocol}#{request.host}"
+      raise StandardError, "Invalid host: #{host}" if host.blank?
+
+      "#{protocol}#{host}"
     end
   end
 end

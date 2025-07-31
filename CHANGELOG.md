@@ -3,6 +3,33 @@
 Qonsole Rails is a Ruby-on-Rails engine for embedding the ability to display,
 edit and run SPARQL queries in a larger Rails app.
 
+## 2.1.2 - 2025-07
+
+- Removed redundant URL conversion for efficiency
+- Added error handling for more specific exceptions
+- Extracted retry logic into a reusable format
+- Improved documentation for better code understanding
+- Updated development tools with new additions
+
+## 2.1.1 - 2025-07
+
+- Refactor HTTP connections to use Faraday with retry options
+- Update dependencies to compatible Faraday versions
+- Increase maximum line length in code style configuration
+- Remove unnecessary disable comments for improved lint adherence
+
+## 2.1.0 - 2025-07
+
+- Update Rails to 8.0.2 and Ruby to 3.4.4
+- Upgrade dependencies to latest versions
+- Enhance query handling with logging and error reporting
+- Improve host validation and connection management
+- Refactor validation and normalise styles
+- Update configuration; make optional component adjustable
+- Add automation for local verification through GitHooks
+- Refactor endpoint validation method for improved clarity
+- Configure system to maintain full timezone offset
+
 ## 2.0.2 - 2025-04
 
 - feat: Now uses built-in JavaScript `URL` and `URLSearchParams` for robust URL
