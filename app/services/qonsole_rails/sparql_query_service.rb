@@ -36,7 +36,7 @@ module QonsoleRails
       log_fields[:message] = "SPARQL query returned #{returned_rows} "
       log_fields[:message] += "#{'result'.pluralize(returned_rows)} from #{endpoint}"
       log_fields[:method] = result.env.method.upcase
-      log_fields[:request_status] = 'completed'
+      log_fields[:request_status] = 'processing'
       log_fields[:request_time] = elapsed_time
       log_fields[:status] = result.status
 
