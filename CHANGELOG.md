@@ -3,6 +3,10 @@
 Qonsole Rails is a Ruby-on-Rails engine for embedding the ability to display,
 edit and run SPARQL queries in a larger Rails app.
 
+## 2.1.3 - 2025-07
+
+- Adds styles to improve accessibility [95 > 97](https://github.com/epimorphics/fsa-registry-config/issues/97)
+
 ## 2.1.2 - 2025-07
 
 - Removed redundant URL conversion for efficiency
