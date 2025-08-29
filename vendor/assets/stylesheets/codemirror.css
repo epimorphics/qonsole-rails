@@ -34,12 +34,12 @@
   padding: 0 3px 0 5px;
   min-width: 20px;
   text-align: right;
-  color: #999;
+  color: #3D3D3D;
   white-space: nowrap;
 }
 
 .CodeMirror-guttermarker { color: black; }
-.CodeMirror-guttermarker-subtle { color: #999; }
+.CodeMirror-guttermarker-subtle { color: #3D3D3D ; }
 
 /* CURSOR */
 
@@ -129,7 +129,7 @@
 .cm-s-default .cm-bracket {color: #997;}
 .cm-s-default .cm-tag {color: #170;}
 .cm-s-default .cm-attribute {color: #00c;}
-.cm-s-default .cm-hr {color: #999;}
+.cm-s-default .cm-hr {color: #3D3D3D;}
 .cm-s-default .cm-link {color: #00c;}
 
 .cm-s-default .cm-error {color: #f00;}

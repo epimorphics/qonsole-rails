@@ -11,6 +11,10 @@ edit and run SPARQL queries in a larger Rails app.
 - Keeps dependency versions in sync across related projects
 - Aligns version cadence with current app suite
 
+## 2.1.3 - 2025-07
+
+- Adds styles to improve accessibility [95 > 97](https://github.com/epimorphics/fsa-registry-config/issues/97)
+
 ## 2.1.2 - 2025-07
 
 - Removed redundant URL conversion for efficiency
