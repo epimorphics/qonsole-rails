@@ -18,7 +18,7 @@ module QonsoleRails
         Faraday::ConnectionFailed,
         Faraday::ResourceNotFound
       ]
-    }
+    }.freeze
 
     attr_reader :qonfig
 
