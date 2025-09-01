@@ -85,8 +85,6 @@ module QonsoleRails
     end
 
     def create_http_connection(http_url, auth: false)
-
-
       Faraday.new(url: http_url) do |config|
         config.use Faraday::Request::UrlEncoded
         config.use Faraday::FollowRedirects::Middleware
