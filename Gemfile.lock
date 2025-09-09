@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    qonsole_rails (2.2.0)
+    qonsole_rails (2.2.1)
       faraday (~> 2.13)
       faraday-encoding (~> 0.0.6)
       faraday-follow_redirects (~> 0.3.0)
