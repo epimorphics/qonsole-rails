@@ -36,7 +36,7 @@ module QonsoleRails
       # as we want to handle it ourselves
       conn = @service.create_http_connection(@endpoint)
 
-      refute_includes conn.builder.handlers, Faraday::Response::Json
+      assert_not_includes conn.builder.handlers, Faraday::Response::Json
     end
 
     test 'processes successful response' do
