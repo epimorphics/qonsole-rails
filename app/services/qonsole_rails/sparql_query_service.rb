@@ -10,9 +10,9 @@ module QonsoleRails
 
     FARADAY_OPTIONS = {
       request: {
-        open_timeout: 1,        # The max number of seconds to wait for the connection to be established.
-        timeout: 5,             # The max number of seconds to wait for the request to complete.
-      },
+        open_timeout: 1, # The max number of seconds to wait for the connection to be established.
+        timeout: 5 # The max number of seconds to wait for the request to complete.
+      }
     }.freeze
 
     FARADAY_RETRY_OPTIONS = {
@@ -23,8 +23,8 @@ module QonsoleRails
       exceptions: [
         Faraday::TimeoutError,
         Faraday::ConnectionFailed,
-        Faraday::ResourceNotFound,
-      ],
+        Faraday::ResourceNotFound
+      ]
     }.freeze
 
     attr_reader :qonfig
