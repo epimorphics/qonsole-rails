@@ -172,7 +172,7 @@ module QonsoleRails
 
     # To keep the penetration test auditors happy
     def remove_version_information(text)
-        text.gsub(/Fuseki - version.*(\n|\Z)/, 'Apache Jena Fuseki')
+        text.gsub(/Fuseki - version.*(\n|\Z)/, 'Apache Jena Fuseki' + '\1')
     end
 
     private
