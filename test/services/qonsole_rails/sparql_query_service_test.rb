@@ -31,6 +31,14 @@ module QonsoleRails
       @mock_config.verify
     end
 
+    test 'ensure response is not json formatted by Faraday' do
+      # Proves we do not use Faraday's JSON middleware to parse the response
+      # as we want to handle it ourselves
+      conn = @service.create_http_connection(@endpoint)
+
+      refute_includes conn.builder.handlers, Faraday::Response::Json
+    end
+
     test 'processes successful response' do
       # Proves we can process a successful response and count results
       json_response = { results: { bindings: [{ s: { value: 'subject' } }] } }.to_json
@@ -46,6 +54,7 @@ module QonsoleRails
       assert_equal 200, result[:status]
       assert_equal json_response, result[:result]
       assert_equal 1, result[:items].size
+
       @mock_config.verify
       mock_response.verify
     end
