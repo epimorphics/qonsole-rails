@@ -8,16 +8,23 @@ module QonsoleRails
     STANDARD_MIME_TYPES =
       'application/json,text/html,application/xhtml+xml,application/xml,text/plain'
 
+    FARADAY_OPTIONS = {
+      request: {
+        open_timeout: 1,        # The max number of seconds to wait for the connection to be established.
+        timeout: 5,             # The max number of seconds to wait for the request to complete.
+      },
+    }.freeze
+
     FARADAY_RETRY_OPTIONS = {
-      max: 2,
-      interval: 0.05,
-      interval_randomness: 0.5,
-      backoff_factor: 2,
+      max: 5,                   # Retry a failed request up to 5 times
+      interval: 0.5,            # First retry after 0.5s
+      interval_randomness: 0.5, # Specify "jitter" of up to 50% of interval
+      backoff_factor: 2,        # Double the delay for each subsequent retry
       exceptions: [
         Faraday::TimeoutError,
         Faraday::ConnectionFailed,
-        Faraday::ResourceNotFound
-      ]
+        Faraday::ResourceNotFound,
+      ],
     }.freeze
 
     attr_reader :qonfig
