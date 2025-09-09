@@ -91,15 +91,14 @@ module QonsoleRails
       with_connection_timeout(create_http_connection(http_url))
     end
 
-    def create_http_connection(http_url, auth: false)
-      Faraday.new(url: http_url) do |config|
+    def create_http_connection(http_url, auth = false)
+      Faraday.new(url: http_url, **FARADAY_OPTIONS) do |config|
         config.use Faraday::Request::UrlEncoded
         config.use Faraday::FollowRedirects::Middleware
         config.request :authorization, :basic, api_user, api_pw if auth
-        # config.request :instrumentation - TBC ~ JRH 2025-07
+        # config.request :instrumentation - TBC ~ JRH 2025-09
         config.request :retry, FARADAY_RETRY_OPTIONS
 
-        config.response :json
         config.response :raise_error
         with_logger_if_rails(config)
       end
