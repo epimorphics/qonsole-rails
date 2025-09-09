@@ -3,6 +3,14 @@
 Qonsole Rails is a Ruby-on-Rails engine for embedding the ability to display,
 edit and run SPARQL queries in a larger Rails app.
 
+## 2.2.1 - 2025-09
+
+- Adds service-level tests for reliability and error handling
+- Refactors client config to centralise timeouts and retries
+- Improves version info stripping, preserving line endings
+- Updates dependencies and increments patch version
+- Clarifies maintenance comments for gem dependencies
+
 ## 2.2.0 - 2025-08
 
 - Upgraded core and secondary libraries to latest patches
