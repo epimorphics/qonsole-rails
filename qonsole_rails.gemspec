@@ -25,8 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rails', '~> 8.0'
 
-  # * Resolves `WARNING:  open-ended dependency on rails (>= 0) is not recommended use a bounded requirement`
-  # Farad
+  # ^ Resolves `WARNING:  open-ended dependency on rails (>= 0) is not recommended use a bounded requirement`
   spec.add_dependency 'faraday', '~> 2.13'
   spec.add_dependency 'faraday-encoding', '~> 0.0.6'
   spec.add_dependency 'faraday-follow_redirects', '~> 0.3.0'
