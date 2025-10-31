@@ -27,8 +27,8 @@ Gem::Specification.new do |spec|
 
   # ^ Resolves `WARNING:  open-ended dependency on rails (>= 0) is not recommended use a bounded requirement`
   spec.add_dependency 'faraday', '~> 2.13'
-  spec.add_dependency 'faraday-encoding', '~> 0.0.6'
-  spec.add_dependency 'faraday-follow_redirects', '~> 0.3.0'
+  spec.add_dependency 'faraday-encoding', "~> 0.0", ">= 0.0.6"
+  spec.add_dependency 'faraday-follow_redirects', "~> 0.3", ">= 0.3.0"
   spec.add_dependency 'faraday-retry', '~> 2.0'
   spec.add_dependency 'font-awesome-rails', '~> 4.7.0'
   spec.add_dependency 'haml-rails', '~> 2.1'

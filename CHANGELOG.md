@@ -1,119 +1,174 @@
-# Change log for Qonsole Rails
+# Changelog
 
-Qonsole Rails is a Ruby-on-Rails engine for embedding the ability to display,
-edit and run SPARQL queries in a larger Rails app.
+All notable changes to this project will be documented in this file.
 
-## 2.2.1 - 2025-09
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- Adds service-level tests for reliability and error handling
-- Refactors client config to centralise timeouts and retries
-- Improves version info stripping, preserving line endings
-- Updates dependencies and increments patch version
-- Clarifies maintenance comments for gem dependencies
+## [2.3.0] - 2025-10
 
-## 2.2.0 - 2025-08
+### Added
 
-- Upgraded core and secondary libraries to latest patches
-- Refreshed templating, XML, HTTP, and mail packages
-- Updated development tools and linting dependencies
-- Keeps dependency versions in sync across related projects
-- Aligns version cadence with current app suite
+- Support for `ActionView::MissingTemplate` error handling now included
+- Support for additional bad request error types (`Faraday::BadRequestError`,
+  `ActionController::BadRequest`, `ActionController::ParameterMissing`) also
+  included as well
 
-## 2.1.3 - 2025-07
+### Changed
 
-- Adds styles to improve accessibility [95 > 97](https://github.com/epimorphics/fsa-registry-config/issues/97)
+- `Rails` framework was upgraded from 8.0.2.1 to 8.1.1
+- Error handling logic was refactored to use case statement for cleaner error
+  grouping
+- Dependency version constraints were relaxed from pessimistic (`~>`) to minimum
+  version (`>=`) for broader compatibility
+- `Faraday`, `haml-rails`, `faraday-follow_redirects`, and `faraday-retry` dependencies
+  were updated to allow more flexible version ranges
+- Development dependencies were updated including `rbs` (3.9.5), `rexml` (3.4.4),
+  `solargraph` (0.57.0), and `rubocop`
+- Locked dependency versions were bumped to latest compatible releases
 
-## 2.1.2 - 2025-07
+### Fixed
 
-- Removed redundant URL conversion for efficiency
-- Added error handling for more specific exceptions
-- Extracted retry logic into a reusable format
-- Improved documentation for better code understanding
-- Updated development tools with new additions
+- Faraday error objects are now raised correctly instead of passing string
+  conversions to the caller
+- Error handling and reporting was improved with better exception categorisation
 
-## 2.1.1 - 2025-07
+## [2.2.1] - 2025-09
 
-- Refactor HTTP connections to use Faraday with retry options
-- Update dependencies to compatible Faraday versions
-- Increase maximum line length in code style configuration
-- Remove unnecessary disable comments for improved lint adherence
+### Added
 
-## 2.1.0 - 2025-07
+- Service-level tests were added for reliability and error handling
 
-- Update Rails to 8.0.2 and Ruby to 3.4.4
-- Upgrade dependencies to latest versions
-- Enhance query handling with logging and error reporting
-- Improve host validation and connection management
-- Refactor validation and normalise styles
-- Update configuration; make optional component adjustable
-- Add automation for local verification through GitHooks
-- Refactor endpoint validation method for improved clarity
-- Configure system to maintain full timezone offset
+### Changed
 
-## 2.0.2 - 2025-04
+- Client config was refactored to centralise timeouts and retries
+- Version info stripping was improved, preserving line endings
+- Dependencies were updated and patch version was incremented
+- Maintenance comments for gem dependencies were clarified
 
-- feat: Now uses built-in JavaScript `URL` and `URLSearchParams` for robust URL
-  parameter parsing
-  - This ensures that the code can handle non-standard characters and encodings,
-    improving compatibility with a wider range of URLs received
-- feat: Added a conditional check to handle potential cross-origin blocking
-  issues when retrieving queries from local storage while developing locally,
-  now redirects developer back to the UKHPI instance with a confirmation prompt
-  explaining as such
-- fix: Implemented more specific Faraday error handling in the SPARQL query
-  service
-  - Now logs warnings for `Faraday::ClientError` (4xx errors), specifically
-    excluding 404 errors from raising exceptions, and logs errors for
-    `Faraday::ServerError` (5xx errors)
-- fix: Added frozen string literal comment
-  - Added a frozen string literal comment to the top of the
-    `app/services/qonsole_rails/sparql_query_service.rb` file to improve
-    performance and memory usage
+## [2.2.0] - 2025-08
 
-## 2.0.1 - 2025-02
+### Changed
 
-- fix: adjusted un-used modal attributes
-  - Removed unnecessary aria-labelledby attribute from the modal.
-- build: Update gem dependencies and versions
-  - Renamed `qonsole-rails` to `qonsole_rails`
-  - Updated `date` gem from 3.3.4 to 3.4.1
-  - Upgraded several gems:
-    - `faraday-multipart` from 1.0.4 to 1.1.0
-    - `net-imap` from 0.4.17 to 0.5.5
-    - `net-smtp` from 0.5.0 to 0.5.1
-    - `nio4r` from 2.7.3 to 2.7.4
-    - `parser` from 3.3.7.0 to 3.3.7.1
-  - Updated other gems like `ffi`, `font-awesome-rails`, and more
+- Core and secondary libraries were upgraded to latest patches
+- Templating, XML, HTTP, and mail packages were refreshed
+- Development tools and linting dependencies were updated
+- Dependency versions were kept in sync across related projects
+- Version cadence was aligned with current app suite
 
-- style: Add new styles for layout and prefix elements
-  - Introduced a `.mx-auto` class for centering elements.
-  - Added styling for `.prefix` to adjust padding and input margins.
-  - Updated label styles within the `.prefix` class.
-- fix: Refactor button layout in vertical view
-  - Moved the submit button inside the label for better semantics.
-  - Cleaned up unnecessary HTML elements to simplify structure.
-- feat: Add visual hints for dropdown selections
-  - Added visually hidden text to indicate the currently selected endpoint.
-  - Included descriptions for each display format option in the dropdowns.
-  - Enhanced accessibility by providing context for users on what is currently
-    selected.
-- refactor: Update copyright notice
-  - Included current year in copyright statement.
-  - Updated existing copyright text for clarity.
+## [2.1.3] - 2025-07
 
-## 2.0.0 - 2025-02
+### Added
 
-- Added gem creation and publishing workflows for easier updates.
-- Updated rubocop rules for better readability and style.
-- Adjusted gemspec to meet new guidelines from rubocop linting.
-- Implemented pre-commit and pre-push githooks for linting/testing.
-- Revamped README with the latest info on the gem and publishing process.
-- Updated the error handling for the qonsole gem by ensuring that the proper
+- Styles to improve accessibility were added
+  [#97](https://github.com/epimorphics/fsa-registry-config/issues/97)
+
+## [2.1.2] - 2025-07
+
+### Added
+
+- Error handling for more specific exceptions was added
+- Documentation was improved for better code understanding
+
+### Changed
+
+- Redundant URL conversion was removed for efficiency
+- Retry logic was extracted into a reusable format
+- Development tools were updated with new additions
+
+## [2.1.1] - 2025-07
+
+### Changed
+
+- HTTP connections were refactored to use Faraday with retry options
+- Dependencies were updated to compatible Faraday versions
+- Maximum line length in code style configuration was increased
+- Unnecessary disable comments were removed for improved lint adherence
+
+## [2.1.0] - 2025-07
+
+### Added
+
+- Automation for local verification through GitHooks was added
+
+### Changed
+
+- `Rails` was updated to 8.0.2 and Ruby to 3.4.4
+- Dependencies were upgraded to latest versions
+- Query handling was enhanced with logging and error reporting
+- Host validation and connection management were improved
+- Validation was refactored and styles were normalised
+- Configuration was updated; optional component was made adjustable
+- Endpoint validation method was refactored for improved clarity
+- System was configured to maintain full timezone offset
+
+## [2.0.2] - 2025-04
+
+### Added
+
+- Built-in JavaScript `URL` and `URLSearchParams` for robust URL parameter
+  parsing were added
+- Conditional check to handle potential cross-origin blocking issues when
+  retrieving queries from local storage while developing locally was added
+- Frozen string literal comment was added to improve performance and memory
+  usage
+
+### Fixed
+
+- More specific Faraday error handling in the SPARQL query service was
+  implemented
+- 404 errors were excluded from raising exceptions, and errors for
+  `Faraday::ServerError` (5xx errors) were logged
+
+## [2.0.1] - 2025-02
+
+### Added
+
+- Visual hints for dropdown selections were added
+- `.mx-auto` class for centering elements was introduced
+- Styling for `.prefix` to adjust padding and input margins was added
+- Label styles within the `.prefix` class were updated
+- Visually hidden text to indicate the currently selected endpoint was added
+- Descriptions for each display format option in the dropdowns were included
+- Accessibility was enhanced by providing context for users on what is currently
+  selected
+
+### Changed
+
+- Gem dependencies and versions were updated
+- `qonsole-rails` was renamed to `qonsole_rails`
+- Several gems were upgraded including `faraday-multipart`, `net-imap`,
+  `net-smtp`, `nio4r`, `parser`
+- Copyright notice was updated to include current year
+
+### Fixed
+
+- Un-used modal attributes were adjusted
+- Unnecessary aria-labelledby attribute was removed from the modal
+- Button layout in vertical view was refactored
+- Submit button was moved inside the label for better semantics
+- Unnecessary HTML elements were cleaned up to simplify structure
+
+## [2.0.0] - 2025-02
+
+### Added
+
+- Gem creation and publishing workflows for easier updates were added
+- Pre-commit and pre-push githooks for linting/testing were implemented
+
+### Changed
+
+- Rubocop rules were updated for better readability and style
+- Gemspec was adjusted to meet new guidelines from rubocop linting
+- README was revamped with the latest info on the gem and publishing process
+- Error handling for the qonsole gem was updated by ensuring that the proper
   error types are returned and handled accordingly
-- Updated the formatting for the error messages to be more user-friendly
-- Updated the logging of errors to improve the debugging process
-- Updated the tag helpers to render the correct HTML tags for the query form
+- Formatting for the error messages was updated to be more user-friendly
+- Logging of errors was updated to improve the debugging process
+- Tag helpers were updated to render the correct HTML tags for the query form
   elements
+
+---
 
 ## 1.0.2 - 2024-11-01
 

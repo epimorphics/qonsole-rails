@@ -33,18 +33,18 @@ module QonsoleRails
 
     unless Rails.application.config.consider_all_requests_local
       rescue_from ActionController::RoutingError, with: :render_404 # rubocop:disable Naming/VariableNumber
+      rescue_from ActionView::MissingTemplate, with: :render_404 # rubocop:disable Naming/VariableNumber
       rescue_from Faraday::ResourceNotFound, with: :render_404 # rubocop:disable Naming/VariableNumber
       rescue_from Exception, with: :render_exception
     end
 
     def render_exception(err) # rubocop:disable Metrics/MethodLength
-      if err.instance_of?(ArgumentError) || err.instance_of?(RuntimeError)
+      case err.class
+      when ArgumentError, RuntimeError, Faraday::BadRequestError, ActionController::BadRequest, ActionController::ParameterMissing
         render_error(400, err)
-      elsif err.instance_of? ActionController::InvalidAuthenticityToken
-        Rails.logger.warn "Invalid authenticity token #{err}"
-        render_error(403, err)
-      elsif err.instance_of?(Faraday::TimeoutError) || err.instance_of?(Faraday::ConnectionFailed)
-        Rails.logger.error "Connection error: #{err}"
+      when ApplicationController::InvalidCrossOriginRequest, ActionController::InvalidAuthenticityToken
+        render_error(403,err)
+      when Faraday::TimeoutError, Faraday::ConnectionFailed
         render_error(504, err)
       else
         Rails.logger.warn "No explicit error page for exception #{err} - #{err.class.name}"
