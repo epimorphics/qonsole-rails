@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Verify Code
 
 on:
   workflow_dispatch: {}
