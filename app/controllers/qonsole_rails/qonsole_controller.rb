@@ -39,7 +39,7 @@ module QonsoleRails
     end
 
     def render_exception(err) # rubocop:disable Metrics/MethodLength
-      case e.class
+      case err.class
       when ArgumentError, RuntimeError, Faraday::BadRequestError, ActionController::BadRequest, ActionController::ParameterMissing
         render_error(400, err)
       when ApplicationController::InvalidCrossOriginRequest, ActionController::InvalidAuthenticityToken
