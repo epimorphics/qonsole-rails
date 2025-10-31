@@ -43,7 +43,7 @@ module QonsoleRails
       when ArgumentError, RuntimeError, Faraday::BadRequestError, ActionController::BadRequest, ActionController::ParameterMissing
         render_error(400, err)
       when ApplicationController::InvalidCrossOriginRequest, ActionController::InvalidAuthenticityToken
-        render_error(403,err)
+        render_error(403, err)
       when Faraday::TimeoutError, Faraday::ConnectionFailed
         render_error(504, err)
       else
