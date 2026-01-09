@@ -79,7 +79,7 @@ module QonsoleRails
     def render_endpoint_item(key, endpoint_url)
       concat(
         content_tag('li', role: 'presentation') do
-          content_tag('a', role: 'menuitem', tabindex: -1, href: '#', data: { key: key }) do
+          content_tag('a', role: 'menuitem', tabindex: -1, data: { key: key }) do
             endpoint_url
           end
         end

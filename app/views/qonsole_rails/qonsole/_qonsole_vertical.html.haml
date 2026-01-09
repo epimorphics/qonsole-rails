@@ -24,12 +24,11 @@
       .row
         .form-group.col-lg-2
           .dropdown
-            %a.btn.btn-dropdown{"data-toggle" => "dropdown", :href => "#"}
+            %button.btn.btn-dropdown.dropdown-toggle{"data-bs-toggle" => "dropdown", :id => "endpointSelector", type: "button", "aria-expanded" => "false"}
               Select endpoint
               %span#dropdownMenu1.visuallyhidden
                 , currently
                 = @qconfig.default_endpoint
-              %i{class: "fa fa-caret-down", "aria-hidden" => "true"}
             %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
               = render_endpoints( @qconfig )
         .form-group.col-lg-5
@@ -44,21 +43,20 @@
               = "table"
             %br
           .dropdown
-            %a.btn.btn-dropdown.display-format{"data-toggle" => "dropdown", "data-value" => "tsv", :href => "#", :role => "button", :id => "displayFormat"}
+            %button.btn.btn-dropdown.dropdown-toggle.display-format{"data-bs-toggle" => "dropdown", "data-value" => "tsv", :id => "displayFormat", type: "button", "aria-expanded" => "false"}
               %span table
-              %i{class: "fa fa-caret-down", "aria-hidden" => "true"}
             %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
               %li{:role => "presentation"}
-                %a{:data => {"value" => "tsv"}, :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as tab-separated values"}
+                %a{:data => {"value" => "tsv"}, :role => "menuitem", :tabindex => "-1", :title => "display results as tab-separated values", type: "button"}
                   table
               %li{:role => "presentation"}
-                %a{"data-value" => "text", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL text"}
+                %a{:data => {"value" =>  "text"}, :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL text", type: "button"}
                   plain text
               %li{:role => "presentation"}
-                %a{"data-value" => "json", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL JSON"}
+                %a{:data => {"value" =>  "json"}, :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL JSON", type: "button"}
                   JSON
               %li{:role => "presentation"}
-                %a{"data-value" => "xml", :href => "#", :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL XML"}
+                %a{:data => {"value" =>  "xml"}, :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL XML", type: "button"}
                   XML
         .form-group.col-lg-3
           %input.btn.btn-success.run-query{type: :submit, value: "perform query"}
