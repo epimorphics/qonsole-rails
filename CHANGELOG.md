@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-01
+
+### Added
+
+- Added handling for empty query results with user feedback to improve clarity.
+
+### Changed
+
+- Replaced sass-rails with dartsass-sprockets for Dart Sass 1.x support.
+  [#105](https://github.com/epimorphics/qonsole-rails/issues/105)
+- Refactored dropdown components to Bootstrap 5 with improved accessibility.
+  [#105](https://github.com/epimorphics/qonsole-rails/issues/105)
+- Enhanced query form layout with Bootstrap 5 utilities for better responsiveness.
+  [#105](https://github.com/epimorphics/qonsole-rails/issues/105)
+- Updated .gitignore to exclude macOS system files.
+- Improved gemspec formatting for consistency.
+
+### Fixed
+
+- Configured response logging to debug mode only, reducing production noise.
+- Fixed nil result count handling in SPARQL responses.
+
 ## [2.3.0] - 2025-10
 
 ### Added
