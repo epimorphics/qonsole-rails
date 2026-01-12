@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Configured response logging to debug mode only, reducing production noise.
 - Fixed nil result count handling in SPARQL responses.
+- Removed timezone deprecation warning in configuration to ensure clean boot.
 
 ## [2.3.0] - 2025-10
 
