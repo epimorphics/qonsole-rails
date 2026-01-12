@@ -167,12 +167,12 @@ modulejs.define( "qonsole", [
 
   /** Return the currenty selected output format */
   var selectedFormat = function() {
-    return $("a.display-format").data( "value" );
+    return $("[id=sparqlFormat]").data( "value" );
   };
 
   /** Update the user's format selection */
   var setCurrentFormat = function( val, label ) {
-    $("a.display-format").data( "value", val ).find("span").text( label );
+    $("[id=sparqlFormat]").data( "value", val ).find("span").text( label );
   };
 
   /** Assemble the set of prefixes to use when initially rendering the query */
