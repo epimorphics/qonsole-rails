@@ -371,11 +371,21 @@ modulejs.define( "qonsole", [
     $("#results").html( Sprintf.sprintf( "<pre class='bg-danger'>%s</pre>", _.escape(message) ) );
   };
 
+  var renderEmptyResults = function() {
+    showResultsTimeAndCount( 0 );
+    $("#results").html( "<pre class='text-bg-light p-3'>No results to display</pre>" );
+  }
+
   /** Query succeeded - use display type to determine how to render */
   var onQuerySuccess = function( data, format ) {
     if (data.status >= 200 && data.status <= 299) {
       var result = new SparqlServiceResult( data.result, format );
       var options = result.asFormat( format, currentConfiguration() );
+
+      if (!options) {
+        renderEmptyResults();
+        return;
+      }
 
       if (options && !options.table) {
         showCodeMirrorResult( options );
