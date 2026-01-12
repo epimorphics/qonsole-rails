@@ -21,8 +21,8 @@
       #query-edit-cm
 
     .query-chrome
-      .row
-        .form-group.col-lg-2
+      .row.flex-lg-nowrap
+        .form-group.col-sm-6.col-md-3.order-md-first
           .dropdown
             %button.btn.btn-dropdown.dropdown-toggle{"data-bs-toggle" => "dropdown", :id => "endpointSelector", type: "button", "aria-expanded" => "false"}
               Select endpoint
@@ -31,19 +31,21 @@
                 = @qconfig.default_endpoint
             %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
               = render_endpoints( @qconfig )
-        .form-group.col-lg-5
+
+        .form-group.col-sm-12.col-md-6.order-md-2
           %label{:for => "sparqlEndpoint"}
             SPARQL endpoint
           %input#sparqlEndpoint.form-control{:type => "url", style: "width: 100%", value: @qconfig.default_endpoint, "autocomplete" => false}/
-        .form-group.col-lg-2
-          %label{:for => "displayFormat"}
+
+        .form-group.col-sm-6.col-md-2.order-md-last.text-md-end
+          %label{:for => "sparqlFormat"}
             Results
             %span#dropdownMenu2.visuallyhidden
               , currently displayed as
               = "table"
             %br
           .dropdown
-            %button.btn.btn-dropdown.dropdown-toggle.display-format{"data-bs-toggle" => "dropdown", "data-value" => "tsv", :id => "displayFormat", type: "button", "aria-expanded" => "false"}
+            %button#sparqlFormat.btn.btn-dropdown.dropdown-toggle{"data-bs-toggle" => "dropdown", "data-value" => "tsv", type: "button", "aria-expanded" => "false"}
               %span table
             %ul.dropdown-menu.formats{"aria-labelledby" => "dropdownMenu2", :role => "menu"}
               %li{:role => "presentation"}
@@ -58,7 +60,9 @@
               %li{:role => "presentation"}
                 %a{:data => {"value" =>  "xml"}, :role => "menuitem", :tabindex => "-1", :title => "display results as SPARQL XML", type: "button"}
                   XML
-        .form-group.col-lg-3
+
+      .row
+        .form-group.col-md-12.text-md-end.ml-auto
           %input.btn.btn-success.run-query{type: :submit, value: "perform query"}
 
   #results-block.row.sparql.sparql-results
