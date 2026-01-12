@@ -142,7 +142,7 @@ module QonsoleRails
     def as_result(response)
       result = { status: response.status }
       result[ok?(response) ? :result : :error] = response_body(response)
-      result[:items] = count_results(result)
+      result[:items] = count_results(result) || []
       result
     end
 
