@@ -127,9 +127,9 @@ module QonsoleRails
       level = Rails.env.production? ? :info : :debug
 
       config.response :logger, Rails.logger, {
-        headers: true,
+        headers: level.to_sym == :debug,
         bodies: false,
-        errors: true,
+        errors: level.to_sym == :debug,
         log_level: level.to_sym
       }
     end
@@ -142,7 +142,7 @@ module QonsoleRails
     def as_result(response)
       result = { status: response.status }
       result[ok?(response) ? :result : :error] = response_body(response)
-      result[:items] = count_results(result)
+      result[:items] = count_results(result) || []
       result
     end
 

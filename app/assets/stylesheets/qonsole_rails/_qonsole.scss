@@ -99,28 +99,21 @@
   .query-chrome {
     margin-top: 1em;
     .row {
-      display: inline-flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 1rem;
       width: 100%;
       margin-inline: unset;
 
       .form-group {
-        &:first-of-type {
-          text-align: start;
-        }
+        text-align: start;
 
         @media (min-width: 44em) {
           text-align: end;
-
+          &:first-of-type {
+            text-align: start;
+          }
         }
       }
       @media(max-width: 44em) {
         flex-wrap: wrap;
-        label {
-          width: 50%;
-        }
       }
       @media (max-width: 22em) {
         flex-direction: column;
