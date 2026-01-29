@@ -2,17 +2,6 @@ PATH
   remote: .
   specs:
     qonsole_rails (2.4.0)
-      faraday (~> 2.13)
-      faraday-encoding (~> 0.0, >= 0.0.6)
-      faraday-follow_redirects (~> 0.3, >= 0.3.0)
-      faraday-retry (~> 2.0)
-      font-awesome-rails (~> 4.7.0)
-      haml-rails (~> 3.0)
-      jquery-datatables-rails (~> 3.4)
-      jquery-rails (~> 4.6)
-      lodash-rails (~> 4.17)
-      modulejs-rails (~> 2.2.0)
-      rails (~> 8.0)
 
 GEM
   remote: https://rubygems.org/
@@ -388,9 +377,20 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  faraday (~> 2.13)
+  faraday-encoding (~> 0.0, >= 0.0.6)
+  faraday-follow_redirects (~> 0.3, >= 0.3.0)
+  faraday-retry (~> 2.0)
+  font-awesome-rails (~> 4.7.0)
+  haml-rails (~> 3.0)
+  jquery-datatables-rails (~> 3.4)
+  jquery-rails (~> 4.6)
+  lodash-rails (~> 4.17)
   minitest-rails
   minitest-spec-rails
+  modulejs-rails (~> 2.2.0)
   qonsole_rails!
+  rails (~> 8.0)
   rubocop
   rubocop-rails
   ruby-lsp
