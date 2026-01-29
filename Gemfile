@@ -15,6 +15,7 @@ group :development, :test do
   gem 'minitest-spec-rails'
 
   gem 'ruby-lsp', require: false
+  gem 'simplecov', require: false
   gem 'solargraph', require: false
 
   gem 'rubocop'
