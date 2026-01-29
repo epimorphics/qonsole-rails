@@ -17,7 +17,8 @@ gem 'faraday-retry', '~> 2.0'
 
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'haml-rails', '~> 3.0'
-gem 'jquery-datatables-rails', '~> 3.4'
+gem 'jquery-datatables-rails', '~> 3.5.0', github: 'marlinpierce/jquery-datatables-rails',
+                                           branch: 'master-3.5'
 gem 'jquery-rails', '~> 4.6'
 gem 'lodash-rails', '~> 4.17'
 gem 'modulejs-rails', '~> 2.2.0'
