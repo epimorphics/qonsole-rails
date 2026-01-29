@@ -33,7 +33,11 @@ clean:
 	@echo "Cleaning up ${NAME}..."
 	@rm -rf ${GEM}
 
-gem: ${GEM}
+coverage: ## Display test coverage report
+	@open coverage/index.html
+	@echo "Displaying test coverage report in browser..."
+
+gem: ${GEM} ## Build the gem package
 	@echo ${GEM}
 
 lint: assets
