@@ -1,16 +1,15 @@
-.PHONY: auth clean gem publish test vars
+.PHONY: all assets auth build bundles check checks clean coverage gem help lint publish realclean rubocop tags test update vars
 
 NAME?=qonsole_rails
 OWNER?=epimorphics
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./lib/${NAME}/version" ; puts QonsoleRails::VERSION')
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
+BUNDLE?=bundle
 
 AUTH=${HOME}/.gem/credentials
 GEM=${NAME}-${VERSION}.gem
 GPR=https://rubygems.pkg.github.com/${OWNER}
 SPEC=${NAME}.gemspec
-
-all: publish
 
 ${AUTH}:
 	@mkdir -p ${HOME}/.gem
@@ -18,19 +17,31 @@ ${AUTH}:
 	@echo ':github: Bearer ${PAT}' >> ${AUTH}
 	@chmod 0600 ${AUTH}
 
+# Build the gem package
 ${GEM}: ${SPEC} ./lib/${NAME}/version.rb
 	gem build ${SPEC}
 
-assets:
-	@echo "Installing assets..."
-	@bundle install
+all: publish ## Default target: publish the gem
 
-auth: ${AUTH}
+assets: auth bundles ## Build assets for gem package
+	@echo assets completed.
 
-build: clean gem
+auth: ${AUTH} ## Set up authentication for package distribution
+	@echo "Authentication set up for package distribution."
 
-clean:
-	@echo "Cleaning up ${NAME}..."
+build: clean gem ## Build the gem package
+
+bundles: ## Install gem dependencies via Bundler
+	@echo "Installing gem dependencies via Bundler..."
+	@${BUNDLE} install
+
+check: checks ## Alias for `checks` target
+
+checks: lint test ## Run all checks: linting and tests
+	@echo "All checks passed."
+
+clean: ## Clean up generated gem package
+	@echo "Removing ${GEM} ..."
 	@rm -rf ${GEM}
 
 coverage: ## Display test coverage report
@@ -40,26 +51,51 @@ coverage: ## Display test coverage report
 gem: ${GEM} ## Build the gem package
 	@echo ${GEM}
 
-lint: assets
-	@echo "Running rubocop..."
-	@bundle exec rubocop
+help: ## Display this message
+	@echo "Available make targets:"
+	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-20s %s\n", $$1, $$2}'
+	@echo ""
+ifdef AWS_PROFILE
+	@echo "Environment variables (optional: all variables have defaults):"
+	@make vars
+else
+	@echo "Warning: AWS_PROFILE environment variable is not set. AWS CLI commands may fail."
+	@echo "Re-run with AWS_PROFILE set to see all variables"
+endif
+lint: rubocop ## Run linting checks
+	@echo "All linting complete."
 
-publish: ${AUTH} ${GEM}
+publish: ${AUTH} ${GEM} ## Publish the gem package to Epimorphics Package Registry
 	@echo Publishing package ${NAME}:${VERSION} to ${OWNER} ...
 	@gem push --key github --host ${GPR} ${GEM}
 	@echo Done.
 
-realclean: clean
+realclean: clean ## Remove authentication files
 	@rm -rf ${AUTH}
 
-tags:
+rubocop: ## Run RuboCop linting
+	@echo "Running RuboCop linting for ${GEM} ..."
+# Auto-correct offenses safely where possible with the `-a` flag
+	@${BUNDLE} exec rubocop -a
+
+tags: ## Display version information
 	@echo version=${VERSION}
 
-test: assets
+test: ## Run tests
 	@echo "Running tests..."
-	@bundle exec rake test
+	@${BUNDLE} exec rake test
 
-vars:
+update: ## Review and update dependencies interactively
+	@echo "Checking for outdated dependencies..."
+	@if [ -f package.json ]; then \
+		echo "Running yarn upgrade-interactive..."; \
+		yarn upgrade-interactive; \
+	fi
+	@echo "Running bundle outdated to check Ruby gems..."
+# Let bundler handle output; treat this as informational even if deps are outdated
+	@${BUNDLE} outdated --only-explicit || true
+
+vars: ## Display environment variables
 	@echo "GEM"	= ${GEM}
 	@echo "GPR"	= ${GPR}
 	@echo "NAME = ${NAME}"
