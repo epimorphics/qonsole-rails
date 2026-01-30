@@ -1,0 +1,32 @@
+#!/bin/bash
+# Source common hook utilities
+. "$(dirname "$0")/common.sh"
+
+# Initialize branch name
+init_branch_name
+
+print_header "Checking \"$BRANCH_NAME\"..."
+
+# Skip on specific branches, with --no-verify flag, or when amending
+if should_skip_hook; then
+  print_success "Skipping pre-push hook... 🎉"
+  exit 0
+fi
+
+# Check for existence of "new or modified" files
+if ! git update-index -q --ignore-submodules --refresh; then
+	print_warning 'Up-to-date check failed 😖'
+  GEM_BUILD_EXIT_CODE=1
+else
+  print_success 'Building Gem... '
+  make build
+  GEM_BUILD_EXIT_CODE=$?
+fi
+
+if [ $GEM_BUILD_EXIT_CODE -ne 0 ]; then
+  print_error 'Gem build failed. Please check your changes. 😖'
+  exit 1
+else
+  print_success 'Gem build succeeded, pushing changes. 🎉'
+  exit 0
+fi

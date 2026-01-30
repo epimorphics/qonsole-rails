@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [2.4.1] - 2026-01
+
+### Added
+
+- Added code-coverage support using `simplecov` and a `coverage` Makefile
+  target.
+
+### Changed
+
+- Bumped development and runtime dependencies for compatibility and stability
+  (includes `rails`, `faraday` utilities, `byebug`, `solargraph`, `ruby-lsp`,
+  `rbs`, `haml-rails`, and `jquery-datatables-rails`).
+  [#108](https://github.com/epimorphics/qonsole-rails/issues/108)
+- Migrated dependency declarations into `Gemfile` and modernised the gemspec.
+- Unified project Makefiles and standardised `.gitignore` entries.
+- Updated linting and developer tooling to align with the current toolchain.
+
+### Fixed
+
+- Handled nil result counts returned from SPARQL queries to avoid exceptions.
+- Added handling for empty query results to improve user feedback.
+- Corrected variable usage in an exception handler and reduced noisy test
+  warnings.
+
 ## [2.4.0] - 2026-01
 
 ### Added
