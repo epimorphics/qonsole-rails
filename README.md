@@ -10,6 +10,17 @@ runs as a Rails engine
 > [qonsole-sfc](https://github.com/epimorphics/qonsole-sfc) project.
 > (2022-07-04)
 
+> [!IMPORTANT]
+> Gem dependencies are now recorded BOTH in the Gemfile, AND in the .gemspec,
+> due to a "quirk" with the `bundler outdated` utility not checking gems listed
+> in the .gemspec while running the `make update` target command which uses the
+> `--only-explicit` flag[^1].
+
+> [!CAUTION]
+> Please be sure to mirror manual version updates to both locations.
+
+[^1]: <https://bundler.io/man/bundle-outdated.1.html>
+
 ---
 
 ### Publishing the gem to the Epimorphics GitHub Package Registry (eGPR)[^1]
@@ -46,5 +57,3 @@ Token (PAT) with the appropriate permissions set.
     - Click the "Run workflow" button below the branch selection
 6. When the workflow has completed, check on the eGPR[^1] to see that the new
    gem has been published successfully
-
-[^1]: <https://github.com/orgs/epimorphics/packages?repo_name=qonsole_rails>
