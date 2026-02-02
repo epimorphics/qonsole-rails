@@ -33,7 +33,7 @@ end
 # fix that has not yet been merged into the main repo. See:
 # https://stackoverflow.com/a/68001592/5760177
 gem 'jquery-datatables-rails', '~> 3.5.0',
-    git: 'git@github.com:marlinpierce/jquery-datatables-rails',
+    github: 'marlinpierce/jquery-datatables-rails',
     branch: 'master-3.5'
 
 # Declare any dependencies that are used in development here instead of in your
