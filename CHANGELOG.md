@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Increased text size of H2's and added H1 title SPARQL Query Editor [#111](https://github.com/epimorphics/qonsole-rails/issues/111)
+- Increased text size of H2's and added H1 title "SPARQL Query Editor" for accessibility improvements [#111](https://github.com/epimorphics/qonsole-rails/issues/111)
 
 ## [2.4.1] - 2026-01
 
