@@ -4422,7 +4422,7 @@
     d.lineGutter = null;
     // Actual scrollable element.
     d.scroller = elt("div", [d.sizer, d.heightForcer, d.gutters], "CodeMirror-scroll");
-    d.scroller.setAttribute("tabIndex", "-1");
+    d.scroller.setAttribute("tabIndex", "0");
     // The element in which the editor lives.
     d.wrapper = elt("div", [d.scrollbarFiller, d.gutterFiller, d.scroller], "CodeMirror");
     // See #6982. FIXME remove when this has been fixed for a while in Chrome
