@@ -7,8 +7,13 @@
     margin-inline: auto;
     width: fit-content;
   }
+
   h2 {
     line-height: 2;
+  }
+
+  .qonsole-h2 {
+    font-size: 16px;
   }
 
   h2, .query-chrome label {
