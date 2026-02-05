@@ -6,12 +6,12 @@
 
 %form.qonsole.form-inline{:role => "form", action: qonsole_rails.query_path}
   .col-md-12.well
-    %h2 Example queries
+    %h2.qonsole-h2 Example queries
     %ul.list-inline.examples
       = render_examples( @qconfig )
 
   .col-md-12.well.vertical
-    %h2 Prefixes
+    %h2.qonsole-h2 Prefixes
     %ul.list-inline.prefixes
       = render_prefixes( @qconfig )
       / %li.keep
@@ -77,7 +77,7 @@
             %span.timeTaken.hidden
         .row
           #results.col-md-12
-            %h2.col-md-12 Query results
+            %h2.qonsole-h2.col-md-12 Query results
 
 / modal dialogue
 #prefixEditor.modal.fade{"aria-hidden" => "true", :role => "dialog", :tabindex => "-1"}
