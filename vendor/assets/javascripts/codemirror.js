@@ -7588,23 +7588,6 @@
       }
     }
 
-    // --------------------------------------------------------------------------------------
-    // LOOK AT THIS FIRST THING
-    
-    // var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      //   lineNumbers: true,
-      //   mode: "javascript",
-      //   screenReaderLabel: "Code editor – press Esc then Tab to exit",
-      // });
-      
-      // // Manual ARIA enhancement
-      // var contentArea = editor.getWrapperElement().querySelector('.CodeMirror-scroll');
-      // if (contentArea) {
-        //   contentArea.setAttribute('aria-label', 'Code editor for JavaScript – press Escape then Tab to exit');
-        //   contentArea.setAttribute('title', 'Code editor (multiline text input)');
-        // }
-    // --------------------------------------------------------------------------------------
-        
     var editorSize = display.wrapper.getBoundingClientRect();
     // Used to ensure timeout re-tries don't fire when another extend
     // happened in the meantime (clearTimeout isn't reliable -- at
