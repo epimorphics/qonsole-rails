@@ -16,7 +16,7 @@ group :maintenance do
   # --only-explicit` from the `make update` target.
 
   # Versions should be kept in sync with those in the .gemspec
-  gem 'faraday', '~> 2.13'
+  gem 'faraday', '~> 2.14'
   gem 'faraday-encoding', '~> 0.0', '>= 0.0.6'
   gem 'faraday-follow_redirects', '~> 0.3', '>= 0.3.0'
   gem 'faraday-retry', '~> 2.0'
