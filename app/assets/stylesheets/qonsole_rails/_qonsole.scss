@@ -103,25 +103,40 @@
 
   .query-chrome {
     margin-top: 1em;
+
+    .query-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+        .select {
+          margin-top: 17px;
+        }
+        .label-results,
+        .label-endpoint {
+          font-size: 12px;
+        }
+        @media(max-width: 44em) {
+          flex-direction: column;
+          gap: 1.5rem;
+          padding-bottom: 1.5rem;
+
+        }
+    }
     .row {
       width: 100%;
       margin-inline: unset;
+      align-items: flex-start;
 
       .form-group {
+        padding-right: 0;
         text-align: start;
-
-        @media (min-width: 44em) {
-          text-align: end;
-          &:first-of-type {
-            text-align: start;
-          }
+        .label-results,
+        .label-endpoint {
+          font-size: 16px;
         }
-      }
-      @media(max-width: 44em) {
-        flex-wrap: wrap;
-      }
-      @media (max-width: 22em) {
-        flex-direction: column;
+        @media(max-width: 44em) {
+          padding-left: 0;
+        }
       }
     }
   }

@@ -23,8 +23,8 @@
       #query-edit-cm
 
     .query-chrome
-      .row.flex-lg-nowrap
-        .form-group.col-sm-6.col-md-3.order-md-first
+      .query-container
+        .query-item.select
           .dropdown
             %button.btn.btn-dropdown.dropdown-toggle{"data-bs-toggle" => "dropdown", :id => "endpointSelector", type: "button", "aria-expanded" => "false"}
               Select endpoint
@@ -34,13 +34,15 @@
             %ul.dropdown-menu.endpoints{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
               = render_endpoints( @qconfig )
 
-        .form-group.col-sm-12.col-md-6.order-md-2
-          %label{:for => "sparqlEndpoint"}
+        .query-item.endpoint
+          %label.label-endpoint{:for => "sparqlEndpoint"}
             SPARQL endpoint
-          %input#sparqlEndpoint.form-control{:type => "url", style: "width: 100%", value: @qconfig.default_endpoint, "autocomplete" => false}/
+          %input#sparqlEndpoint.form-control{:type => "url", style: "width: 100%", value: @qconfig.default_endpoint, autocomplete: "off", "aria-describedby" => "endpointHelp"}
+          %p#endpointHelp
+          Enter the full URL of the SPARQL endpoint you want to query.
 
-        .form-group.col-sm-6.col-md-2.order-md-last.text-md-end
-          %label{:for => "sparqlFormat"}
+        .query-item.results
+          %label.label-results{:for => "sparqlFormat"}
             Results
             %span#dropdownMenu2.visuallyhidden
               , currently displayed as
@@ -85,7 +87,7 @@
     .modal-content
       .modal-header
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
-        %h4.modal-title Add a SPARQL prefix
+        %h3.modal-title Add a SPARQL prefix
       .modal-body
         %form.form-horizontal{:role => "form"}
           .form-group
