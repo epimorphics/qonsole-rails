@@ -8,9 +8,11 @@ input.btn-success {
 .skip-to-endpoint {
   opacity: 0;
   display: inline-block;
+  position: absolute;
 
   &:focus,
   &:focus-visible {
+    position: static;
     opacity: 1;
     outline: 2px solid #ffbf47;
     background: #ffbf47;
