@@ -18,9 +18,16 @@
       /   %button{type: :submit, title: "Add a SPARQL prefix", name: "add-prefix"}
       /     %i.fa.fa-plus
 
+  %p#query-editor-desc{tabindex:"0"}
+    Multi-line SPARQL query editor: enter or paste your query below.
+    %span.visuallyhidden
+      Press <kbd>Escape</kbd> key to exit the editor area, or <kbd>Shift</kbd> key plus the <kbd>Tab</kbd> key to go back.
+    %a.skip-to-endpoint.focus-visible{:href => "#endpointSelector", role: "button"}
+      Skip SPARQL editor (go to endpoint selection)
+
   .col-md-12.well
     .query-edit
-      #query-edit-cm
+      #query-edit-cm{ "aria-describedby" => "query-editor-desc"}
 
     .query-chrome
       .query-container
