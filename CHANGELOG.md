@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.2] - 2026-02
+
 - Adds instructions to the SPARQL editor and custom js so keyboard users can exit the textarea by pressing escape or shift + tab. [#102](https://github.com/epimorphics/qonsole-rails/issues/102)
 - Increased contrast of Brackets inside the code editor. The query section now has labels and tweaked layour with scss [#112](https://github.com/epimorphics/qonsole-rails/issues/112)
 - Increased text size of H2's and added H1 title "SPARQL Query Editor" for accessibility improvements [#111](https://github.com/epimorphics/qonsole-rails/issues/111)
